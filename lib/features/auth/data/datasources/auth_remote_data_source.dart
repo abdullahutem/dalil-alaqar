@@ -22,8 +22,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required String password,
   }) async {
     final response = await apiConsumer.post(
-      '${EndPoints.baserUrl}${EndPoints.login}',
-      data: {'phone_number': phoneNumber, 'password': password},
+      EndPoints.login,
+      data: {ApiKey.email: phoneNumber, ApiKey.password: password},
     );
 
     final data = response['data'] as Map<String, dynamic>;

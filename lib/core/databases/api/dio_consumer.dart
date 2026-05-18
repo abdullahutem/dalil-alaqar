@@ -47,9 +47,6 @@ class DioConsumer extends ApiConsumer {
             print('⚠️  No Token Found');
           }
 
-          options.headers['X-App-Key'] =
-              'pnrm_mobile_R7OVAmtELZprRmy6s3fjgOLTYHx';
-
           // Add default headers
           options.headers['Accept'] = 'application/json';
           options.headers['Content-Type'] = 'application/json';

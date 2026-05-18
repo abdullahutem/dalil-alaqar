@@ -45,6 +45,7 @@ dependencies:
     sdk: flutter
   intl: any
   dartz: ^0.10.1
+  carousel_slider: ^5.1.2
 
 dev_dependencies:
   flutter_test:

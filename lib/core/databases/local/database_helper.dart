@@ -19,15 +19,78 @@ class DatabaseHelper {
 
     return await openDatabase(
       path,
-      version: 1,
+      version: 2, // Incremented version for migration
       onCreate: _createDB,
       onUpgrade: _onUpgrade,
+      onOpen: (db) async {
+        // Verify the slides table exists and has the correct schema
+        final tables = await db.rawQuery(
+          "SELECT name FROM sqlite_master WHERE type='table' AND name='slides'",
+        );
+
+        if (tables.isEmpty) {
+          print('⚠️ Slides table does not exist, creating it...');
+          await _createDB(db, 2);
+        } else {
+          print('✅ Slides table exists');
+        }
+      },
     );
   }
 
-  Future _onUpgrade(Database db, int oldVersion, int newVersion) async {}
+  Future _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      // Drop old slides table if it exists
+      await db.execute('DROP TABLE IF EXISTS slides');
 
-  Future _createDB(Database db, int version) async {}
+      // Create new slides table with updated schema
+      await db.execute('''
+        CREATE TABLE slides (
+          id INTEGER PRIMARY KEY,
+          title TEXT NOT NULL,
+          description TEXT NOT NULL,
+          image TEXT NOT NULL,
+          link TEXT NOT NULL,
+          position TEXT NOT NULL,
+          "order" INTEGER NOT NULL,
+          office_id INTEGER,
+          start_date TEXT NOT NULL,
+          end_date TEXT NOT NULL,
+          views_count INTEGER NOT NULL,
+          clicks_count INTEGER NOT NULL,
+          is_active INTEGER NOT NULL,
+          status TEXT NOT NULL,
+          created_at TEXT NOT NULL,
+          updated_at TEXT NOT NULL,
+          cached_at TEXT NOT NULL
+        )
+      ''');
+    }
+  }
+
+  Future _createDB(Database db, int version) async {
+    await db.execute('''
+      CREATE TABLE slides (
+        id INTEGER PRIMARY KEY,
+        title TEXT NOT NULL,
+        description TEXT NOT NULL,
+        image TEXT NOT NULL,
+        link TEXT NOT NULL,
+        position TEXT NOT NULL,
+        "order" INTEGER NOT NULL,
+        office_id INTEGER,
+        start_date TEXT NOT NULL,
+        end_date TEXT NOT NULL,
+        views_count INTEGER NOT NULL,
+        clicks_count INTEGER NOT NULL,
+        is_active INTEGER NOT NULL,
+        status TEXT NOT NULL,
+        created_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL,
+        cached_at TEXT NOT NULL
+      )
+    ''');
+  }
 
   Future<void> clearAllData() async {}
 

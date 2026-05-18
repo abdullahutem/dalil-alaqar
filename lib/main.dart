@@ -1,4 +1,5 @@
 import 'package:dalil_alaqar/core/constants/app_constants.dart';
+import 'package:dalil_alaqar/core/databases/cache/cache_helper.dart';
 import 'package:dalil_alaqar/core/localization/app_localizations.dart';
 import 'package:dalil_alaqar/core/localization/locale_cubit.dart';
 import 'package:dalil_alaqar/core/localization/locale_state.dart';
@@ -12,7 +13,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Initialize cache helper
+  await CacheHelper().init();
+
   runApp(const MyApp());
 }
 
