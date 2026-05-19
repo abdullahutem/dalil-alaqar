@@ -1,5 +1,6 @@
 import 'package:dalil_alaqar/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dalil_alaqar/features/auth/presentation/cubit/auth_state.dart';
+import 'package:dalil_alaqar/features/dashboard/presentation/screens/dashboard_screen.dart';
 import 'package:dalil_alaqar/features/home/presentation/screens/home_screen.dart';
 import 'package:dalil_alaqar/features/main/presentation/cubit/main_cubit.dart';
 import 'package:dalil_alaqar/features/main/presentation/cubit/main_state.dart';
@@ -57,22 +58,26 @@ class MainView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, authState) {
+        // Determine if user is logged in (not a guest)
+        final isLoggedIn = authState is AuthSuccess;
+
         return BlocBuilder<MainCubit, MainState>(
           builder: (context, state) {
             int currentIndex = state.currentIndex;
 
+            // Build screens list based on auth status
+            final List<Widget> screens = [
+              HomeScreen(),
+              const PropertiesScreen(),
+              const PromotionsScreen(),
+              if (isLoggedIn) const DashboardScreen(),
+            ];
+
             return Scaffold(
-              body: IndexedStack(
-                index: currentIndex,
-                children: [
-                  HomeScreen(),
-                  const PropertiesScreen(),
-                  const PromotionsScreen(),
-                  _PlaceholderScreen(title: 'Profile'),
-                ],
-              ),
+              body: IndexedStack(index: currentIndex, children: screens),
               bottomNavigationBar: CustomBottomNavBar(
                 currentIndex: currentIndex,
+                isLoggedIn: isLoggedIn,
                 onTap: (index) {
                   context.read<MainCubit>().changeTab(index);
                 },
@@ -81,37 +86,6 @@ class MainView extends StatelessWidget {
           },
         );
       },
-    );
-  }
-}
-
-// Placeholder screen for features not yet implemented
-class _PlaceholderScreen extends StatelessWidget {
-  final String title;
-
-  const _PlaceholderScreen({required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.construction_rounded, size: 64, color: Colors.grey[400]),
-            const SizedBox(height: 16),
-            Text(
-              '$title - Coming Soon',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.grey[600],
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

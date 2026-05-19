@@ -13,7 +13,8 @@ class EndPoints {
   static String neighborhoodsByDistrict(int districtId) =>
       "public/data/districts/$districtId/neighborhoods";
   static const String offices = 'public/offices';
-  static const String promotions = 'public/promotions'; // <-- ADD THIS
+  static const String promotions = 'public/promotions';
+  static const String dashboard = 'office/dashboard';
 }
 
 class ApiKey {

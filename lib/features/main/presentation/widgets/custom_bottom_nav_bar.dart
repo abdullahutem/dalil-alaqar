@@ -4,11 +4,13 @@ import 'package:dalil_alaqar/core/theme/app_colors.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   final int currentIndex;
+  final bool isLoggedIn;
   final Function(int) onTap;
 
   const CustomBottomNavBar({
     super.key,
     required this.currentIndex,
+    required this.isLoggedIn,
     required this.onTap,
   });
 
@@ -30,10 +32,12 @@ class CustomBottomNavBar extends StatelessWidget {
         icon: const Icon(Icons.business_rounded),
         label: localizations.translate('nav_promotions'),
       ),
-      BottomNavigationBarItem(
-        icon: const Icon(Icons.person_rounded),
-        label: localizations.translate('nav_profile'),
-      ),
+      // Only show dashboard for logged-in users
+      if (isLoggedIn)
+        BottomNavigationBarItem(
+          icon: const Icon(Icons.dashboard_rounded),
+          label: localizations.translate('nav_dashboard'),
+        ),
     ];
 
     return Container(

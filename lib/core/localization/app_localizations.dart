@@ -30,6 +30,7 @@ class AppLocalizations {
       'nav_offices': 'Offices',
       'nav_profile': 'Profile',
       'nav_promotions': 'Promotions',
+      'nav_dashboard': 'Dashboard',
     },
     'ar': {
       // App
@@ -49,6 +50,7 @@ class AppLocalizations {
       'nav_offices': 'المكاتب',
       'nav_profile': 'الملف الشخصي',
       'nav_promotions': 'العروض',
+      'nav_dashboard': 'لوحة التحكم',
     },
   };
 
