@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dalil_alaqar/core/theme/app_colors.dart';
 import 'package:dalil_alaqar/core/utils/image_cache_config.dart';
 import 'package:dalil_alaqar/features/properties/domain/entities/property_entity.dart';
+import 'package:dalil_alaqar/features/properties/presentation/screens/property_details_screen.dart';
 import 'package:intl/intl.dart';
 
 class PropertyCard extends Widget {
@@ -50,7 +51,16 @@ class _PropertyCardElement extends ComponentElement {
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
-        onTap: widget.onTap,
+        onTap:
+            widget.onTap ??
+            () {
+              Navigator.of(this).push(
+                MaterialPageRoute(
+                  builder: (context) =>
+                      PropertyDetailsScreen(propertyId: property.id),
+                ),
+              );
+            },
         borderRadius: BorderRadius.circular(12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -2,6 +2,7 @@ import 'package:dalil_alaqar/core/routes/app_routes.dart';
 import 'package:dalil_alaqar/features/auth/presentation/screens/login_screen.dart';
 import 'package:dalil_alaqar/features/home/presentation/screens/home_screen.dart';
 import 'package:dalil_alaqar/features/main/presentation/screens/main_screen.dart';
+import 'package:dalil_alaqar/features/properties/presentation/screens/property_details_screen.dart';
 import 'package:dalil_alaqar/features/splash/presentation/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,11 @@ class AppRouter {
         return MaterialPageRoute(builder: (context) => const MainScreen());
       case AppRoutes.home:
         return MaterialPageRoute(builder: (context) => const HomeScreen());
+      case AppRoutes.propertyDetailsScreen:
+        final propertyId = settings.arguments as int;
+        return MaterialPageRoute(
+          builder: (context) => PropertyDetailsScreen(propertyId: propertyId),
+        );
       default:
         return MaterialPageRoute(
           builder: (context) =>

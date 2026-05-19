@@ -56,7 +56,7 @@ class AppTheme {
         ),
         headlineMedium: TextStyle(
           fontFamily: 'EXPOARABIC',
-          fontSize: 20,
+          fontSize: 18,
           fontWeight: FontWeight.w600,
           color: AppColors.darkText,
         ),
@@ -179,7 +179,7 @@ class AppTheme {
         ),
         headlineMedium: TextStyle(
           fontFamily: 'EXPOARABIC',
-          fontSize: 20,
+          fontSize: 18,
           fontWeight: FontWeight.w600,
           color: AppColors.lightText,
         ),
@@ -205,13 +205,13 @@ class AppTheme {
           fontFamily: 'EXPOARABIC',
           fontSize: 14,
           fontWeight: FontWeight.normal,
-          color: AppColors.lightTextSecondary,
+          color: AppColors.lightText,
         ),
         bodySmall: TextStyle(
           fontFamily: 'EXPOARABIC',
           fontSize: 12,
           fontWeight: FontWeight.normal,
-          color: AppColors.lightTextSecondary,
+          color: AppColors.lightText,
         ),
       ),
 

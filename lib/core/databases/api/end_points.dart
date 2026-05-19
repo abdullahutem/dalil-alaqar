@@ -4,6 +4,7 @@ class EndPoints {
   static const String logout = "office/logout";
   static const String advertisements = "public/advertisements";
   static const String properties = "public/properties";
+  static String propertyDetails(int id) => "public/properties/$id";
   static const String offices = 'public/offices';
   static const String promotions = 'public/promotions'; // <-- ADD THIS
 }

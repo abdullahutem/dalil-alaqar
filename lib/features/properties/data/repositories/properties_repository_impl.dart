@@ -5,6 +5,7 @@ import 'package:dalil_alaqar/core/errors/expentions.dart';
 import 'package:dalil_alaqar/core/errors/failure.dart';
 import 'package:dalil_alaqar/features/properties/data/datasources/properties_remote_data_source.dart';
 import 'package:dalil_alaqar/features/properties/domain/entities/properties_response_entity.dart';
+import 'package:dalil_alaqar/features/properties/domain/entities/property_details_entity.dart';
 import 'package:dalil_alaqar/features/properties/domain/repositories/properties_repository.dart';
 
 class PropertiesRepositoryImpl implements PropertiesRepository {
@@ -27,6 +28,34 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
           page: page,
           perPage: perPage,
         );
+        return Right(result);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(errMessage: e.errorModel.errorMessage));
+      } on DioException catch (e) {
+        return Left(
+          ServerFailure(errMessage: e.message ?? 'Network error occurred'),
+        );
+      } catch (e) {
+        return Left(
+          ServerFailure(errMessage: 'Unexpected error: ${e.toString()}'),
+        );
+      }
+    } else {
+      return Left(
+        ServerFailure(
+          errMessage: 'No internet connection. Please check your network.',
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, PropertyDetailsEntity>> getPropertyDetails({
+    required int id,
+  }) async {
+    if (await networkInfo.isConnected ?? false) {
+      try {
+        final result = await remoteDataSource.getPropertyDetails(id: id);
         return Right(result);
       } on ServerException catch (e) {
         return Left(ServerFailure(errMessage: e.errorModel.errorMessage));

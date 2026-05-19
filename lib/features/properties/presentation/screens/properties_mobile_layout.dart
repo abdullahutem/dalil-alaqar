@@ -1,3 +1,4 @@
+import 'package:dalil_alaqar/core/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dalil_alaqar/core/theme/app_colors.dart';
@@ -115,12 +116,10 @@ class _PropertiesMobileLayoutState extends State<PropertiesMobileLayout> {
                       return PropertyCard(
                         property: property,
                         onTap: () {
-                          // TODO: Navigate to property details
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('تم النقر على: ${property.title}'),
-                              duration: const Duration(seconds: 2),
-                            ),
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.propertyDetailsScreen,
+                            arguments: property.id,
                           );
                         },
                       );

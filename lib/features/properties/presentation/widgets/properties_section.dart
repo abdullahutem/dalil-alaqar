@@ -13,6 +13,7 @@ class PropertiesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       padding: EdgeInsets.symmetric(vertical: isTablet ? 48 : 24),
       child: Column(
@@ -30,15 +31,18 @@ class PropertiesSection extends StatelessWidget {
                     Text(
                       'أحدث العقارات',
                       style: TextStyle(
-                        fontSize: isTablet ? 32 : 24,
-                        fontWeight: FontWeight.bold,
+                        fontSize: isTablet ? 32 : 16,
+                        fontWeight: FontWeight.w600,
+                        color: isDark
+                            ? AppColors.lightTextSecondary
+                            : AppColors.black,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       'تصفح أحدث العقارات المتاحة',
                       style: TextStyle(
-                        fontSize: isTablet ? 16 : 14,
+                        fontSize: isTablet ? 16 : 12,
                         color: Colors.grey[600],
                       ),
                     ),

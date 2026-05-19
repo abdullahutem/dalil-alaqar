@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dalil_alaqar/core/theme/app_colors.dart';
 import 'package:dalil_alaqar/core/utils/image_cache_config.dart';
 import 'package:dalil_alaqar/features/properties/domain/entities/property_entity.dart';
+import 'package:dalil_alaqar/features/properties/presentation/screens/property_details_screen.dart';
 
 class PropertyCardCompact extends StatelessWidget {
   final PropertyEntity property;
@@ -38,7 +39,16 @@ class PropertyCardCompact extends StatelessWidget {
     final imageUrl = _getImageUrl();
 
     return GestureDetector(
-      onTap: onTap,
+      onTap:
+          onTap ??
+          () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) =>
+                    PropertyDetailsScreen(propertyId: property.id),
+              ),
+            );
+          },
       child: Container(
         width: 280,
         margin: const EdgeInsets.only(left: 16),
