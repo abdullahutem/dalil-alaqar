@@ -61,7 +61,6 @@ class _HomeMobileLayoutState extends State<HomeMobileLayout>
             SliderWidget(isTablet: false),
 
             SizedBox(height: 24),
-
             // Properties Section
             PropertiesSection(isTablet: false),
             SizedBox(height: 24),

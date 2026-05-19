@@ -26,21 +26,21 @@ class SlideModel extends SlideEntity {
 
       return SlideModel(
         id: json['id'] as int,
-        title: json['title'] as String,
-        description: json['description'] as String,
-        image: json['image'] as String,
-        link: json['link'] as String,
-        position: json['position'] as String,
-        order: json['order'] as int,
+        title: json['title'] as String? ?? '',
+        description: json['description'] as String? ?? '',
+        image: json['image'] as String? ?? '',
+        link: json['link'] as String? ?? '',
+        position: json['position'] as String? ?? 'top',
+        order: json['order'] as int? ?? 0,
         officeId: json['office_id'] as int?, // Nullable
-        startDate: json['start_date'] as String,
-        endDate: json['end_date'] as String,
-        viewsCount: json['views_count'] as int,
-        clicksCount: json['clicks_count'] as int,
-        isActive: json['is_active'] as bool,
-        status: json['status'] as String,
-        createdAt: json['created_at'] as String,
-        updatedAt: json['updated_at'] as String,
+        startDate: json['start_date'] as String? ?? '',
+        endDate: json['end_date'] as String? ?? '',
+        viewsCount: json['views_count'] as int? ?? 0,
+        clicksCount: json['clicks_count'] as int? ?? 0,
+        isActive: json['is_active'] as bool? ?? false,
+        status: json['status'] as String? ?? 'active',
+        createdAt: json['created_at'] as String? ?? '',
+        updatedAt: json['updated_at'] as String? ?? '',
       );
     } catch (e, stackTrace) {
       print('❌ Error parsing slide JSON: $e');

@@ -1,7 +1,7 @@
+import 'package:dalil_alaqar/core/errors/failure.dart';
+import 'package:dalil_alaqar/features/promotions/domain/entities/promotions_response_entity.dart';
+import 'package:dalil_alaqar/features/promotions/domain/repositories/promotions_repository.dart';
 import 'package:dartz/dartz.dart';
-import '../../../../core/errors/failures.dart';
-import '../entities/promotions_response_entity.dart';
-import '../repositories/promotions_repository.dart';
 
 class GetPromotionsUseCase {
   final PromotionsRepository repository;

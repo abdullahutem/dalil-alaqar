@@ -1,9 +1,10 @@
+import 'package:dalil_alaqar/features/promotions/domain/entities/promotion_entity.dart';
+import 'package:dalil_alaqar/features/promotions/presentation/screens/promotions_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../domain/entities/promotion_entity.dart';
-import '../cubit/promotions_cubit.dart';
-import '../cubit/promotions_state.dart';
-import '../screens/promotions_screen.dart';
+import 'package:dalil_alaqar/features/promotions/presentation/cubit/promotions_cubit.dart';
+import 'package:dalil_alaqar/features/promotions/presentation/cubit/promotions_state.dart';
+
 import 'promotion_card_compact.dart';
 
 class PromotionsSection extends StatefulWidget {
@@ -46,8 +47,7 @@ class _PromotionsSectionState extends State<PromotionsSection> {
     );
   }
 
-  Widget _buildSection(
-      BuildContext context, List<PromotionEntity> promotions) {
+  Widget _buildSection(BuildContext context, List<PromotionEntity> promotions) {
     final theme = Theme.of(context);
     final displayed = promotions.take(10).toList();
 
@@ -61,8 +61,11 @@ class _PromotionsSectionState extends State<PromotionsSection> {
             children: [
               Row(
                 children: [
-                  Icon(Icons.local_offer,
-                      color: theme.colorScheme.primary, size: 20),
+                  Icon(
+                    Icons.local_offer,
+                    color: theme.colorScheme.primary,
+                    size: 20,
+                  ),
                   const SizedBox(width: 8),
                   Text(
                     'العروض الترويجية',
@@ -75,8 +78,7 @@ class _PromotionsSectionState extends State<PromotionsSection> {
               TextButton(
                 onPressed: () => Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (_) => const PromotionsScreen()),
+                  MaterialPageRoute(builder: (_) => const PromotionsScreen()),
                 ),
                 child: const Text('عرض الكل'),
               ),
@@ -95,8 +97,7 @@ class _PromotionsSectionState extends State<PromotionsSection> {
                 promotion: displayed[index],
                 onTap: () => Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (_) => const PromotionsScreen()),
+                  MaterialPageRoute(builder: (_) => const PromotionsScreen()),
                 ),
               );
             },
@@ -116,8 +117,9 @@ class _PromotionsSectionState extends State<PromotionsSection> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
             'العروض الترويجية',
-            style: theme.textTheme.titleMedium
-                ?.copyWith(fontWeight: FontWeight.bold),
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         const SizedBox(height: 8),

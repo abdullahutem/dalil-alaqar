@@ -1,4 +1,4 @@
-import '../../domain/entities/promotion_entity.dart';
+import 'package:dalil_alaqar/features/promotions/domain/entities/promotion_entity.dart';
 
 class PromotionModel extends PromotionEntity {
   const PromotionModel({
@@ -25,7 +25,7 @@ class PromotionModel extends PromotionEntity {
   factory PromotionModel.fromJson(Map<String, dynamic> json) {
     return PromotionModel(
       id: json['id'] as int,
-      title: json['title'] as String,
+      title: json['title'] as String? ?? '',
       description: json['description'] as String?,
       image: json['image'] as String?,
       type: json['type'] as String? ?? 'percentage',
@@ -48,23 +48,23 @@ class PromotionModel extends PromotionEntity {
   }
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'title': title,
-        'description': description,
-        'image': image,
-        'type': type,
-        'discount_value': discountValue,
-        'office_id': officeId,
-        'property_id': propertyId,
-        'plan_id': planId,
-        'start_date': startDate,
-        'end_date': endDate,
-        'terms': terms,
-        'max_usage': maxUsage,
-        'usage_count': usageCount,
-        'is_active': isActive,
-        'status': status,
-        'created_at': createdAt,
-        'updated_at': updatedAt,
-      };
+    'id': id,
+    'title': title,
+    'description': description,
+    'image': image,
+    'type': type,
+    'discount_value': discountValue,
+    'office_id': officeId,
+    'property_id': propertyId,
+    'plan_id': planId,
+    'start_date': startDate,
+    'end_date': endDate,
+    'terms': terms,
+    'max_usage': maxUsage,
+    'usage_count': usageCount,
+    'is_active': isActive,
+    'status': status,
+    'created_at': createdAt,
+    'updated_at': updatedAt,
+  };
 }

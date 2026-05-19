@@ -43,9 +43,9 @@ class OfficeModel extends OfficeEntity {
   factory OfficeModel.fromJson(Map<String, dynamic> json) {
     return OfficeModel(
       id: json['id'] as int,
-      name: json['name'] as String,
+      name: json['name'] as String? ?? '',
       ownerName: json['owner_name'] as String?,
-      slug: json['slug'] as String,
+      slug: json['slug'] as String? ?? '',
       logo: json['logo'] as String?,
       email: json['email'] as String?,
       phone: json['phone'] as String?,
@@ -135,7 +135,7 @@ class GovernorateModel extends GovernorateEntity {
   factory GovernorateModel.fromJson(Map<String, dynamic> json) {
     return GovernorateModel(
       id: json['id'] as int,
-      nameAr: json['name_ar'] as String,
+      nameAr: json['name_ar'] as String? ?? '',
     );
   }
 }
@@ -146,7 +146,7 @@ class DistrictModel extends DistrictEntity {
   factory DistrictModel.fromJson(Map<String, dynamic> json) {
     return DistrictModel(
       id: json['id'] as int,
-      nameAr: json['name_ar'] as String,
+      nameAr: json['name_ar'] as String? ?? '',
     );
   }
 }

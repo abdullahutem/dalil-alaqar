@@ -1,5 +1,5 @@
+import 'package:dalil_alaqar/features/promotions/domain/entities/promotion_entity.dart';
 import 'package:equatable/equatable.dart';
-import '../../domain/entities/promotion_entity.dart';
 
 abstract class PromotionsState extends Equatable {
   const PromotionsState();

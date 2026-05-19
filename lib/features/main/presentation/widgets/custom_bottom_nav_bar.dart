@@ -28,7 +28,7 @@ class CustomBottomNavBar extends StatelessWidget {
       ),
       BottomNavigationBarItem(
         icon: const Icon(Icons.business_rounded),
-        label: localizations.translate('nav_offices'),
+        label: localizations.translate('nav_promotions'),
       ),
       BottomNavigationBarItem(
         icon: const Icon(Icons.person_rounded),

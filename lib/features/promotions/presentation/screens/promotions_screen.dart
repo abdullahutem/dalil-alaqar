@@ -1,6 +1,6 @@
+import 'package:dalil_alaqar/features/promotions/presentation/cubit/promotions_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../cubit/promotions_cubit.dart';
 import 'promotions_mobile_layout.dart';
 import 'promotions_tablet_layout.dart';
 

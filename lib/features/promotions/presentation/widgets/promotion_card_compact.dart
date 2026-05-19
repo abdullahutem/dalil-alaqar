@@ -1,15 +1,11 @@
+import 'package:dalil_alaqar/features/promotions/domain/entities/promotion_entity.dart';
 import 'package:flutter/material.dart';
-import '../../domain/entities/promotion_entity.dart';
 
 class PromotionCardCompact extends StatelessWidget {
   final PromotionEntity promotion;
   final VoidCallback? onTap;
 
-  const PromotionCardCompact({
-    super.key,
-    required this.promotion,
-    this.onTap,
-  });
+  const PromotionCardCompact({super.key, required this.promotion, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +36,9 @@ class PromotionCardCompact extends StatelessWidget {
               height: 3,
               decoration: BoxDecoration(
                 color: typeColor,
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(12)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(12),
+                ),
               ),
             ),
             Padding(
@@ -57,8 +54,11 @@ class PromotionCardCompact extends StatelessWidget {
                           color: typeColor.withOpacity(0.12),
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: Icon(_typeIcon(promotion.type),
-                            color: typeColor, size: 18),
+                        child: Icon(
+                          _typeIcon(promotion.type),
+                          color: typeColor,
+                          size: 18,
+                        ),
                       ),
                       const SizedBox(width: 8),
                       Expanded(
@@ -87,10 +87,13 @@ class PromotionCardCompact extends StatelessWidget {
                     const SizedBox(height: 6),
                     Row(
                       children: [
-                        Icon(Icons.access_time_outlined,
-                            size: 12,
-                            color: theme.textTheme.bodySmall?.color
-                                ?.withOpacity(0.5)),
+                        Icon(
+                          Icons.access_time_outlined,
+                          size: 12,
+                          color: theme.textTheme.bodySmall?.color?.withOpacity(
+                            0.5,
+                          ),
+                        ),
                         const SizedBox(width: 4),
                         Text(
                           'ينتهي ${_formatDate(promotion.endDate!)}',
@@ -130,9 +133,9 @@ class PromotionCardCompact extends StatelessWidget {
       child: Text(
         label,
         style: Theme.of(context).textTheme.labelMedium?.copyWith(
-              color: color,
-              fontWeight: FontWeight.bold,
-            ),
+          color: color,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }

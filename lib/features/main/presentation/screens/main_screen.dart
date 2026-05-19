@@ -4,6 +4,7 @@ import 'package:dalil_alaqar/features/home/presentation/screens/home_screen.dart
 import 'package:dalil_alaqar/features/main/presentation/cubit/main_cubit.dart';
 import 'package:dalil_alaqar/features/main/presentation/cubit/main_state.dart';
 import 'package:dalil_alaqar/features/main/presentation/widgets/custom_bottom_nav_bar.dart';
+import 'package:dalil_alaqar/features/promotions/presentation/screens/promotions_screen.dart';
 import 'package:dalil_alaqar/features/properties/presentation/screens/properties_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,7 +67,7 @@ class MainView extends StatelessWidget {
                 children: [
                   HomeScreen(),
                   const PropertiesScreen(),
-                  _PlaceholderScreen(title: 'Offices'),
+                  const PromotionsScreen(),
                   _PlaceholderScreen(title: 'Profile'),
                 ],
               ),

@@ -29,6 +29,7 @@ class AppLocalizations {
       'nav_properties': 'Properties',
       'nav_offices': 'Offices',
       'nav_profile': 'Profile',
+      'nav_promotions': 'Promotions',
     },
     'ar': {
       // App
@@ -47,6 +48,7 @@ class AppLocalizations {
       'nav_properties': 'العقارات',
       'nav_offices': 'المكاتب',
       'nav_profile': 'الملف الشخصي',
+      'nav_promotions': 'العروض',
     },
   };
 

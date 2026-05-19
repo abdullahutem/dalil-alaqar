@@ -1,8 +1,8 @@
+import 'package:dalil_alaqar/features/promotions/presentation/cubit/promotions_cubit.dart';
+import 'package:dalil_alaqar/features/promotions/presentation/cubit/promotions_state.dart';
+import 'package:dalil_alaqar/features/promotions/presentation/widgets/promotion_card_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../cubit/promotions_cubit.dart';
-import '../cubit/promotions_state.dart';
-import '../widgets/promotion_card.dart';
 
 class PromotionsMobileLayout extends StatelessWidget {
   const PromotionsMobileLayout({super.key});
@@ -25,7 +25,7 @@ class PromotionsMobileLayout extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 8),
               itemCount: state.promotions.length,
               itemBuilder: (context, index) =>
-                  PromotionCard(promotion: state.promotions[index]),
+                  PromotionCardMobile(promotion: state.promotions[index]),
             ),
           );
         }
@@ -46,13 +46,14 @@ class PromotionsMobileLayout extends StatelessWidget {
             const SizedBox(height: 16),
             Text('حدث خطأ', style: theme.textTheme.titleMedium),
             const SizedBox(height: 8),
-            Text(message,
-                style: theme.textTheme.bodyMedium,
-                textAlign: TextAlign.center),
+            Text(
+              message,
+              style: theme.textTheme.bodyMedium,
+              textAlign: TextAlign.center,
+            ),
             const SizedBox(height: 24),
             ElevatedButton.icon(
-              onPressed: () =>
-                  context.read<PromotionsCubit>().getPromotions(),
+              onPressed: () => context.read<PromotionsCubit>().getPromotions(),
               icon: const Icon(Icons.refresh),
               label: const Text('إعادة المحاولة'),
             ),
@@ -68,16 +69,19 @@ class PromotionsMobileLayout extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.local_offer_outlined,
-              size: 80,
-              color: theme.colorScheme.primary.withOpacity(0.4)),
+          Icon(
+            Icons.local_offer_outlined,
+            size: 80,
+            color: theme.colorScheme.primary.withValues(alpha: 0.4),
+          ),
           const SizedBox(height: 16),
           Text('لا توجد عروض', style: theme.textTheme.titleMedium),
           const SizedBox(height: 8),
           Text(
             'لا توجد عروض ترويجية متاحة حالياً',
-            style: theme.textTheme.bodyMedium
-                ?.copyWith(color: theme.textTheme.bodySmall?.color),
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: theme.textTheme.bodySmall?.color,
+            ),
             textAlign: TextAlign.center,
           ),
         ],
