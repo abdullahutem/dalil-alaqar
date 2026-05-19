@@ -19,7 +19,7 @@ class DatabaseHelper {
 
     return await openDatabase(
       path,
-      version: 2, // Incremented version for migration
+      version: 3, // Incremented to force recreation with nullable office_id
       onCreate: _createDB,
       onUpgrade: _onUpgrade,
       onOpen: (db) async {
@@ -30,7 +30,7 @@ class DatabaseHelper {
 
         if (tables.isEmpty) {
           print('⚠️ Slides table does not exist, creating it...');
-          await _createDB(db, 2);
+          await _createDB(db, 3);
         } else {
           print('✅ Slides table exists');
         }
@@ -39,11 +39,11 @@ class DatabaseHelper {
   }
 
   Future _onUpgrade(Database db, int oldVersion, int newVersion) async {
-    if (oldVersion < 2) {
-      // Drop old slides table if it exists
+    if (oldVersion < 3) {
+      // Drop old slides table if it exists (to fix NOT NULL constraint on office_id)
       await db.execute('DROP TABLE IF EXISTS slides');
 
-      // Create new slides table with updated schema
+      // Create new slides table with updated schema (office_id is nullable)
       await db.execute('''
         CREATE TABLE slides (
           id INTEGER PRIMARY KEY,
@@ -65,6 +65,10 @@ class DatabaseHelper {
           cached_at TEXT NOT NULL
         )
       ''');
+
+      print(
+        '✅ Database upgraded to version $newVersion - office_id is now nullable',
+      );
     }
   }
 
