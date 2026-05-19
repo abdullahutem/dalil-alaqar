@@ -4,6 +4,7 @@ import 'package:dalil_alaqar/features/home/presentation/screens/home_screen.dart
 import 'package:dalil_alaqar/features/main/presentation/cubit/main_cubit.dart';
 import 'package:dalil_alaqar/features/main/presentation/cubit/main_state.dart';
 import 'package:dalil_alaqar/features/main/presentation/widgets/custom_bottom_nav_bar.dart';
+import 'package:dalil_alaqar/features/properties/presentation/screens/properties_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -51,62 +52,65 @@ class MainView extends StatelessWidget {
 
   const MainView({super.key, required this.isGuest});
 
-  bool _isUserAdmin(AuthState authState) {
-    if (authState is AuthSuccess) {
-      final user = authState.authResponse.user;
-      return user.roles.contains('admin') ||
-          user.roles.contains('administrator');
-    }
-    return false;
-  }
-
-  Widget _getScreen(int index, bool isAdmin) {
-    switch (index) {
-      case 0:
-        return HomeScreen();
-      case 1:
-        return HomeScreen();
-      case 2:
-        return HomeScreen();
-      case 3:
-        return HomeScreen();
-      case 4:
-        return HomeScreen();
-      default:
-        return HomeScreen();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, authState) {
-        final isAdmin = _isUserAdmin(authState);
-
         return BlocBuilder<MainCubit, MainState>(
           builder: (context, state) {
-            // If user is not admin and currently on admin tab (index 4), redirect to home
             int currentIndex = state.currentIndex;
-            if (!isAdmin && currentIndex >= 4) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                context.read<MainCubit>().changeTab(0);
-              });
-              currentIndex = 0;
-            }
 
             return Scaffold(
-              body: _getScreen(currentIndex, isAdmin),
+              body: IndexedStack(
+                index: currentIndex,
+                children: [
+                  HomeScreen(),
+                  const PropertiesScreen(),
+                  _PlaceholderScreen(title: 'Offices'),
+                  _PlaceholderScreen(title: 'Profile'),
+                ],
+              ),
               bottomNavigationBar: CustomBottomNavBar(
                 currentIndex: currentIndex,
                 onTap: (index) {
                   context.read<MainCubit>().changeTab(index);
                 },
-                showConversations: isAdmin,
               ),
             );
           },
         );
       },
+    );
+  }
+}
+
+// Placeholder screen for features not yet implemented
+class _PlaceholderScreen extends StatelessWidget {
+  final String title;
+
+  const _PlaceholderScreen({required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(title)),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.construction_rounded, size: 64, color: Colors.grey[400]),
+            const SizedBox(height: 16),
+            Text(
+              '$title - Coming Soon',
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.grey[600],
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

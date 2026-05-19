@@ -7,7 +7,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
-      fontFamily: 'ExpoArabic',
+      fontFamily: 'EXPOARABIC',
 
       colorScheme: const ColorScheme.dark(
         primary: AppColors.primary,
@@ -28,7 +28,7 @@ class AppTheme {
         centerTitle: true,
         iconTheme: IconThemeData(color: AppColors.primary),
         titleTextStyle: TextStyle(
-          fontFamily: 'ExpoArabic',
+          fontFamily: 'EXPOARABIC',
           color: AppColors.darkText,
           fontSize: 20,
           fontWeight: FontWeight.w600,
@@ -37,55 +37,55 @@ class AppTheme {
 
       textTheme: const TextTheme(
         displayLarge: TextStyle(
-          fontFamily: 'ExpoArabic',
+          fontFamily: 'EXPOARABIC',
           fontSize: 32,
           fontWeight: FontWeight.bold,
           color: AppColors.darkText,
         ),
         displayMedium: TextStyle(
-          fontFamily: 'ExpoArabic',
+          fontFamily: 'EXPOARABIC',
           fontSize: 28,
           fontWeight: FontWeight.bold,
           color: AppColors.darkText,
         ),
         displaySmall: TextStyle(
-          fontFamily: 'ExpoArabic',
+          fontFamily: 'EXPOARABIC',
           fontSize: 24,
           fontWeight: FontWeight.w600,
           color: AppColors.darkText,
         ),
         headlineMedium: TextStyle(
-          fontFamily: 'ExpoArabic',
+          fontFamily: 'EXPOARABIC',
           fontSize: 20,
           fontWeight: FontWeight.w600,
           color: AppColors.darkText,
         ),
         titleLarge: TextStyle(
-          fontFamily: 'ExpoArabic',
+          fontFamily: 'EXPOARABIC',
           fontSize: 18,
           fontWeight: FontWeight.w600,
           color: AppColors.darkText,
         ),
         titleMedium: TextStyle(
-          fontFamily: 'ExpoArabic',
+          fontFamily: 'EXPOARABIC',
           fontSize: 16,
           fontWeight: FontWeight.w500,
           color: AppColors.darkText,
         ),
         bodyLarge: TextStyle(
-          fontFamily: 'ExpoArabic',
+          fontFamily: 'EXPOARABIC',
           fontSize: 16,
           fontWeight: FontWeight.normal,
           color: AppColors.darkText,
         ),
         bodyMedium: TextStyle(
-          fontFamily: 'ExpoArabic',
+          fontFamily: 'EXPOARABIC',
           fontSize: 14,
           fontWeight: FontWeight.normal,
           color: AppColors.darkTextSecondary,
         ),
         bodySmall: TextStyle(
-          fontFamily: 'ExpoArabic',
+          fontFamily: 'EXPOARABIC',
           fontSize: 12,
           fontWeight: FontWeight.normal,
           color: AppColors.darkTextSecondary,
@@ -99,7 +99,7 @@ class AppTheme {
           elevation: 0,
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
           textStyle: const TextStyle(
-            fontFamily: 'ExpoArabic',
+            fontFamily: 'EXPOARABIC',
             fontSize: 16,
             fontWeight: FontWeight.w600,
           ),
@@ -116,7 +116,7 @@ class AppTheme {
       snackBarTheme: const SnackBarThemeData(
         backgroundColor: AppColors.darkSurface,
         contentTextStyle: TextStyle(
-          fontFamily: 'ExpoArabic',
+          fontFamily: 'EXPOARABIC',
           color: AppColors.darkText,
           fontSize: 14,
         ),
@@ -130,7 +130,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
-      fontFamily: 'ExpoArabic',
+      fontFamily: 'EXPOARABIC',
 
       colorScheme: const ColorScheme.light(
         primary: AppColors.primary,
@@ -146,12 +146,12 @@ class AppTheme {
       scaffoldBackgroundColor: AppColors.lightBackground,
 
       appBarTheme: const AppBarTheme(
-        backgroundColor: AppColors.lightSurface,
+        backgroundColor: AppColors.primary,
         elevation: 0,
         centerTitle: true,
         iconTheme: IconThemeData(color: AppColors.primary),
         titleTextStyle: TextStyle(
-          fontFamily: 'ExpoArabic',
+          fontFamily: 'EXPOARABIC',
           color: AppColors.white, // White text on dark surface
           fontSize: 20,
           fontWeight: FontWeight.w600,
@@ -160,55 +160,55 @@ class AppTheme {
 
       textTheme: const TextTheme(
         displayLarge: TextStyle(
-          fontFamily: 'ExpoArabic',
+          fontFamily: 'EXPOARABIC',
           fontSize: 32,
           fontWeight: FontWeight.bold,
           color: AppColors.lightText,
         ),
         displayMedium: TextStyle(
-          fontFamily: 'ExpoArabic',
+          fontFamily: 'EXPOARABIC',
           fontSize: 28,
           fontWeight: FontWeight.bold,
           color: AppColors.lightText,
         ),
         displaySmall: TextStyle(
-          fontFamily: 'ExpoArabic',
+          fontFamily: 'EXPOARABIC',
           fontSize: 24,
           fontWeight: FontWeight.w600,
           color: AppColors.lightText,
         ),
         headlineMedium: TextStyle(
-          fontFamily: 'ExpoArabic',
+          fontFamily: 'EXPOARABIC',
           fontSize: 20,
           fontWeight: FontWeight.w600,
           color: AppColors.lightText,
         ),
         titleLarge: TextStyle(
-          fontFamily: 'ExpoArabic',
+          fontFamily: 'EXPOARABIC',
           fontSize: 18,
           fontWeight: FontWeight.w600,
           color: AppColors.lightText,
         ),
         titleMedium: TextStyle(
-          fontFamily: 'ExpoArabic',
+          fontFamily: 'EXPOARABIC',
           fontSize: 16,
           fontWeight: FontWeight.w500,
           color: AppColors.lightText,
         ),
         bodyLarge: TextStyle(
-          fontFamily: 'ExpoArabic',
+          fontFamily: 'EXPOARABIC',
           fontSize: 16,
           fontWeight: FontWeight.normal,
           color: AppColors.lightText,
         ),
         bodyMedium: TextStyle(
-          fontFamily: 'ExpoArabic',
+          fontFamily: 'EXPOARABIC',
           fontSize: 14,
           fontWeight: FontWeight.normal,
           color: AppColors.lightTextSecondary,
         ),
         bodySmall: TextStyle(
-          fontFamily: 'ExpoArabic',
+          fontFamily: 'EXPOARABIC',
           fontSize: 12,
           fontWeight: FontWeight.normal,
           color: AppColors.lightTextSecondary,
@@ -222,7 +222,7 @@ class AppTheme {
           elevation: 0,
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
           textStyle: const TextStyle(
-            fontFamily: 'ExpoArabic',
+            fontFamily: 'EXPOARABIC',
             fontSize: 16,
             fontWeight: FontWeight.w600,
           ),
@@ -244,7 +244,7 @@ class AppTheme {
       snackBarTheme: const SnackBarThemeData(
         backgroundColor: AppColors.lightSurface,
         contentTextStyle: TextStyle(
-          fontFamily: 'ExpoArabic',
+          fontFamily: 'EXPOARABIC',
           color: AppColors.white,
           fontSize: 14,
         ),

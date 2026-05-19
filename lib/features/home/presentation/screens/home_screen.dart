@@ -26,24 +26,13 @@ class HomeScreen extends StatelessWidget {
           : AppColors.lightBackground,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.transparent,
-        title: Image.asset(
-          'assets/images/logo-p-h.png',
-          height: 48,
-          fit: BoxFit.contain,
-          errorBuilder: (context, error, stackTrace) {
-            return Icon(
-              Icons.hotel_rounded,
-              color: AppColors.primary,
-              size: 32,
-            );
-          },
-        ),
+
+        title: Text(localizations.translate('app_name')),
         actions: [
           IconButton(
             icon: Icon(
               isRTL ? Icons.language : Icons.translate_rounded,
-              color: isDark ? AppColors.darkText : AppColors.lightText,
+              color: isDark ? AppColors.darkText : AppColors.white,
               size: 22,
             ),
             onPressed: () {
@@ -56,7 +45,7 @@ class HomeScreen extends StatelessWidget {
               context.watch<ThemeCubit>().state.isDarkMode
                   ? Icons.light_mode_outlined
                   : Icons.dark_mode_outlined,
-              color: isDark ? AppColors.darkText : AppColors.lightText,
+              color: isDark ? AppColors.darkText : AppColors.white,
               size: 22,
             ),
             onPressed: () {
@@ -74,7 +63,7 @@ class HomeScreen extends StatelessWidget {
               return IconButton(
                 icon: Icon(
                   Icons.logout_rounded,
-                  color: isDark ? AppColors.darkText : AppColors.lightText,
+                  color: isDark ? AppColors.darkText : AppColors.white,
                   size: 22,
                 ),
                 onPressed: () => _showLogoutDialog(context, localizations),

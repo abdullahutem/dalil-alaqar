@@ -139,6 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (state is AuthSuccess || state is AuthGuest) {
           Navigator.of(context).pushReplacementNamed(AppRoutes.main);
         } else if (state is AuthFailure) {
+          print(state.message);
           _showSnackBar(context, state.message);
         }
       },

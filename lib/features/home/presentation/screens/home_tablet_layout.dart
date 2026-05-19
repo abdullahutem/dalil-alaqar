@@ -3,7 +3,6 @@ import 'package:dalil_alaqar/features/advertisements/presentation/widgets/slider
 import 'package:dalil_alaqar/features/properties/presentation/cubit/properties_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:dalil_alaqar/features/home/presentation/widgets/features_section.dart';
 import 'package:dalil_alaqar/features/properties/presentation/widgets/properties_section.dart';
 
 class HomeTabletLayout extends StatefulWidget {
@@ -52,11 +51,6 @@ class _HomeTabletLayoutState extends State<HomeTabletLayout>
               children: [
                 // Slider Section
                 SliderWidget(isTablet: true),
-
-                SizedBox(height: 40),
-
-                // Features Section
-                FeaturesSection(isTablet: true),
 
                 SizedBox(height: 40),
 

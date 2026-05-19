@@ -22,12 +22,16 @@ class UserModel extends UserEntity {
       email: json['email'] as String,
       phoneNumber: json['phone_number'] as String,
       whatsappNumber: json['whatsapp_number'] as String?,
-      type: json['type'] as String?,
+      type: json['user_type'] as String? ?? json['type'] as String?,
       isActive: json['is_active'] as bool,
-      roles: (json['roles'] as List<dynamic>).map((e) => e as String).toList(),
-      permissions: (json['permissions'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
+      roles:
+          (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+          [],
+      permissions:
+          (json['permissions'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          [],
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
     );

@@ -49,11 +49,7 @@ class PropertiesSection extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => BlocProvider(
-                          create: (context) =>
-                              PropertiesCubit.create()..getProperties(),
-                          child: const PropertiesScreen(),
-                        ),
+                        builder: (context) => const PropertiesScreen(),
                       ),
                     );
                   },
@@ -187,11 +183,7 @@ class PropertiesSection extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => BlocProvider(
-                                  create: (context) =>
-                                      PropertiesCubit.create()..getProperties(),
-                                  child: const PropertiesScreen(),
-                                ),
+                                builder: (context) => const PropertiesScreen(),
                               ),
                             );
                           },

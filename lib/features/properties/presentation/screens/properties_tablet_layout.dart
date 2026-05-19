@@ -113,30 +113,6 @@ class _PropertiesTabletLayoutState extends State<PropertiesTabletLayout> {
                 },
                 child: Column(
                   children: [
-                    // Properties count and pagination info
-                    Container(
-                      padding: const EdgeInsets.all(24),
-                      color: Colors.grey[100],
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'إجمالي العقارات: ${propertiesResponse.meta.total}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
-                          Text(
-                            'صفحة ${propertiesResponse.meta.currentPage} من ${propertiesResponse.meta.lastPage}',
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
                     // Properties grid
                     Expanded(
                       child: GridView.builder(

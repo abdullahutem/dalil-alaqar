@@ -4,7 +4,6 @@ import 'package:dalil_alaqar/features/offices/presentation/widgets/offices_secti
 import 'package:dalil_alaqar/features/properties/presentation/cubit/properties_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:dalil_alaqar/features/home/presentation/widgets/features_section.dart';
 import 'package:dalil_alaqar/features/properties/presentation/widgets/properties_section.dart';
 
 class HomeMobileLayout extends StatefulWidget {
@@ -60,11 +59,6 @@ class _HomeMobileLayoutState extends State<HomeMobileLayout>
           children: [
             // Slider Section
             SliderWidget(isTablet: false),
-
-            SizedBox(height: 24),
-
-            // Features Section (Static - لا يحتاج Cubit)
-            FeaturesSection(),
 
             SizedBox(height: 24),
 

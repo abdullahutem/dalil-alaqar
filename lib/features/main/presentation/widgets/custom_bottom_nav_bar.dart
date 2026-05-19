@@ -5,13 +5,11 @@ import 'package:dalil_alaqar/core/theme/app_colors.dart';
 class CustomBottomNavBar extends StatelessWidget {
   final int currentIndex;
   final Function(int) onTap;
-  final bool showConversations;
 
   const CustomBottomNavBar({
     super.key,
     required this.currentIndex,
     required this.onTap,
-    this.showConversations = false,
   });
 
   @override
@@ -25,23 +23,17 @@ class CustomBottomNavBar extends StatelessWidget {
         label: localizations.translate('nav_home'),
       ),
       BottomNavigationBarItem(
-        icon: const Icon(Icons.hotel_rounded),
-        label: localizations.translate('nav_units'),
+        icon: const Icon(Icons.apartment_rounded),
+        label: localizations.translate('nav_properties'),
       ),
       BottomNavigationBarItem(
-        icon: const Icon(Icons.room_service_rounded),
-        label: localizations.translate('nav_services'),
+        icon: const Icon(Icons.business_rounded),
+        label: localizations.translate('nav_offices'),
       ),
       BottomNavigationBarItem(
-        icon: const Icon(Icons.event_rounded),
-        label: localizations.translate('nav_events'),
+        icon: const Icon(Icons.person_rounded),
+        label: localizations.translate('nav_profile'),
       ),
-
-      if (showConversations)
-        BottomNavigationBarItem(
-          icon: const Icon(Icons.admin_panel_settings_rounded),
-          label: localizations.translate('admin_control_title'),
-        ),
     ];
 
     return Container(

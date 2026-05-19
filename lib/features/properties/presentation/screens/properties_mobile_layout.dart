@@ -98,24 +98,6 @@ class _PropertiesMobileLayoutState extends State<PropertiesMobileLayout> {
             },
             child: Column(
               children: [
-                // Properties count and pagination info
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  color: Colors.grey[100],
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'إجمالي العقارات: ${propertiesResponse.meta.total}',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        'صفحة ${propertiesResponse.meta.currentPage} من ${propertiesResponse.meta.lastPage}',
-                        style: TextStyle(color: Colors.grey[600]),
-                      ),
-                    ],
-                  ),
-                ),
                 // Properties list
                 Expanded(
                   child: ListView.builder(

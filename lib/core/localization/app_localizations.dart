@@ -22,6 +22,13 @@ class AppLocalizations {
       'login_subtitle': 'Click to enter',
       'login_button': 'Login',
       'login_create_account': 'Create Account',
+
+      // nav
+      'nav_home': 'Home',
+      'nav_search': 'Search',
+      'nav_properties': 'Properties',
+      'nav_offices': 'Offices',
+      'nav_profile': 'Profile',
     },
     'ar': {
       // App
@@ -33,6 +40,13 @@ class AppLocalizations {
       'login_subtitle': 'اضغط للدخول',
       'login_button': 'تسجيل الدخول',
       'login_create_account': 'إنشاء حساب',
+
+      // nav
+      'nav_home': 'الرئيسية',
+      'nav_search': 'البحث',
+      'nav_properties': 'العقارات',
+      'nav_offices': 'المكاتب',
+      'nav_profile': 'الملف الشخصي',
     },
   };
 

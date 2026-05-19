@@ -69,6 +69,7 @@ Create the following in `lib/features/[feature_name]/presentation/`:
 - States: Initial, Loading, Success, Error, LoadMoreError (if pagination needed)
 - Cubit with factory method `[FeatureName]Cubit.create()` for dependency injection
 - Implement pagination logic if needed (similar to PropertiesCubit)
+- Handle loading states properly for skeleton display
 
 **Screens:**
 - `[feature_name]_screen.dart` - Main screen with LayoutBuilder
@@ -76,11 +77,118 @@ Create the following in `lib/features/[feature_name]/presentation/`:
 - `[feature_name]_tablet_layout.dart` - Tablet-specific layout (≥ 600px)
 
 **Widgets:**
-- `[feature_name]_card.dart` - Card widget for displaying individual items
-- `[feature_name]_card_compact.dart` - Compact card for horizontal scrolling (if needed for home screen)
-- `[feature_name]_section.dart` - Section widget for home screen integration (if needed)
+- `[feature_name]_card.dart` - Full card for mobile list view
+- `[feature_name]_card_tablet.dart` - Tablet-optimized card (wider, more spacious)
+- `[feature_name]_card_compact.dart` - Compact card for horizontal scrolling (home screen)
+- `[feature_name]_skeleton.dart` - Animated skeleton loading widget
+- `[feature_name]_section.dart` - Section widget for home screen (if needed)
+
+**Critical Widget Design Rules:**
+- ❌ **NEVER** use the same card widget for mobile and tablet
+- ✅ **ALWAYS** create separate card designs for different screen sizes
+- ✅ **ALWAYS** implement skeleton loading for loading states
+- ✅ **ALWAYS** use animated shimmer effect in skeletons
+
+**Card Design Differences:**
+- **Mobile Card**: Compact, vertical layout, 14-16px fonts, minimal padding
+- **Tablet Card**: Wider, horizontal elements, 16-18px fonts, generous padding
+- **Compact Card**: Fixed width (280px), optimized for horizontal scrolling
 
 #### 4. Home Screen Integration (Optional)
+If this feature should appear on the home screen:
+- Create a horizontal scrolling section using `SingleChildScrollView` with `Row`
+- Use compact cards (280px wide)
+- Show first 10 items
+- Add "Show All" button
+- Update `home_mobile_layout.dart` and `home_tablet_layout.dart`
+- Include skeleton loading for the section
+- **DO NOT** use fixed height `SizedBox` with `ListView` - causes overflow issues
+- Let cards expand based on content
+
+#### 5. Skeleton Loading Implementation
+Create animated skeleton loading for better UX:
+
+**Skeleton Widget Pattern:**
+```dart
+class [FeatureName]Skeleton extends StatefulWidget {
+  final bool isTablet;
+  
+  const [FeatureName]Skeleton({super.key, this.isTablet = false});
+  
+  @override
+  State<[FeatureName]Skeleton> createState() => _[FeatureName]SkeletonState();
+}
+
+class _[FeatureName]SkeletonState extends State<[FeatureName]Skeleton>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+  
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 1500),
+      vsync: this,
+    )..repeat(reverse: true);
+    _animation = Tween<double>(begin: 0.3, end: 0.7).animate(_controller);
+  }
+  
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+  
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, child) {
+        return Container(
+          // Skeleton structure matching your card layout
+          decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Column(
+            children: [
+              // Animated shimmer boxes
+              Container(
+                height: 100,
+                decoration: BoxDecoration(
+                  color: Colors.grey.withValues(alpha: _animation.value * 0.3),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              // Add more skeleton elements
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+```
+
+**Usage in Layouts:**
+```dart
+if (state is [FeatureName]Loading) {
+  return ListView.builder(
+    itemCount: 5,
+    itemBuilder: (context, index) => [FeatureName]Skeleton(isTablet: isTablet),
+  );
+}
+```
+
+**Skeleton Design Guidelines:**
+- Match the skeleton structure to your actual card layout
+- Use animated shimmer effect (0.3 to 0.7 alpha)
+- Duration: 1500ms with reverse repeat
+- Use theme-aware colors
+- Create separate skeletons for mobile and tablet if layouts differ significantly
+
+#### 6. Additional Requirements
 If this feature should appear on the home screen:
 - Create a horizontal scrolling section
 - Use compact cards (280px wide)
@@ -461,9 +569,11 @@ After generating a feature, verify:
 - [ ] Endpoint added to end_points.dart
 - [ ] Factory method created in cubit
 - [ ] Mobile and tablet layouts separated
+- [ ] **Separate card widgets for mobile and tablet (not the same card)**
+- [ ] **Skeleton loading widget created and implemented**
 - [ ] Pagination implemented (if needed)
 - [ ] Error handling implemented
-- [ ] Loading states implemented
+- [ ] Loading states implemented with skeleton
 - [ ] Empty states implemented
 - [ ] Pull-to-refresh implemented
 - [ ] **No diagnostic errors or warnings**
@@ -477,6 +587,7 @@ After generating a feature, verify:
 - [ ] **Shadows use consistent opacity (0.08)**
 - [ ] **No unused variables declared**
 - [ ] **Error widget uses single underscores (_, __, _)**
+- [ ] **Horizontal scrolling uses SingleChildScrollView + Row (not fixed height ListView)**
 
 ### Code Review Checklist
 
@@ -496,6 +607,14 @@ Before considering the feature complete, verify:
 - [ ] No unused variables
 - [ ] Error widget parameters: `(_, __, _)` not `(_, __, ___)`
 - [ ] Consistent naming conventions
+
+**Widget Design:**
+- [ ] Separate card widgets for mobile and tablet
+- [ ] Skeleton loading widget created with animated shimmer
+- [ ] Skeleton matches actual card layout structure
+- [ ] Horizontal scrolling uses `SingleChildScrollView` + `Row`
+- [ ] No fixed height constraints causing overflow
+- [ ] Cards expand based on content
 
 **Theme Support:**
 - [ ] Uses `Theme.of(context)` for colors
