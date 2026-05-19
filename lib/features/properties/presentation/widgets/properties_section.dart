@@ -150,30 +150,28 @@ class PropertiesSection extends StatelessWidget {
                 return Column(
                   children: [
                     // Horizontal scrolling list
-                    SizedBox(
-                      height: isTablet ? 320 : 280,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: isTablet ? 24 : 16,
-                        ),
-                        itemCount: displayProperties.length,
-                        itemBuilder: (context, index) {
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: isTablet ? 24 : 16,
+                      ),
+                      child: Row(
+                        children: displayProperties.map((property) {
                           return PropertyCardCompact(
-                            property: displayProperties[index],
+                            property: property,
                             onTap: () {
                               // TODO: Navigate to property details
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                    'تم النقر على: ${displayProperties[index].title}',
+                                    'تم النقر على: ${property.title}',
                                   ),
                                   duration: const Duration(seconds: 2),
                                 ),
                               );
                             },
                           );
-                        },
+                        }).toList(),
                       ),
                     ),
                     const SizedBox(height: 16),

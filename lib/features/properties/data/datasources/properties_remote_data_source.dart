@@ -4,8 +4,8 @@ import 'package:dalil_alaqar/features/properties/data/models/properties_response
 
 abstract class PropertiesRemoteDataSource {
   Future<PropertiesResponseModel> getProperties({
-    int page = 1,
-    int perPage = 20,
+    required int page,
+    required int perPage,
   });
 }
 
@@ -16,8 +16,8 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
 
   @override
   Future<PropertiesResponseModel> getProperties({
-    int page = 1,
-    int perPage = 20,
+    required int page,
+    required int perPage,
   }) async {
     final response = await apiConsumer.get(
       EndPoints.properties,

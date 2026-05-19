@@ -21,7 +21,7 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
     int page = 1,
     int perPage = 20,
   }) async {
-    if (await networkInfo.isConnected!) {
+    if (await networkInfo.isConnected ?? false) {
       try {
         final result = await remoteDataSource.getProperties(
           page: page,
