@@ -21,12 +21,28 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
   Future<Either<Failure, PropertiesResponseEntity>> getProperties({
     int page = 1,
     int perPage = 20,
+    String? search,
+    int? propertyTypeId,
+    int? offerTypeId,
+    int? governorateId,
+    int? districtId,
+    int? neighborhoodId,
+    double? minPrice,
+    double? maxPrice,
   }) async {
     if (await networkInfo.isConnected ?? false) {
       try {
         final result = await remoteDataSource.getProperties(
           page: page,
           perPage: perPage,
+          search: search,
+          propertyTypeId: propertyTypeId,
+          offerTypeId: offerTypeId,
+          governorateId: governorateId,
+          districtId: districtId,
+          neighborhoodId: neighborhoodId,
+          minPrice: minPrice,
+          maxPrice: maxPrice,
         );
         return Right(result);
       } on ServerException catch (e) {

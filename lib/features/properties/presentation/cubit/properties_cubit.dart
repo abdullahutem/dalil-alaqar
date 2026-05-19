@@ -37,18 +37,57 @@ class PropertiesCubit extends Cubit<PropertiesState> {
   List<PropertyEntity> _allProperties = [];
   PaginationMeta? _meta;
 
-  Future<void> getProperties({bool refresh = false}) async {
+  // Search parameters
+  String? _search;
+  int? _propertyTypeId;
+  int? _offerTypeId;
+  int? _governorateId;
+  int? _districtId;
+  int? _neighborhoodId;
+  double? _minPrice;
+  double? _maxPrice;
+
+  Future<void> getProperties({
+    bool refresh = false,
+    String? search,
+    int? propertyTypeId,
+    int? offerTypeId,
+    int? governorateId,
+    int? districtId,
+    int? neighborhoodId,
+    double? minPrice,
+    double? maxPrice,
+  }) async {
     if (refresh) {
       _currentPage = 1;
       _allProperties = [];
       _meta = null;
+      // Update search parameters
+      _search = search;
+      _propertyTypeId = propertyTypeId;
+      _offerTypeId = offerTypeId;
+      _governorateId = governorateId;
+      _districtId = districtId;
+      _neighborhoodId = neighborhoodId;
+      _minPrice = minPrice;
+      _maxPrice = maxPrice;
     }
 
     if (state is PropertiesLoading) return;
 
     emit(PropertiesLoading());
 
-    final result = await getPropertiesUseCase(page: _currentPage);
+    final result = await getPropertiesUseCase(
+      page: _currentPage,
+      search: _search,
+      propertyTypeId: _propertyTypeId,
+      offerTypeId: _offerTypeId,
+      governorateId: _governorateId,
+      districtId: _districtId,
+      neighborhoodId: _neighborhoodId,
+      minPrice: _minPrice,
+      maxPrice: _maxPrice,
+    );
 
     result.fold(
       (failure) {
@@ -79,7 +118,17 @@ class PropertiesCubit extends Cubit<PropertiesState> {
 
     _currentPage++;
 
-    final result = await getPropertiesUseCase(page: _currentPage);
+    final result = await getPropertiesUseCase(
+      page: _currentPage,
+      search: _search,
+      propertyTypeId: _propertyTypeId,
+      offerTypeId: _offerTypeId,
+      governorateId: _governorateId,
+      districtId: _districtId,
+      neighborhoodId: _neighborhoodId,
+      minPrice: _minPrice,
+      maxPrice: _maxPrice,
+    );
 
     result.fold(
       (failure) {
@@ -115,5 +164,27 @@ class PropertiesCubit extends Cubit<PropertiesState> {
     );
   }
 
+  void clearFilters() {
+    _search = null;
+    _propertyTypeId = null;
+    _offerTypeId = null;
+    _governorateId = null;
+    _districtId = null;
+    _neighborhoodId = null;
+    _minPrice = null;
+    _maxPrice = null;
+    getProperties(refresh: true);
+  }
+
   bool get hasMore => _meta != null && _currentPage < _meta!.lastPage;
+
+  bool get hasActiveFilters =>
+      _search != null ||
+      _propertyTypeId != null ||
+      _offerTypeId != null ||
+      _governorateId != null ||
+      _districtId != null ||
+      _neighborhoodId != null ||
+      _minPrice != null ||
+      _maxPrice != null;
 }

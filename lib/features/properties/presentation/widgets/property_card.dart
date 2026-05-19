@@ -1,6 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:dalil_alaqar/core/theme/app_colors.dart';
-import 'package:dalil_alaqar/core/utils/image_cache_config.dart';
 import 'package:dalil_alaqar/features/properties/domain/entities/property_entity.dart';
 import 'package:dalil_alaqar/features/properties/presentation/screens/property_details_screen.dart';
 import 'package:intl/intl.dart';
@@ -48,7 +48,6 @@ class _PropertyCardElement extends ComponentElement {
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
         onTap:
@@ -74,21 +73,14 @@ class _PropertyCardElement extends ComponentElement {
                 children: [
                   AspectRatio(
                     aspectRatio: 16 / 9,
-                    child: imageUrl.isNotEmpty
-                        ? ImageCacheConfig.cachedImage(
-                            imageUrl: imageUrl,
-                            fit: BoxFit.cover,
-                          )
-                        : Container(
-                            color: Colors.grey[300],
-                            child: const Center(
-                              child: Icon(
-                                Icons.home,
-                                size: 48,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ),
+                    child: CachedNetworkImage(
+                      imageUrl: imageUrl,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) =>
+                          Center(child: Image.asset('assets/images/logo.png')),
+                      errorWidget: (context, url, error) =>
+                          Center(child: Image.asset('assets/images/logo.png')),
+                    ),
                   ),
                   // Offer Type Badge
                   Positioned(
