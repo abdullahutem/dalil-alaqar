@@ -4,6 +4,7 @@ import 'package:dalil_alaqar/core/theme/app_colors.dart';
 import 'package:dalil_alaqar/features/properties/presentation/cubit/properties_cubit.dart';
 import 'package:dalil_alaqar/features/properties/presentation/cubit/properties_state.dart';
 import 'package:dalil_alaqar/features/properties/presentation/widgets/property_card.dart';
+import 'package:dalil_alaqar/features/properties/presentation/widgets/property_card_skeleton.dart';
 
 class PropertiesTabletLayout extends StatefulWidget {
   const PropertiesTabletLayout({super.key});
@@ -48,7 +49,17 @@ class _PropertiesTabletLayoutState extends State<PropertiesTabletLayout> {
         child: BlocBuilder<PropertiesCubit, PropertiesState>(
           builder: (context, state) {
             if (state is PropertiesLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return GridView.builder(
+                padding: const EdgeInsets.all(24),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.75,
+                  crossAxisSpacing: 24,
+                  mainAxisSpacing: 24,
+                ),
+                itemCount: 6, // Show 6 skeleton cards
+                itemBuilder: (context, index) => const PropertyCardSkeleton(),
+              );
             }
 
             if (state is PropertiesError) {
@@ -128,9 +139,7 @@ class _PropertiesTabletLayoutState extends State<PropertiesTabletLayout> {
                         itemCount: properties.length + (isLoadingMore ? 1 : 0),
                         itemBuilder: (context, index) {
                           if (index >= properties.length) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
+                            return const PropertyCardSkeleton();
                           }
 
                           final property = properties[index];

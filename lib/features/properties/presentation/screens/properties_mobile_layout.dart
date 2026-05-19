@@ -5,6 +5,7 @@ import 'package:dalil_alaqar/core/theme/app_colors.dart';
 import 'package:dalil_alaqar/features/properties/presentation/cubit/properties_cubit.dart';
 import 'package:dalil_alaqar/features/properties/presentation/cubit/properties_state.dart';
 import 'package:dalil_alaqar/features/properties/presentation/widgets/property_card.dart';
+import 'package:dalil_alaqar/features/properties/presentation/widgets/property_card_skeleton.dart';
 
 class PropertiesMobileLayout extends StatefulWidget {
   const PropertiesMobileLayout({super.key});
@@ -46,7 +47,10 @@ class _PropertiesMobileLayoutState extends State<PropertiesMobileLayout> {
     return BlocBuilder<PropertiesCubit, PropertiesState>(
       builder: (context, state) {
         if (state is PropertiesLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return ListView.builder(
+            itemCount: 6, // Show 6 skeleton cards
+            itemBuilder: (context, index) => const PropertyCardSkeleton(),
+          );
         }
 
         if (state is PropertiesError) {
@@ -107,8 +111,8 @@ class _PropertiesMobileLayoutState extends State<PropertiesMobileLayout> {
                     itemBuilder: (context, index) {
                       if (index >= properties.length) {
                         return const Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: Center(child: CircularProgressIndicator()),
+                          padding: EdgeInsets.symmetric(vertical: 8.0),
+                          child: PropertyCardSkeleton(),
                         );
                       }
 
