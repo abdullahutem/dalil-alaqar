@@ -1,11 +1,17 @@
 import 'package:dalil_alaqar/core/databases/api/api_consumer.dart';
 import '../../../../core/databases/api/end_points.dart';
+import '../models/add_employee_request_model.dart';
+import '../models/add_employee_response_model.dart';
 import '../models/employees_response_model.dart';
 
 abstract class EmployeesRemoteDataSource {
   Future<EmployeesResponseModel> getEmployees({
     required int page,
     required int perPage,
+  });
+
+  Future<AddEmployeeResponseModel> addEmployee({
+    required AddEmployeeRequestModel request,
   });
 }
 
@@ -23,5 +29,16 @@ class EmployeesRemoteDataSourceImpl implements EmployeesRemoteDataSource {
       queryParameters: {'page': page, 'per_page': perPage},
     );
     return EmployeesResponseModel.fromJson(response);
+  }
+
+  @override
+  Future<AddEmployeeResponseModel> addEmployee({
+    required AddEmployeeRequestModel request,
+  }) async {
+    final response = await apiConsumer.post(
+      EndPoints.employees,
+      queryParameters: request.toJson(),
+    );
+    return AddEmployeeResponseModel.fromJson(response);
   }
 }

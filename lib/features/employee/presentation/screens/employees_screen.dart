@@ -1,8 +1,8 @@
 import 'package:dalil_alaqar/core/localization/app_localizations.dart';
-import 'package:dalil_alaqar/core/localization/locale_cubit.dart';
 import 'package:dalil_alaqar/core/theme/app_colors.dart';
 import 'package:dalil_alaqar/core/utils/breakpoints.dart';
 import 'package:dalil_alaqar/features/employee/presentation/cubit/employees_cubit.dart';
+import 'package:dalil_alaqar/features/employee/presentation/screens/add_employees_screen.dart';
 import 'package:dalil_alaqar/features/employee/presentation/screens/employees_mobile_layout.dart';
 import 'package:dalil_alaqar/features/employee/presentation/screens/employees_tablet_layout.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +26,6 @@ class EmployeesResponsive extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context);
-    final isRTL = context.read<LocaleCubit>().isArabic;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
@@ -35,7 +34,6 @@ class EmployeesResponsive extends StatelessWidget {
           : AppColors.lightBackground,
       appBar: AppBar(
         elevation: 0,
-
         title: Text(localizations.translate('app_name')),
       ),
       body: LayoutBuilder(
@@ -50,6 +48,24 @@ class EmployeesResponsive extends StatelessWidget {
             return const EmployeesTabletLayout();
           }
         },
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () async {
+          final result = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AddEmployeesScreen()),
+          );
+          // Refresh the list if an employee was added
+          if (result == true && context.mounted) {
+            context.read<EmployeesCubit>().refresh();
+          }
+        },
+        backgroundColor: AppColors.primary,
+        icon: const Icon(Icons.add, color: Colors.white),
+        label: Text(
+          localizations.translate('add_employee'),
+          style: const TextStyle(color: Colors.white),
+        ),
       ),
     );
   }
