@@ -1,3 +1,4 @@
+import 'package:dalil_alaqar/core/routes/app_routes.dart';
 import 'package:dalil_alaqar/features/offices/presentation/cubit/offices_cubit.dart';
 import 'package:dalil_alaqar/features/offices/presentation/cubit/offices_state.dart';
 import 'package:dalil_alaqar/features/offices/presentation/widgets/office_card.dart';
@@ -82,7 +83,14 @@ class _OfficesTabletLayoutState extends State<OfficesTabletLayout> {
               if (index == state.offices.length) {
                 return const Center(child: CircularProgressIndicator());
               }
-              return OfficeCard(office: state.offices[index]);
+              return OfficeCard(
+                office: state.offices[index],
+                onTap: () => Navigator.pushNamed(
+                  context,
+                  AppRoutes.officeDetails,
+                  arguments: state.offices[index].id,
+                ),
+              );
             },
           ),
         ),
@@ -122,7 +130,14 @@ class _OfficesTabletLayoutState extends State<OfficesTabletLayout> {
                   ),
                 );
               }
-              return OfficeCard(office: state.offices[index]);
+              return OfficeCard(
+                office: state.offices[index],
+                onTap: () => Navigator.pushNamed(
+                  context,
+                  AppRoutes.officeDetails,
+                  arguments: state.offices[index].id,
+                ),
+              );
             },
           ),
         ),

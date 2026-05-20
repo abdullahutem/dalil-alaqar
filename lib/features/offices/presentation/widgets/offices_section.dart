@@ -1,3 +1,4 @@
+import 'package:dalil_alaqar/core/routes/app_routes.dart';
 import 'package:dalil_alaqar/features/offices/domain/entities/office_entity.dart';
 import 'package:dalil_alaqar/features/offices/presentation/cubit/offices_cubit.dart';
 import 'package:dalil_alaqar/features/offices/presentation/cubit/offices_state.dart';
@@ -89,9 +90,10 @@ class _OfficesSectionState extends State<OfficesSection> {
             itemBuilder: (context, index) {
               return OfficeCardCompact(
                 office: displayed[index],
-                onTap: () => Navigator.push(
+                onTap: () => Navigator.pushNamed(
                   context,
-                  MaterialPageRoute(builder: (_) => const OfficesScreen()),
+                  AppRoutes.officeDetails,
+                  arguments: displayed[index].id,
                 ),
               );
             },
