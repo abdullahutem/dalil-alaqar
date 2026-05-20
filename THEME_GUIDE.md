@@ -215,7 +215,7 @@ Container(
   decoration: BoxDecoration(
     color: Theme.of(context).cardColor,
     borderRadius: BorderRadius.circular(12),
-    boxShadow: [
+    
       BoxShadow(
         color: Colors.black.withOpacity(0.08),
         blurRadius: 8,
@@ -491,7 +491,7 @@ class InfoContainer extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(12),
-        boxShadow: [
+        
           BoxShadow(
             color: Colors.black.withOpacity(0.08),
             blurRadius: 8,

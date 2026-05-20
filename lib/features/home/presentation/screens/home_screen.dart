@@ -31,17 +31,6 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(
-              isRTL ? Icons.language : Icons.translate_rounded,
-              color: isDark ? AppColors.darkText : AppColors.white,
-              size: 22,
-            ),
-            onPressed: () {
-              context.read<LocaleCubit>().toggleLocale();
-            },
-            tooltip: 'Language',
-          ),
-          IconButton(
-            icon: Icon(
               context.watch<ThemeCubit>().state.isDarkMode
                   ? Icons.light_mode_outlined
                   : Icons.dark_mode_outlined,

@@ -23,14 +23,34 @@ import 'package:dalil_alaqar/core/theme/app_colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PropertiesScreen extends StatelessWidget {
-  const PropertiesScreen({super.key});
+  final int? initialPropertyTypeId;
+  final int? initialOfferTypeId;
+  final int? initialGovernorateId;
+  final int? initialDistrictId;
+  final int? initialNeighborhoodId;
+
+  const PropertiesScreen({
+    super.key,
+    this.initialPropertyTypeId,
+    this.initialOfferTypeId,
+    this.initialGovernorateId,
+    this.initialDistrictId,
+    this.initialNeighborhoodId,
+  });
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => PropertiesCubit.create()..getProperties(),
+          create: (context) => PropertiesCubit.create()
+            ..getProperties(
+              propertyTypeId: initialPropertyTypeId,
+              offerTypeId: initialOfferTypeId,
+              governorateId: initialGovernorateId,
+              districtId: initialDistrictId,
+              neighborhoodId: initialNeighborhoodId,
+            ),
         ),
         BlocProvider(
           create: (context) => PropertyTypesCubit.create()..getPropertyTypes(),
@@ -43,15 +63,77 @@ class PropertiesScreen extends StatelessWidget {
         ),
         BlocProvider(create: (context) => DistrictsCubit.create()),
         BlocProvider(create: (context) => NeighborhoodsCubit.create()),
-        BlocProvider(create: (context) => SearchFiltersCubit()),
+        BlocProvider(
+          create: (context) {
+            final cubit = SearchFiltersCubit();
+            // Apply initial filters if provided
+            if (initialPropertyTypeId != null) {
+              cubit.updatePropertyType(initialPropertyTypeId);
+            }
+            if (initialOfferTypeId != null) {
+              cubit.updateOfferType(initialOfferTypeId);
+            }
+            if (initialGovernorateId != null) {
+              cubit.updateGovernorate(initialGovernorateId);
+            }
+            if (initialDistrictId != null) {
+              cubit.updateDistrict(initialDistrictId);
+            }
+            if (initialNeighborhoodId != null) {
+              cubit.updateNeighborhood(initialNeighborhoodId);
+            }
+            // Show advanced filters if any filter is applied
+            if (initialPropertyTypeId != null ||
+                initialOfferTypeId != null ||
+                initialGovernorateId != null ||
+                initialDistrictId != null ||
+                initialNeighborhoodId != null) {
+              cubit.toggleAdvancedFilters();
+            }
+            return cubit;
+          },
+        ),
       ],
-      child: const _PropertiesScreenContent(),
+      child: _PropertiesScreenContent(
+        initialGovernorateId: initialGovernorateId,
+        initialDistrictId: initialDistrictId,
+      ),
     );
   }
 }
 
-class _PropertiesScreenContent extends StatelessWidget {
-  const _PropertiesScreenContent();
+class _PropertiesScreenContent extends StatefulWidget {
+  final int? initialGovernorateId;
+  final int? initialDistrictId;
+
+  const _PropertiesScreenContent({
+    this.initialGovernorateId,
+    this.initialDistrictId,
+  });
+
+  @override
+  State<_PropertiesScreenContent> createState() =>
+      _PropertiesScreenContentState();
+}
+
+class _PropertiesScreenContentState extends State<_PropertiesScreenContent> {
+  @override
+  void initState() {
+    super.initState();
+    // Load districts and neighborhoods if initial location filters are provided
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.initialGovernorateId != null) {
+        context.read<DistrictsCubit>().getDistrictsByGovernorate(
+          widget.initialGovernorateId!,
+        );
+      }
+      if (widget.initialDistrictId != null) {
+        context.read<NeighborhoodsCubit>().getNeighborhoodsByDistrict(
+          widget.initialDistrictId!,
+        );
+      }
+    });
+  }
 
   void _applySearch(BuildContext context) {
     final filtersState = context.read<SearchFiltersCubit>().state;
@@ -149,16 +231,7 @@ class _PropertiesScreenContent extends StatelessWidget {
     return BlocBuilder<SearchFiltersCubit, SearchFiltersState>(
       builder: (context, filtersState) {
         return Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
-                blurRadius: 4,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
+          decoration: BoxDecoration(color: Colors.white),
           child: Column(
             children: [
               // Search bar

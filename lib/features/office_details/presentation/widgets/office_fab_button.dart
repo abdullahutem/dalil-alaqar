@@ -42,13 +42,6 @@ class OfficeFabButton extends StatelessWidget {
             shape: BoxShape.circle,
             color: bg,
             border: Border.all(color: bc, width: 0.5),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.08),
-                blurRadius: 14,
-                offset: const Offset(0, 4),
-              ),
-            ],
           ),
           child: Icon(icon, size: 20, color: ic),
         ),

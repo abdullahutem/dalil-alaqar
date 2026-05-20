@@ -238,7 +238,7 @@ Container(
   decoration: BoxDecoration(
     color: isSelected ? YourColors.primary : Colors.white,
     borderRadius: BorderRadius.circular(12),
-    boxShadow: [
+    
       BoxShadow(
         color: Colors.black.withOpacity(0.1),
         blurRadius: 4,

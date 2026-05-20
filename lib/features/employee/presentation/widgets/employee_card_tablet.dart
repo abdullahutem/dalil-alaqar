@@ -13,13 +13,6 @@ class EmployeeCardTablet extends StatelessWidget {
       decoration: BoxDecoration(
         color: theme.cardColor,
         borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
       ),
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -149,11 +142,7 @@ class EmployeeCardTablet extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(
-          icon,
-          size: 16,
-          color: theme.colorScheme.primary,
-        ),
+        Icon(icon, size: 16, color: theme.colorScheme.primary),
         const SizedBox(width: 8),
         Expanded(
           child: Column(
@@ -163,8 +152,9 @@ class EmployeeCardTablet extends StatelessWidget {
                 label,
                 style: theme.textTheme.bodySmall?.copyWith(
                   fontSize: 11,
-                  color: theme.textTheme.bodySmall?.color
-                      ?.withValues(alpha: 0.6),
+                  color: theme.textTheme.bodySmall?.color?.withValues(
+                    alpha: 0.6,
+                  ),
                 ),
               ),
               Text(

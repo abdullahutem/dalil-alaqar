@@ -101,13 +101,6 @@ class _AddEmployeesTabletLayoutState extends State<AddEmployeesTabletLayout> {
             decoration: BoxDecoration(
               color: isDark ? AppColors.darkSurface : AppColors.lightSurface,
               borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
-                ),
-              ],
             ),
             padding: const EdgeInsets.all(32),
             child: Form(

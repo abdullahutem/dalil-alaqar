@@ -336,16 +336,7 @@ class _CascadingLocationSelectorScreenState
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 8,
-                    offset: const Offset(0, -2),
-                  ),
-                ],
-              ),
+              decoration: BoxDecoration(color: Colors.white),
               child: ElevatedButton(
                 onPressed: () {
                   // Apply filter or navigate back with selection
