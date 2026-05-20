@@ -149,7 +149,7 @@ class AppTheme {
         backgroundColor: AppColors.primary,
         elevation: 0,
         centerTitle: true,
-        iconTheme: IconThemeData(color: AppColors.primary),
+        iconTheme: IconThemeData(color: AppColors.white),
         titleTextStyle: TextStyle(
           fontFamily: 'EXPOARABIC',
           color: AppColors.white, // White text on dark surface

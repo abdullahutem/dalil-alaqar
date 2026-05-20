@@ -81,14 +81,7 @@ class PropertyCardCompact extends StatelessWidget {
                             imageUrl: imageUrl,
                             fit: BoxFit.cover,
                           )
-                        : Container(
-                            color: Colors.grey[200],
-                            child: Icon(
-                              Icons.home_outlined,
-                              size: 48,
-                              color: Colors.grey[400],
-                            ),
-                          ),
+                        : ImageCacheConfig.defaultPlaceholder(),
                   ),
                 ),
                 // Offer Type Badge

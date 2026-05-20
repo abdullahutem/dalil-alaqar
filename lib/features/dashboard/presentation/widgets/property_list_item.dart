@@ -6,154 +6,122 @@ class PropertyListItem extends StatelessWidget {
 
   const PropertyListItem({super.key, required this.property});
 
-  Color _getStatusColor() {
-    switch (property.status) {
-      case 'available':
-        return Colors.green;
-      case 'reserved':
-        return Colors.orange;
-      case 'sold':
-        return Colors.red;
-      case 'rented':
-        return Colors.blue;
-      default:
-        return Colors.grey;
-    }
-  }
-
-  String _getStatusText() {
-    switch (property.status) {
-      case 'available':
-        return 'متاح';
-      case 'reserved':
-        return 'محجوز';
-      case 'sold':
-        return 'مباع';
-      case 'rented':
-        return 'مؤجر';
-      default:
-        return property.status;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final border = isDark
+        ? Colors.white.withValues(alpha: 0.08)
+        : Colors.black.withValues(alpha: 0.08);
+    final muted = isDark
+        ? Colors.white.withValues(alpha: 0.40)
+        : Colors.black.withValues(alpha: 0.38);
+    final secondary = isDark
+        ? Colors.white.withValues(alpha: 0.55)
+        : Colors.black.withValues(alpha: 0.5);
+    final primary = isDark ? Colors.white : Colors.black;
+
+    final isForSale = property.offerType.contains('بيع');
+    final offerBg = isForSale
+        ? const Color(0xFFEAF3DE)
+        : const Color(0xFFE6F1FB);
+    final offerFg = isForSale
+        ? const Color(0xFF3B6D11)
+        : const Color(0xFF185FA5);
+    final offerBorder = isForSale
+        ? const Color(0xFFC0DD97)
+        : const Color(0xFFB5D4F4);
+
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        border: Border(bottom: BorderSide(color: border, width: 0.5)),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
+          // Thumbnail placeholder
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Container(
+              width: 52,
+              height: 52,
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.05)
+                  : Colors.black.withValues(alpha: 0.03),
+              child: Icon(Icons.image_outlined, size: 24, color: muted),
+            ),
+          ),
+          const SizedBox(width: 12),
+
+          // Details
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
                   property.title,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                    color: primary,
+                    height: 1.3,
                   ),
-                  maxLines: 2,
+                  maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-              ),
-              const SizedBox(width: 8),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: _getStatusColor().withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: _getStatusColor(), width: 1),
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 7,
+                        vertical: 2,
+                      ),
+                      decoration: BoxDecoration(
+                        color: offerBg,
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: offerBorder, width: 0.5),
+                      ),
+                      child: Text(
+                        property.offerType,
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w600,
+                          color: offerFg,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        property.governorate,
+                        style: TextStyle(fontSize: 11, color: secondary),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
                 ),
-                child: Text(
-                  _getStatusText(),
-                  style: TextStyle(
-                    color: _getStatusColor(),
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(width: 8),
 
-          Row(
-            children: [
-              Icon(Icons.category, size: 14, color: Colors.grey[600]),
-              const SizedBox(width: 4),
-              Text(
-                property.propertyType,
-                style: TextStyle(fontSize: 13, color: Colors.grey[600]),
-              ),
-              const SizedBox(width: 12),
-              Icon(Icons.local_offer, size: 14, color: Colors.grey[600]),
-              const SizedBox(width: 4),
-              Text(
-                property.offerType,
-                style: TextStyle(fontSize: 13, color: Colors.grey[600]),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-
-          Row(
-            children: [
-              Icon(Icons.location_on, size: 14, color: Colors.grey[600]),
-              const SizedBox(width: 4),
-              Text(
-                property.governorate,
-                style: TextStyle(fontSize: 13, color: Colors.grey[600]),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '${property.price} ريال',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue,
-                ),
-              ),
-              Row(
-                children: [
-                  Icon(Icons.visibility, size: 14, color: Colors.grey[600]),
-                  const SizedBox(width: 4),
-                  Text(
-                    '${property.viewsCount}',
-                    style: TextStyle(fontSize: 13, color: Colors.grey[600]),
-                  ),
-                  const SizedBox(width: 12),
-                  Icon(Icons.calendar_today, size: 14, color: Colors.grey[600]),
-                  const SizedBox(width: 4),
-                  Text(
-                    property.createdAt,
-                    style: TextStyle(fontSize: 13, color: Colors.grey[600]),
-                  ),
-                ],
-              ),
-            ],
+          // Price
+          Text(
+            _formatPrice(property.price),
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF1D9E75),
+            ),
           ),
         ],
       ),
     );
+  }
+
+  String _formatPrice(String price) {
+    // Simple formatting - you can enhance this
+    return price;
   }
 }

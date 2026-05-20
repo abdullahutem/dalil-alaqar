@@ -76,10 +76,24 @@ class _PropertyCardElement extends ComponentElement {
                     child: CachedNetworkImage(
                       imageUrl: imageUrl,
                       fit: BoxFit.cover,
-                      placeholder: (context, url) =>
-                          Center(child: Image.asset('assets/images/logo.png')),
-                      errorWidget: (context, url, error) =>
-                          Center(child: Image.asset('assets/images/logo.png')),
+                      placeholder: (context, url) => Center(
+                        child: Opacity(
+                          opacity: 0.15,
+                          child: Image.asset(
+                            "assets/images/logo.png",
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => Center(
+                        child: Opacity(
+                          opacity: 0.15,
+                          child: Image.asset(
+                            "assets/images/logo.png",
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                   // Offer Type Badge

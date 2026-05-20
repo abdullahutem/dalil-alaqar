@@ -4,6 +4,7 @@ import 'package:dalil_alaqar/features/office_details/presentation/cubit/office_d
 import 'package:dalil_alaqar/features/office_details/presentation/cubit/office_details_state.dart';
 import 'package:dalil_alaqar/features/office_details/presentation/screens/office_details_mobile_layout.dart';
 import 'package:dalil_alaqar/features/office_details/presentation/screens/office_details_tablet_layout.dart';
+import 'package:dalil_alaqar/features/office_details/presentation/widgets/office_details_loading.dart';
 
 class OfficeDetailsScreen extends StatelessWidget {
   final int officeId;
@@ -29,7 +30,7 @@ class OfficeDetailsContent extends StatelessWidget {
       body: BlocBuilder<OfficeDetailsCubit, OfficeDetailsState>(
         builder: (context, state) {
           if (state is OfficeDetailsLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const OfficeDetailsLoadingView();
           }
 
           if (state is OfficeDetailsError) {

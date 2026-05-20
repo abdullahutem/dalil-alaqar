@@ -170,7 +170,10 @@ class PromotionCardMobile extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       height: 160,
-      child: Image.asset('assets/images/logo.png', fit: BoxFit.fill),
+      child: Opacity(
+        opacity: 0.15,
+        child: Image.asset("assets/images/logo.png", fit: BoxFit.fill),
+      ),
     );
   }
 

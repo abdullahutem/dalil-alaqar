@@ -16,6 +16,7 @@ class OfficesScreen extends StatelessWidget {
           title: const Text('المكاتب العقارية'),
           centerTitle: true,
           elevation: 0,
+          iconTheme: IconThemeData(color: Colors.white),
         ),
         body: LayoutBuilder(
           builder: (context, constraints) {

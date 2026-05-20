@@ -63,83 +63,96 @@ class OfficePropertyCard extends StatelessWidget {
                   : _ImgPlaceholder(muted: muted, isDark: isDark),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Offer type badge + property type
-                Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 7,
-                        vertical: 3,
-                      ),
-                      decoration: BoxDecoration(
-                        color: offerBg,
-                        borderRadius: BorderRadius.circular(6),
-                        border: Border.all(color: offerBorder, width: 0.5),
-                      ),
-                      child: Text(
-                        property.offerType.name,
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w600,
-                          color: offerFg,
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Offer type badge + property type
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 2,
+                        ),
+                        decoration: BoxDecoration(
+                          color: offerBg,
+                          borderRadius: BorderRadius.circular(6),
+                          border: Border.all(color: offerBorder, width: 0.5),
+                        ),
+                        child: Text(
+                          property.offerType.name,
+                          style: TextStyle(
+                            fontSize: 9,
+                            fontWeight: FontWeight.w600,
+                            color: offerFg,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 5),
-                    Expanded(
-                      child: Text(
-                        property.propertyType.name,
-                        style: TextStyle(fontSize: 11, color: secondary),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  property.title,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    color: primary,
-                    height: 1.35,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  property.price,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1D9E75),
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Row(
-                  children: [
-                    Icon(Icons.remove_red_eye_outlined, size: 11, color: muted),
-                    const SizedBox(width: 3),
-                    Text(
-                      property.viewsCount.toString(),
-                      style: TextStyle(fontSize: 10, color: muted),
-                    ),
-                    if (property.priceNegotiable) ...[
-                      const SizedBox(width: 6),
-                      Text(
-                        'قابل للتفاوض',
-                        style: TextStyle(fontSize: 10, color: muted),
+                      const SizedBox(width: 5),
+                      Expanded(
+                        child: Text(
+                          property.propertyType.name,
+                          style: TextStyle(fontSize: 10, color: secondary),
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ],
-                  ],
-                ),
-              ],
+                  ),
+                  const SizedBox(height: 5),
+                  Expanded(
+                    child: Text(
+                      property.title,
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: primary,
+                        height: 1.3,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    property.price,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF1D9E75),
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 3),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.remove_red_eye_outlined,
+                        size: 11,
+                        color: muted,
+                      ),
+                      const SizedBox(width: 3),
+                      Text(
+                        property.viewsCount.toString(),
+                        style: TextStyle(fontSize: 10, color: muted),
+                      ),
+                      if (property.priceNegotiable) ...[
+                        const SizedBox(width: 6),
+                        Flexible(
+                          child: Text(
+                            'قابل للتفاوض',
+                            style: TextStyle(fontSize: 10, color: muted),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ],

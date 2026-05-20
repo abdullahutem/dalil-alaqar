@@ -27,8 +27,6 @@ class ImageCacheConfig {
     double? width,
     double? height,
     BoxFit fit = BoxFit.cover,
-    Widget? placeholder,
-    Widget? errorWidget,
     BorderRadius? borderRadius,
   }) {
     // التحقق من صحة القيم وتحويلها بشكل آمن
@@ -51,9 +49,8 @@ class ImageCacheConfig {
         height: height,
         fit: fit,
         cacheManager: customCacheManager,
-        placeholder: (context, url) => placeholder ?? _defaultPlaceholder(),
-        errorWidget: (context, url, error) =>
-            errorWidget ?? _defaultErrorWidget(),
+        placeholder: (context, url) => defaultPlaceholder(),
+        errorWidget: (context, url, error) => _defaultErrorWidget(),
         // تفعيل الكاش في الذاكرة أيضاً - فقط إذا كانت القيم صحيحة
         memCacheWidth: memCacheWidth,
         memCacheHeight: memCacheHeight,
@@ -64,16 +61,14 @@ class ImageCacheConfig {
   }
 
   /// Placeholder افتراضي
-  static Widget _defaultPlaceholder() {
+  static Widget defaultPlaceholder() {
     return Container(
       color: Colors.grey.withValues(alpha: 0.1),
+
       child: Center(
         child: Opacity(
           opacity: 0.15,
-          child: ColorFiltered(
-            colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn),
-            child: Image.asset("assets/images/logo.png", height: 80),
-          ),
+          child: Image.asset("assets/images/logo.png", fit: BoxFit.fill),
         ),
       ),
     );
@@ -86,10 +81,7 @@ class ImageCacheConfig {
       child: Center(
         child: Opacity(
           opacity: 0.15,
-          child: ColorFiltered(
-            colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn),
-            child: Image.asset("assets/images/logo.png", height: 80),
-          ),
+          child: Image.asset("assets/images/logo.png", fit: BoxFit.fill),
         ),
       ),
     );

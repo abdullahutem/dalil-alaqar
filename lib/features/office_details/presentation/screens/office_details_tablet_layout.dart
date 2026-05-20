@@ -54,7 +54,7 @@ class OfficeDetailsTabletLayout extends StatelessWidget {
           title: Row(
             children: [
               OfficeCircleButton(
-                icon: Icons.arrow_forward_ios_rounded,
+                icon: Icons.arrow_back_ios_rounded,
                 isDark: isDark,
                 border: border,
                 onTap: () => Navigator.of(context).maybePop(),
@@ -72,13 +72,6 @@ class OfficeDetailsTabletLayout extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-              OfficeCircleButton(
-                icon: Icons.ios_share_rounded,
-                isDark: isDark,
-                border: border,
-                onTap: () {},
-              ),
-              const SizedBox(width: 24),
             ],
           ),
           bottom: PreferredSize(

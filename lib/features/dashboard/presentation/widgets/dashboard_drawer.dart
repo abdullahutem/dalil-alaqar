@@ -1,3 +1,4 @@
+import 'package:dalil_alaqar/core/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 
 class DashboardDrawer extends StatelessWidget {
@@ -66,11 +67,10 @@ class DashboardDrawer extends StatelessWidget {
                   },
                 ),
                 _buildDrawerItem(
-                  icon: Icons.home_work,
-                  title: 'عقاراتي',
+                  icon: Icons.person,
+                  title: 'الموظفين',
                   onTap: () {
-                    Navigator.pop(context);
-                    // Navigate to properties
+                    Navigator.pushNamed(context, AppRoutes.employeesScreen);
                   },
                 ),
                 _buildDrawerItem(

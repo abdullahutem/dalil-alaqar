@@ -1,5 +1,6 @@
 import 'package:dalil_alaqar/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dalil_alaqar/features/auth/presentation/cubit/auth_state.dart';
+import 'package:dalil_alaqar/features/dashboard/presentation/cubit/dashboard_cubit.dart';
 import 'package:dalil_alaqar/features/dashboard/presentation/screens/dashboard_screen.dart';
 import 'package:dalil_alaqar/features/home/presentation/screens/home_screen.dart';
 import 'package:dalil_alaqar/features/main/presentation/cubit/main_cubit.dart';
@@ -71,6 +72,12 @@ class MainView extends StatelessWidget {
               const PropertiesScreen(),
               const PromotionsScreen(),
               if (isLoggedIn) const DashboardScreen(),
+              // if (isLoggedIn)
+              //   BlocProvider(
+              //     create: (context) =>
+              //         DashboardCubit.create()..getDashboardStats(),
+              //     child: const DashboardMobileLayout(),
+              //   ),
             ];
 
             return Scaffold(

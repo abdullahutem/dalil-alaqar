@@ -18,6 +18,7 @@ class EndPoints {
   static const String offices = 'public/offices';
   static const String promotions = 'public/promotions';
   static const String dashboard = 'office/dashboard';
+  static const String employees = 'office/employees';
 }
 
 class ApiKey {

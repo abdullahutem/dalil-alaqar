@@ -52,7 +52,7 @@ class OfficeDetailsMobileLayout extends StatelessWidget {
                 title: Row(
                   children: [
                     OfficeCircleButton(
-                      icon: Icons.arrow_forward_ios_rounded,
+                      icon: Icons.arrow_back_ios_rounded,
                       isDark: isDark,
                       border: border,
                       onTap: () => Navigator.of(context).maybePop(),
@@ -69,12 +69,6 @@ class OfficeDetailsMobileLayout extends StatelessWidget {
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
-                    ),
-                    OfficeCircleButton(
-                      icon: Icons.ios_share_rounded,
-                      isDark: isDark,
-                      border: border,
-                      onTap: () {},
                     ),
                   ],
                 ),
@@ -284,7 +278,9 @@ class OfficeDetailsMobileLayout extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(left: 20),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                              ),
                               child: Row(
                                 children: [
                                   Expanded(
@@ -293,14 +289,6 @@ class OfficeDetailsMobileLayout extends StatelessWidget {
                                       muted: muted,
                                     ),
                                   ),
-                                  Text(
-                                    'عرض الكل',
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      color: muted,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 20),
                                 ],
                               ),
                             ),

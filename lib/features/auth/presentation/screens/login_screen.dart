@@ -305,10 +305,9 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Image.asset(
           'assets/images/logo.png',
           fit: BoxFit.contain,
-          errorBuilder: (_, __, ___) => Icon(
-            Icons.apartment_rounded,
-            size: size * 0.5,
-            color: AppColors.white,
+          errorBuilder: (_, __, ___) => Opacity(
+            opacity: 0.15,
+            child: Image.asset("assets/images/logo.png", fit: BoxFit.fill),
           ),
         ),
       ),
