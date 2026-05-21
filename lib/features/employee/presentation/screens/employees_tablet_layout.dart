@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/employees_cubit.dart';
 import '../cubit/employees_state.dart';
 import '../widgets/employee_card_tablet.dart';
+import '../widgets/employee_stats_section.dart';
 import '../widgets/employees_skeleton.dart';
 
 class EmployeesTabletLayout extends StatefulWidget {
@@ -106,6 +107,7 @@ class _EmployeesTabletLayoutState extends State<EmployeesTabletLayout> {
         child: CustomScrollView(
           controller: _scrollController,
           slivers: [
+            const SliverToBoxAdapter(child: EmployeeStatsSection()),
             SliverPadding(
               padding: const EdgeInsets.all(24),
               sliver: SliverGrid(

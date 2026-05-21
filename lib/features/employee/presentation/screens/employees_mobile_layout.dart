@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/employees_cubit.dart';
 import '../cubit/employees_state.dart';
 import '../widgets/employee_card.dart';
+import '../widgets/employee_stats_section.dart';
 import '../widgets/employees_skeleton.dart';
 
 class EmployeesMobileLayout extends StatefulWidget {
@@ -57,17 +58,26 @@ class _EmployeesMobileLayoutState extends State<EmployeesMobileLayout> {
             onRefresh: () => context.read<EmployeesCubit>().refresh(),
             child: ListView.builder(
               controller: _scrollController,
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              itemCount: state.employees.length + (state.isLoadingMore ? 1 : 0),
+              padding: const EdgeInsets.only(bottom: 8),
+              itemCount:
+                  state.employees.length + 1 + (state.isLoadingMore ? 1 : 0),
               itemBuilder: (_, index) {
-                if (index >= state.employees.length) {
+                // First item is the stats section
+                if (index == 0) {
+                  return const EmployeeStatsSection();
+                }
+
+                // Adjust index for employee cards
+                final employeeIndex = index - 1;
+
+                if (employeeIndex >= state.employees.length) {
                   return const Padding(
                     padding: EdgeInsets.symmetric(vertical: 16),
                     child: Center(child: CircularProgressIndicator()),
                   );
                 }
                 return EmployeeCard(
-                  employee: state.employees[index],
+                  employee: state.employees[employeeIndex],
                   onUpdate: () {
                     context.read<EmployeesCubit>().refresh();
                   },
@@ -85,14 +95,22 @@ class _EmployeesMobileLayoutState extends State<EmployeesMobileLayout> {
             onRefresh: () => context.read<EmployeesCubit>().refresh(),
             child: ListView.builder(
               controller: _scrollController,
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              itemCount: state.employees.length + 1,
+              padding: const EdgeInsets.only(bottom: 8),
+              itemCount: state.employees.length + 2,
               itemBuilder: (_, index) {
-                if (index >= state.employees.length) {
+                // First item is the stats section
+                if (index == 0) {
+                  return const EmployeeStatsSection();
+                }
+
+                // Adjust index for employee cards
+                final employeeIndex = index - 1;
+
+                if (employeeIndex >= state.employees.length) {
                   return _buildLoadMoreError(context, state.message);
                 }
                 return EmployeeCard(
-                  employee: state.employees[index],
+                  employee: state.employees[employeeIndex],
                   onUpdate: () {
                     context.read<EmployeesCubit>().refresh();
                   },

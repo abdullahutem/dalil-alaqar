@@ -1,6 +1,7 @@
 import 'package:dalil_alaqar/core/localization/app_localizations.dart';
 import 'package:dalil_alaqar/core/theme/app_colors.dart';
 import 'package:dalil_alaqar/core/utils/breakpoints.dart';
+import 'package:dalil_alaqar/features/employee/presentation/cubit/employee_stats_cubit.dart';
 import 'package:dalil_alaqar/features/employee/presentation/cubit/employees_cubit.dart';
 import 'package:dalil_alaqar/features/employee/presentation/screens/add_employees_screen.dart';
 import 'package:dalil_alaqar/features/employee/presentation/screens/employees_mobile_layout.dart';
@@ -13,8 +14,15 @@ class EmployeesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => EmployeesCubit.create()..getEmployees(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => EmployeesCubit.create()..getEmployees(),
+        ),
+        BlocProvider(
+          create: (context) => EmployeeStatsCubit.create()..getStats(),
+        ),
+      ],
       child: const EmployeesResponsive(),
     );
   }
@@ -58,6 +66,7 @@ class EmployeesResponsive extends StatelessWidget {
           // Refresh the list if an employee was added
           if (result == true && context.mounted) {
             context.read<EmployeesCubit>().refresh();
+            context.read<EmployeeStatsCubit>().getStats();
           }
         },
         backgroundColor: AppColors.primary,

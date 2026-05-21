@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/employee_entity.dart';
 import '../cubit/delete_employee_cubit.dart';
 import '../cubit/delete_employee_state.dart';
+import '../cubit/employee_stats_cubit.dart';
 import '../screens/add_employees_screen.dart';
 
 class EmployeeCardTablet extends StatelessWidget {
@@ -67,6 +68,10 @@ class EmployeeCardTablet extends StatelessWidget {
           );
           if (result == true && onUpdate != null) {
             onUpdate!();
+            // Refresh stats after update
+            if (context.mounted) {
+              context.read<EmployeeStatsCubit>().getStats();
+            }
           }
         } else if (value == 'delete') {
           _showDeleteDialog(context);
@@ -120,6 +125,8 @@ class EmployeeCardTablet extends StatelessWidget {
               if (onDelete != null) {
                 onDelete!();
               }
+              // Refresh stats after delete
+              context.read<EmployeeStatsCubit>().getStats();
             } else if (state is DeleteEmployeeError) {
               Navigator.of(dialogContext).pop();
               ScaffoldMessenger.of(context).showSnackBar(

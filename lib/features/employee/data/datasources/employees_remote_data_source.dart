@@ -3,6 +3,7 @@ import '../../../../core/databases/api/end_points.dart';
 import '../models/add_employee_request_model.dart';
 import '../models/add_employee_response_model.dart';
 import '../models/delete_employee_response_model.dart';
+import '../models/employee_stats_response_model.dart';
 import '../models/employees_response_model.dart';
 import '../models/update_employee_request_model.dart';
 import '../models/update_employee_response_model.dart';
@@ -23,6 +24,8 @@ abstract class EmployeesRemoteDataSource {
   });
 
   Future<DeleteEmployeeResponseModel> deleteEmployee({required int employeeId});
+
+  Future<EmployeeStatsResponseModel> getEmployeeStats();
 }
 
 class EmployeesRemoteDataSourceImpl implements EmployeesRemoteDataSource {
@@ -72,5 +75,11 @@ class EmployeesRemoteDataSourceImpl implements EmployeesRemoteDataSource {
       '${EndPoints.employees}/$employeeId',
     );
     return DeleteEmployeeResponseModel.fromJson(response);
+  }
+
+  @override
+  Future<EmployeeStatsResponseModel> getEmployeeStats() async {
+    final response = await apiConsumer.get('${EndPoints.employees}/stats');
+    return EmployeeStatsResponseModel.fromJson(response);
   }
 }
