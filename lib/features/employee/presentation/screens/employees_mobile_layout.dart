@@ -58,8 +58,7 @@ class _EmployeesMobileLayoutState extends State<EmployeesMobileLayout> {
             child: ListView.builder(
               controller: _scrollController,
               padding: const EdgeInsets.symmetric(vertical: 8),
-              itemCount: state.employees.length +
-                  (state.isLoadingMore ? 1 : 0),
+              itemCount: state.employees.length + (state.isLoadingMore ? 1 : 0),
               itemBuilder: (_, index) {
                 if (index >= state.employees.length) {
                   return const Padding(
@@ -67,7 +66,12 @@ class _EmployeesMobileLayoutState extends State<EmployeesMobileLayout> {
                     child: Center(child: CircularProgressIndicator()),
                   );
                 }
-                return EmployeeCard(employee: state.employees[index]);
+                return EmployeeCard(
+                  employee: state.employees[index],
+                  onUpdate: () {
+                    context.read<EmployeesCubit>().refresh();
+                  },
+                );
               },
             ),
           );
@@ -84,7 +88,12 @@ class _EmployeesMobileLayoutState extends State<EmployeesMobileLayout> {
                 if (index >= state.employees.length) {
                   return _buildLoadMoreError(context, state.message);
                 }
-                return EmployeeCard(employee: state.employees[index]);
+                return EmployeeCard(
+                  employee: state.employees[index],
+                  onUpdate: () {
+                    context.read<EmployeesCubit>().refresh();
+                  },
+                );
               },
             ),
           );
@@ -103,11 +112,7 @@ class _EmployeesMobileLayoutState extends State<EmployeesMobileLayout> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              Icons.error_outline,
-              size: 64,
-              color: theme.colorScheme.error,
-            ),
+            Icon(Icons.error_outline, size: 64, color: theme.colorScheme.error),
             const SizedBox(height: 16),
             Text(
               message,

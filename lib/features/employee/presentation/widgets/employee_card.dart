@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../domain/entities/employee_entity.dart';
+import '../screens/add_employees_screen.dart';
 
 class EmployeeCard extends StatelessWidget {
   final EmployeeEntity employee;
+  final VoidCallback? onUpdate;
 
-  const EmployeeCard({super.key, required this.employee});
+  const EmployeeCard({super.key, required this.employee, this.onUpdate});
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +25,85 @@ class EmployeeCard extends StatelessWidget {
             const SizedBox(width: 12),
             Expanded(child: _buildInfo(context)),
             _buildStatusBadge(context),
+            const SizedBox(width: 8),
+            _buildPopupMenu(context),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildPopupMenu(BuildContext context) {
+    final theme = Theme.of(context);
+    return PopupMenuButton<String>(
+      icon: Icon(Icons.more_vert, color: theme.iconTheme.color),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      onSelected: (value) async {
+        if (value == 'update') {
+          final result = await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddEmployeesScreen(employee: employee),
+            ),
+          );
+          if (result == true && onUpdate != null) {
+            onUpdate!();
+          }
+        } else if (value == 'delete') {
+          _showDeleteDialog(context);
+        }
+      },
+      itemBuilder: (context) => [
+        PopupMenuItem(
+          value: 'update',
+          child: Row(
+            children: [
+              Icon(
+                Icons.edit_outlined,
+                size: 20,
+                color: theme.colorScheme.primary,
+              ),
+              const SizedBox(width: 12),
+              const Text('تحديث'),
+            ],
+          ),
+        ),
+        PopupMenuItem(
+          value: 'delete',
+          child: Row(
+            children: [
+              const Icon(Icons.delete_outline, size: 20, color: Colors.red),
+              const SizedBox(width: 12),
+              const Text('حذف'),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _showDeleteDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('تأكيد الحذف'),
+        content: Text('هل أنت متأكد من حذف الموظف "${employee.name}"؟'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: const Text('إلغاء'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(dialogContext).pop();
+              // TODO: Implement delete functionality
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('سيتم تنفيذ وظيفة الحذف قريباً')),
+              );
+            },
+            child: const Text('حذف', style: TextStyle(color: Colors.red)),
+          ),
+        ],
       ),
     );
   }

@@ -232,6 +232,35 @@ class DioConsumer extends ApiConsumer {
     }
   }
 
+  //!PUT
+  @override
+  Future put(
+    String path, {
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    bool isFormData = false,
+  }) async {
+    try {
+      print('\n🟢 PUT Request Starting...');
+      print('Path: $path');
+
+      var res = await dio.put(
+        path,
+        data: isFormData ? FormData.fromMap(data) : data,
+        queryParameters: queryParameters,
+      );
+
+      print('🟢 PATCH Request Completed Successfully');
+      print('Response Type: ${res.data.runtimeType}');
+
+      return res.data;
+    } on DioException catch (e) {
+      print('🔴 PATCH Request Failed');
+      print('Error: ${e.message}');
+      handleDioException(e);
+    }
+  }
+
   //!PATCH
   @override
   Future patch(

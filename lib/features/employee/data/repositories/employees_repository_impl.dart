@@ -4,9 +4,11 @@ import 'package:dalil_alaqar/core/errors/failure.dart';
 import 'package:dartz/dartz.dart';
 import '../../domain/entities/add_employee_response_entity.dart';
 import '../../domain/entities/employees_response_entity.dart';
+import '../../domain/entities/update_employee_response_entity.dart';
 import '../../domain/repositories/employees_repository.dart';
 import '../datasources/employees_remote_data_source.dart';
 import '../models/add_employee_request_model.dart';
+import '../models/update_employee_request_model.dart';
 
 class EmployeesRepositoryImpl implements EmployeesRepository {
   final EmployeesRemoteDataSource remoteDataSource;
@@ -46,6 +48,7 @@ class EmployeesRepositoryImpl implements EmployeesRepository {
     required String whatsappNumber,
     required String address,
     required String role,
+    required String userType,
   }) async {
     if (!(await networkInfo.isConnected ?? false)) {
       return Left(Failure(errMessage: 'لا يوجد اتصال بالإنترنت'));
@@ -60,8 +63,40 @@ class EmployeesRepositoryImpl implements EmployeesRepository {
         whatsappNumber: whatsappNumber,
         address: address,
         role: role,
+        userType: userType,
       );
       final result = await remoteDataSource.addEmployee(request: request);
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(errMessage: e.errorModel.errorMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UpdateEmployeeResponseEntity>> updateEmployee({
+    required int employeeId,
+    required String name,
+    required String email,
+    required String phoneNumber,
+    required String whatsappNumber,
+    required String userType,
+  }) async {
+    if (!(await networkInfo.isConnected ?? false)) {
+      return Left(Failure(errMessage: 'لا يوجد اتصال بالإنترنت'));
+    }
+
+    try {
+      final request = UpdateEmployeeRequestModel(
+        name: name,
+        email: email,
+        phoneNumber: phoneNumber,
+        whatsappNumber: whatsappNumber,
+        userType: userType,
+      );
+      final result = await remoteDataSource.updateEmployee(
+        employeeId: employeeId,
+        request: request,
+      );
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(errMessage: e.errorModel.errorMessage));

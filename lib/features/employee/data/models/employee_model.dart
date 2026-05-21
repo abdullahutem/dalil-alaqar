@@ -16,11 +16,7 @@ class EmployeeOfficeModel extends EmployeeOfficeEntity {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'email': email,
-    };
+    return {'id': id, 'name': name, 'email': email};
   }
 }
 
@@ -30,6 +26,8 @@ class EmployeeModel extends EmployeeEntity {
     required super.name,
     required super.email,
     required super.phoneNumber,
+    super.whatsappNumber,
+    super.address,
     required super.userType,
     required super.role,
     required super.office,
@@ -44,10 +42,13 @@ class EmployeeModel extends EmployeeEntity {
       name: json['name'] as String,
       email: json['email'] as String,
       phoneNumber: json['phone_number'] as String,
+      whatsappNumber: json['whatsapp_number'] as String?,
+      address: json['address'] as String?,
       userType: json['user_type'] as String,
       role: json['role'] as String,
       office: EmployeeOfficeModel.fromJson(
-          json['office'] as Map<String, dynamic>),
+        json['office'] as Map<String, dynamic>,
+      ),
       isActive: json['is_active'] as bool,
       avatar: json['avatar'] as String?,
       createdAt: json['created_at'] as String,
@@ -60,6 +61,8 @@ class EmployeeModel extends EmployeeEntity {
       'name': name,
       'email': email,
       'phone_number': phoneNumber,
+      'whatsapp_number': whatsappNumber,
+      'address': address,
       'user_type': userType,
       'role': role,
       'office': (office as EmployeeOfficeModel).toJson(),

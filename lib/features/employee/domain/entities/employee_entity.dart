@@ -15,6 +15,8 @@ class EmployeeEntity {
   final String name;
   final String email;
   final String phoneNumber;
+  final String? whatsappNumber;
+  final String? address;
   final String userType;
   final String role;
   final EmployeeOfficeEntity office;
@@ -27,6 +29,8 @@ class EmployeeEntity {
     required this.name,
     required this.email,
     required this.phoneNumber,
+    this.whatsappNumber,
+    this.address,
     required this.userType,
     required this.role,
     required this.office,

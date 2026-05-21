@@ -6,16 +6,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/databases/api/dio_consumer.dart';
 import '../../data/datasources/employees_remote_data_source.dart';
 import '../../data/repositories/employees_repository_impl.dart';
-import '../../domain/usecases/add_employee_usecase.dart';
-import 'add_employee_state.dart';
+import '../../domain/usecases/update_employee_usecase.dart';
+import 'update_employee_state.dart';
 
-class AddEmployeeCubit extends Cubit<AddEmployeeState> {
-  final AddEmployeeUseCase addEmployeeUseCase;
+class UpdateEmployeeCubit extends Cubit<UpdateEmployeeState> {
+  final UpdateEmployeeUseCase updateEmployeeUseCase;
 
-  AddEmployeeCubit({required this.addEmployeeUseCase})
-    : super(const AddEmployeeInitial());
+  UpdateEmployeeCubit({required this.updateEmployeeUseCase})
+    : super(const UpdateEmployeeInitial());
 
-  factory AddEmployeeCubit.create() {
+  factory UpdateEmployeeCubit.create() {
     final ApiConsumer apiConsumer = DioConsumer(dio: Dio());
     final remoteDataSource = EmployeesRemoteDataSourceImpl(
       apiConsumer: apiConsumer,
@@ -25,40 +25,39 @@ class AddEmployeeCubit extends Cubit<AddEmployeeState> {
       remoteDataSource: remoteDataSource,
       networkInfo: networkInfo,
     );
-    final useCase = AddEmployeeUseCase(repository);
-    return AddEmployeeCubit(addEmployeeUseCase: useCase);
+    final useCase = UpdateEmployeeUseCase(repository);
+    return UpdateEmployeeCubit(updateEmployeeUseCase: useCase);
   }
 
-  Future<void> addEmployee({
+  Future<void> updateEmployee({
+    required int employeeId,
     required String name,
     required String email,
-    required String password,
     required String phoneNumber,
     required String whatsappNumber,
-    required String address,
-    required String role,
     required String userType,
   }) async {
-    emit(const AddEmployeeLoading());
-    final result = await addEmployeeUseCase(
+    emit(const UpdateEmployeeLoading());
+    final result = await updateEmployeeUseCase(
+      employeeId: employeeId,
       name: name,
       email: email,
-      password: password,
       phoneNumber: phoneNumber,
       whatsappNumber: whatsappNumber,
-      address: address,
-      role: role,
       userType: userType,
     );
     result.fold(
-      (failure) => emit(AddEmployeeError(message: failure.errMessage)),
+      (failure) => emit(UpdateEmployeeError(message: failure.errMessage)),
       (response) => emit(
-        AddEmployeeSuccess(employee: response.data, message: response.message),
+        UpdateEmployeeSuccess(
+          employee: response.data,
+          message: response.message,
+        ),
       ),
     );
   }
 
   void reset() {
-    emit(const AddEmployeeInitial());
+    emit(const UpdateEmployeeInitial());
   }
 }

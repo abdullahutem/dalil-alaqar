@@ -3,6 +3,8 @@ import '../../../../core/databases/api/end_points.dart';
 import '../models/add_employee_request_model.dart';
 import '../models/add_employee_response_model.dart';
 import '../models/employees_response_model.dart';
+import '../models/update_employee_request_model.dart';
+import '../models/update_employee_response_model.dart';
 
 abstract class EmployeesRemoteDataSource {
   Future<EmployeesResponseModel> getEmployees({
@@ -12,6 +14,11 @@ abstract class EmployeesRemoteDataSource {
 
   Future<AddEmployeeResponseModel> addEmployee({
     required AddEmployeeRequestModel request,
+  });
+
+  Future<UpdateEmployeeResponseModel> updateEmployee({
+    required int employeeId,
+    required UpdateEmployeeRequestModel request,
   });
 }
 
@@ -40,5 +47,17 @@ class EmployeesRemoteDataSourceImpl implements EmployeesRemoteDataSource {
       queryParameters: request.toJson(),
     );
     return AddEmployeeResponseModel.fromJson(response);
+  }
+
+  @override
+  Future<UpdateEmployeeResponseModel> updateEmployee({
+    required int employeeId,
+    required UpdateEmployeeRequestModel request,
+  }) async {
+    final response = await apiConsumer.put(
+      '${EndPoints.employees}/$employeeId',
+      queryParameters: request.toJson(),
+    );
+    return UpdateEmployeeResponseModel.fromJson(response);
   }
 }

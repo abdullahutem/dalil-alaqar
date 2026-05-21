@@ -1,21 +1,15 @@
-class AddEmployeeRequestModel {
+class UpdateEmployeeRequestModel {
   final String name;
   final String email;
-  final String password;
   final String phoneNumber;
   final String whatsappNumber;
-  final String address;
-  final String role; // "manager" or "employee"
   final String userType; // "admin", "office_owner", or "office_employee"
 
-  const AddEmployeeRequestModel({
+  const UpdateEmployeeRequestModel({
     required this.name,
     required this.email,
-    required this.password,
     required this.phoneNumber,
     required this.whatsappNumber,
-    required this.address,
-    required this.role,
     required this.userType,
   });
 
@@ -23,11 +17,8 @@ class AddEmployeeRequestModel {
     return {
       'name': name,
       'email': email,
-      'password': password,
       'phone_number': phoneNumber,
       'whatsapp_number': whatsappNumber,
-      'address': address,
-      'role': role,
       'user_type': userType,
     };
   }
