@@ -33,3 +33,29 @@ class OfficeInfoError extends OfficeInfoState {
   @override
   List<Object?> get props => [message];
 }
+
+class OfficeInfoUpdating extends OfficeInfoState {
+  const OfficeInfoUpdating();
+}
+
+class OfficeInfoUpdateSuccess extends OfficeInfoState {
+  final OfficeInfoEntity officeInfo;
+  final String message;
+
+  const OfficeInfoUpdateSuccess({
+    required this.officeInfo,
+    required this.message,
+  });
+
+  @override
+  List<Object?> get props => [officeInfo, message];
+}
+
+class OfficeInfoUpdateError extends OfficeInfoState {
+  final String message;
+
+  const OfficeInfoUpdateError({required this.message});
+
+  @override
+  List<Object?> get props => [message];
+}

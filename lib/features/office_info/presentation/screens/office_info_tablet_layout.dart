@@ -7,6 +7,7 @@ import '../widgets/office_info_description_card.dart';
 import '../widgets/office_info_header.dart';
 import '../widgets/office_info_skeleton.dart';
 import '../widgets/office_info_social_card.dart';
+import 'update_office_info_screen.dart';
 
 class OfficeInfoTabletLayout extends StatelessWidget {
   const OfficeInfoTabletLayout({super.key});
@@ -15,7 +16,7 @@ class OfficeInfoTabletLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<OfficeInfoCubit, OfficeInfoState>(
       builder: (context, state) {
-        if (state is OfficeInfoLoading) {
+        if (state is OfficeInfoLoading || state is OfficeInfoUpdating) {
           return const OfficeInfoSkeleton(isTablet: true);
         }
 
@@ -44,17 +45,21 @@ class OfficeInfoTabletLayout extends StatelessWidget {
                         children: [
                           Expanded(
                             child: OfficeInfoContactCard(
-                                officeInfo: state.officeInfo),
+                              officeInfo: state.officeInfo,
+                            ),
                           ),
                           const SizedBox(width: 20),
                           Expanded(
                             child: OfficeInfoSocialCard(
-                                officeInfo: state.officeInfo),
+                              officeInfo: state.officeInfo,
+                            ),
                           ),
                         ],
                       ),
                       const SizedBox(height: 20),
                       OfficeInfoDescriptionCard(officeInfo: state.officeInfo),
+                      const SizedBox(height: 24),
+                      _buildEditButton(context, state.officeInfo),
                       const SizedBox(height: 24),
                     ],
                   ),
@@ -66,6 +71,41 @@ class OfficeInfoTabletLayout extends StatelessWidget {
 
         return const SizedBox.shrink();
       },
+    );
+  }
+
+  Widget _buildEditButton(BuildContext context, officeInfo) {
+    return SizedBox(
+      width: double.infinity,
+      child: Builder(
+        builder: (builderContext) {
+          return ElevatedButton.icon(
+            onPressed: () async {
+              final cubit = context.read<OfficeInfoCubit>();
+              final result = await Navigator.push(
+                builderContext,
+                MaterialPageRoute(
+                  builder: (context) => BlocProvider.value(
+                    value: cubit,
+                    child: UpdateOfficeInfoScreen(officeInfo: officeInfo),
+                  ),
+                ),
+              );
+              if (result == true && builderContext.mounted) {
+                cubit.refresh();
+              }
+            },
+            icon: const Icon(Icons.edit_outlined),
+            label: const Text('تعديل معلومات المكتب'),
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 

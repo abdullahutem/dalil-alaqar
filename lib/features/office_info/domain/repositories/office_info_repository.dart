@@ -4,4 +4,7 @@ import '../entities/office_info_entity.dart';
 
 abstract class OfficeInfoRepository {
   Future<Either<Failure, OfficeInfoEntity>> getOfficeInfo();
+  Future<Either<Failure, OfficeInfoEntity>> updateOfficeInfo(
+    Map<String, dynamic> updateData,
+  );
 }

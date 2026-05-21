@@ -35,9 +35,9 @@ class OfficeInfoModel extends OfficeInfoEntity {
       address: json['data']['address'] as String?,
       logo: json['data']['logo'] as String?,
       logoUrl: json['data']['logo_url'] as String?,
-      status: json['data']['status'] as String,
-      createdAt: json['data']['created_at'] as String,
-      updatedAt: json['data']['updated_at'] as String,
+      status: json['data']['status'] as String? ?? '',
+      createdAt: json['data']['created_at'] as String? ?? '',
+      updatedAt: json['data']['updated_at'] as String? ?? '',
     );
   }
 

@@ -28,4 +28,20 @@ class OfficeInfoRepositoryImpl implements OfficeInfoRepository {
       return Left(ServerFailure(errMessage: e.errorModel.errorMessage));
     }
   }
+
+  @override
+  Future<Either<Failure, OfficeInfoEntity>> updateOfficeInfo(
+    Map<String, dynamic> updateData,
+  ) async {
+    if (!(await networkInfo.isConnected ?? false)) {
+      return Left(Failure(errMessage: 'لا يوجد اتصال بالإنترنت'));
+    }
+
+    try {
+      final result = await remoteDataSource.updateOfficeInfo(updateData);
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(errMessage: e.errorModel.errorMessage));
+    }
+  }
 }
