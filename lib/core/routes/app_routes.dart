@@ -9,4 +9,5 @@ class AppRoutes {
   static const String officeDetails = '/office_details_screen';
   static const String employeesScreen = '/employees_screen';
   static const String officeInfoScreen = '/officeInfo_screen';
+  static const String officeProperties = '/office_property';
 }

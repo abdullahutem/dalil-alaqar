@@ -5,6 +5,7 @@ import 'package:dalil_alaqar/features/home/presentation/screens/home_screen.dart
 import 'package:dalil_alaqar/features/main/presentation/screens/main_screen.dart';
 import 'package:dalil_alaqar/features/office_details/presentation/screens/office_details_screen.dart';
 import 'package:dalil_alaqar/features/office_info/presentation/screens/office_info_screen.dart';
+import 'package:dalil_alaqar/features/office_properties/presentation/screens/office_properties_screen.dart';
 import 'package:dalil_alaqar/features/properties/presentation/screens/property_details_screen.dart';
 import 'package:dalil_alaqar/features/splash/presentation/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,10 @@ class AppRouter {
         return MaterialPageRoute(builder: (context) => const HomeScreen());
       case AppRoutes.employeesScreen:
         return MaterialPageRoute(builder: (context) => const EmployeesScreen());
+      case AppRoutes.officeProperties:
+        return MaterialPageRoute(
+          builder: (context) => const OfficePropertiesScreen(),
+        );
       case AppRoutes.officeInfoScreen:
         return MaterialPageRoute(
           builder: (context) => const OfficeInfoScreen(),

@@ -83,10 +83,9 @@ class DashboardDrawer extends StatelessWidget {
                 const Divider(),
                 _buildDrawerItem(
                   icon: Icons.people,
-                  title: 'الموظفين',
+                  title: 'العقارات',
                   onTap: () {
-                    Navigator.pop(context);
-                    // Navigate to employees
+                    Navigator.pushNamed(context, AppRoutes.officeProperties);
                   },
                 ),
                 _buildDrawerItem(
