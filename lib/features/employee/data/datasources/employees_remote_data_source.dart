@@ -2,6 +2,7 @@ import 'package:dalil_alaqar/core/databases/api/api_consumer.dart';
 import '../../../../core/databases/api/end_points.dart';
 import '../models/add_employee_request_model.dart';
 import '../models/add_employee_response_model.dart';
+import '../models/delete_employee_response_model.dart';
 import '../models/employees_response_model.dart';
 import '../models/update_employee_request_model.dart';
 import '../models/update_employee_response_model.dart';
@@ -20,6 +21,8 @@ abstract class EmployeesRemoteDataSource {
     required int employeeId,
     required UpdateEmployeeRequestModel request,
   });
+
+  Future<DeleteEmployeeResponseModel> deleteEmployee({required int employeeId});
 }
 
 class EmployeesRemoteDataSourceImpl implements EmployeesRemoteDataSource {
@@ -59,5 +62,15 @@ class EmployeesRemoteDataSourceImpl implements EmployeesRemoteDataSource {
       queryParameters: request.toJson(),
     );
     return UpdateEmployeeResponseModel.fromJson(response);
+  }
+
+  @override
+  Future<DeleteEmployeeResponseModel> deleteEmployee({
+    required int employeeId,
+  }) async {
+    final response = await apiConsumer.delete(
+      '${EndPoints.employees}/$employeeId',
+    );
+    return DeleteEmployeeResponseModel.fromJson(response);
   }
 }

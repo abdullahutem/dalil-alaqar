@@ -3,6 +3,7 @@ import 'package:dalil_alaqar/core/errors/expentions.dart';
 import 'package:dalil_alaqar/core/errors/failure.dart';
 import 'package:dartz/dartz.dart';
 import '../../domain/entities/add_employee_response_entity.dart';
+import '../../domain/entities/delete_employee_response_entity.dart';
 import '../../domain/entities/employees_response_entity.dart';
 import '../../domain/entities/update_employee_response_entity.dart';
 import '../../domain/repositories/employees_repository.dart';
@@ -96,6 +97,24 @@ class EmployeesRepositoryImpl implements EmployeesRepository {
       final result = await remoteDataSource.updateEmployee(
         employeeId: employeeId,
         request: request,
+      );
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(errMessage: e.errorModel.errorMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, DeleteEmployeeResponseEntity>> deleteEmployee({
+    required int employeeId,
+  }) async {
+    if (!(await networkInfo.isConnected ?? false)) {
+      return Left(Failure(errMessage: 'لا يوجد اتصال بالإنترنت'));
+    }
+
+    try {
+      final result = await remoteDataSource.deleteEmployee(
+        employeeId: employeeId,
       );
       return Right(result);
     } on ServerException catch (e) {

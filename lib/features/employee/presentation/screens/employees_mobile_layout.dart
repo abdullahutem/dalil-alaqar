@@ -71,6 +71,9 @@ class _EmployeesMobileLayoutState extends State<EmployeesMobileLayout> {
                   onUpdate: () {
                     context.read<EmployeesCubit>().refresh();
                   },
+                  onDelete: () {
+                    context.read<EmployeesCubit>().refresh();
+                  },
                 );
               },
             ),
@@ -91,6 +94,9 @@ class _EmployeesMobileLayoutState extends State<EmployeesMobileLayout> {
                 return EmployeeCard(
                   employee: state.employees[index],
                   onUpdate: () {
+                    context.read<EmployeesCubit>().refresh();
+                  },
+                  onDelete: () {
                     context.read<EmployeesCubit>().refresh();
                   },
                 );

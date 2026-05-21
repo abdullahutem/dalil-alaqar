@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/employee_entity.dart';
+import '../cubit/delete_employee_cubit.dart';
+import '../cubit/delete_employee_state.dart';
+import '../screens/add_employees_screen.dart';
 
 class EmployeeCardTablet extends StatelessWidget {
   final EmployeeEntity employee;
+  final VoidCallback? onUpdate;
+  final VoidCallback? onDelete;
 
-  const EmployeeCardTablet({super.key, required this.employee});
+  const EmployeeCardTablet({
+    super.key,
+    required this.employee,
+    this.onUpdate,
+    this.onDelete,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +36,8 @@ class EmployeeCardTablet extends StatelessWidget {
                 const SizedBox(width: 16),
                 Expanded(child: _buildHeader(context)),
                 _buildStatusBadge(context),
+                const SizedBox(width: 8),
+                _buildPopupMenu(context),
               ],
             ),
             const SizedBox(height: 16),
@@ -34,6 +47,121 @@ class EmployeeCardTablet extends StatelessWidget {
             const SizedBox(height: 8),
             _buildOfficeRow(context),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPopupMenu(BuildContext context) {
+    final theme = Theme.of(context);
+    return PopupMenuButton<String>(
+      icon: Icon(Icons.more_vert, color: theme.iconTheme.color),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      onSelected: (value) async {
+        if (value == 'update') {
+          final result = await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddEmployeesScreen(employee: employee),
+            ),
+          );
+          if (result == true && onUpdate != null) {
+            onUpdate!();
+          }
+        } else if (value == 'delete') {
+          _showDeleteDialog(context);
+        }
+      },
+      itemBuilder: (context) => [
+        PopupMenuItem(
+          value: 'update',
+          child: Row(
+            children: [
+              Icon(
+                Icons.edit_outlined,
+                size: 20,
+                color: theme.colorScheme.primary,
+              ),
+              const SizedBox(width: 12),
+              const Text('تحديث'),
+            ],
+          ),
+        ),
+        PopupMenuItem(
+          value: 'delete',
+          child: Row(
+            children: [
+              const Icon(Icons.delete_outline, size: 20, color: Colors.red),
+              const SizedBox(width: 12),
+              const Text('حذف'),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _showDeleteDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => BlocProvider(
+        create: (context) => DeleteEmployeeCubit.create(),
+        child: BlocConsumer<DeleteEmployeeCubit, DeleteEmployeeState>(
+          listener: (context, state) {
+            if (state is DeleteEmployeeSuccess) {
+              Navigator.of(dialogContext).pop();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.message),
+                  backgroundColor: Colors.green,
+                  behavior: SnackBarBehavior.floating,
+                ),
+              );
+              if (onDelete != null) {
+                onDelete!();
+              }
+            } else if (state is DeleteEmployeeError) {
+              Navigator.of(dialogContext).pop();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.message),
+                  backgroundColor: Colors.red,
+                  behavior: SnackBarBehavior.floating,
+                ),
+              );
+            }
+          },
+          builder: (context, state) {
+            final isLoading = state is DeleteEmployeeLoading;
+            return AlertDialog(
+              title: const Text('تأكيد الحذف'),
+              content: Text('هل أنت متأكد من حذف الموظف "${employee.name}"؟'),
+              actions: [
+                TextButton(
+                  onPressed: isLoading
+                      ? null
+                      : () => Navigator.of(dialogContext).pop(),
+                  child: const Text('إلغاء'),
+                ),
+                TextButton(
+                  onPressed: isLoading
+                      ? null
+                      : () {
+                          context.read<DeleteEmployeeCubit>().deleteEmployee(
+                            employeeId: employee.id,
+                          );
+                        },
+                  child: isLoading
+                      ? const SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : const Text('حذف', style: TextStyle(color: Colors.red)),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

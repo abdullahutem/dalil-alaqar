@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/employee_entity.dart';
+import '../cubit/delete_employee_cubit.dart';
+import '../cubit/delete_employee_state.dart';
 import '../screens/add_employees_screen.dart';
 
 class EmployeeCard extends StatelessWidget {
   final EmployeeEntity employee;
   final VoidCallback? onUpdate;
+  final VoidCallback? onDelete;
 
-  const EmployeeCard({super.key, required this.employee, this.onUpdate});
+  const EmployeeCard({
+    super.key,
+    required this.employee,
+    this.onUpdate,
+    this.onDelete,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -85,25 +94,65 @@ class EmployeeCard extends StatelessWidget {
   void _showDeleteDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text('تأكيد الحذف'),
-        content: Text('هل أنت متأكد من حذف الموظف "${employee.name}"؟'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
-            child: const Text('إلغاء'),
-          ),
-          TextButton(
-            onPressed: () {
+      builder: (dialogContext) => BlocProvider(
+        create: (context) => DeleteEmployeeCubit.create(),
+        child: BlocConsumer<DeleteEmployeeCubit, DeleteEmployeeState>(
+          listener: (context, state) {
+            if (state is DeleteEmployeeSuccess) {
               Navigator.of(dialogContext).pop();
-              // TODO: Implement delete functionality
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('سيتم تنفيذ وظيفة الحذف قريباً')),
+                SnackBar(
+                  content: Text(state.message),
+                  backgroundColor: Colors.green,
+                  behavior: SnackBarBehavior.floating,
+                ),
               );
-            },
-            child: const Text('حذف', style: TextStyle(color: Colors.red)),
-          ),
-        ],
+              if (onDelete != null) {
+                onDelete!();
+              }
+            } else if (state is DeleteEmployeeError) {
+              Navigator.of(dialogContext).pop();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.message),
+                  backgroundColor: Colors.red,
+                  behavior: SnackBarBehavior.floating,
+                ),
+              );
+            }
+          },
+          builder: (context, state) {
+            final isLoading = state is DeleteEmployeeLoading;
+            return AlertDialog(
+              title: const Text('تأكيد الحذف'),
+              content: Text('هل أنت متأكد من حذف الموظف "${employee.name}"؟'),
+              actions: [
+                TextButton(
+                  onPressed: isLoading
+                      ? null
+                      : () => Navigator.of(dialogContext).pop(),
+                  child: const Text('إلغاء'),
+                ),
+                TextButton(
+                  onPressed: isLoading
+                      ? null
+                      : () {
+                          context.read<DeleteEmployeeCubit>().deleteEmployee(
+                            employeeId: employee.id,
+                          );
+                        },
+                  child: isLoading
+                      ? const SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : const Text('حذف', style: TextStyle(color: Colors.red)),
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

@@ -89,8 +89,7 @@ class _EmployeesTabletLayoutState extends State<EmployeesTabletLayout> {
             childAspectRatio: 2.4,
           ),
           itemCount: 6,
-          itemBuilder: (_, __) =>
-              const EmployeesSkeleton(isTablet: true),
+          itemBuilder: (_, __) => const EmployeesSkeleton(isTablet: true),
         ),
       ),
     );
@@ -110,8 +109,7 @@ class _EmployeesTabletLayoutState extends State<EmployeesTabletLayout> {
             SliverPadding(
               padding: const EdgeInsets.all(24),
               sliver: SliverGrid(
-                gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 16,
                   mainAxisSpacing: 16,
@@ -119,7 +117,14 @@ class _EmployeesTabletLayoutState extends State<EmployeesTabletLayout> {
                 ),
                 delegate: SliverChildBuilderDelegate(
                   (_, index) => EmployeeCardTablet(
-                      employee: state.employees[index]),
+                    employee: state.employees[index],
+                    onUpdate: () {
+                      context.read<EmployeesCubit>().refresh();
+                    },
+                    onDelete: () {
+                      context.read<EmployeesCubit>().refresh();
+                    },
+                  ),
                   childCount: state.employees.length,
                 ),
               ),
@@ -182,8 +187,7 @@ class _EmployeesTabletLayoutState extends State<EmployeesTabletLayout> {
           Text(
             'لا يوجد موظفون',
             style: theme.textTheme.titleMedium?.copyWith(
-              color:
-                  theme.textTheme.bodySmall?.color?.withValues(alpha: 0.6),
+              color: theme.textTheme.bodySmall?.color?.withValues(alpha: 0.6),
             ),
           ),
         ],
