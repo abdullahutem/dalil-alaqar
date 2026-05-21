@@ -92,6 +92,9 @@ class OfficePropertiesCubit extends Cubit<OfficePropertiesState> {
     final currentState = state;
     if (currentState is! OfficePropertiesSuccess) return false;
 
+    // Set deleting state
+    emit(currentState.copyWith(deletingPropertyId: propertyId));
+
     final result = await deletePropertyUseCase(propertyId);
 
     return result.fold(
@@ -122,6 +125,7 @@ class OfficePropertiesCubit extends Cubit<OfficePropertiesState> {
             total: currentState.total - 1,
             stats: currentState.stats,
             deleteSuccessMessage: message,
+            deletingPropertyId: null,
           ),
         );
 

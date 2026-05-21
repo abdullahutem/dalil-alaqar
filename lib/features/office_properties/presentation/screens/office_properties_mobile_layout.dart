@@ -45,7 +45,7 @@ class _OfficePropertiesMobileLayoutState
         if (state is OfficePropertiesLoading) {
           return ListView.builder(
             itemCount: 4,
-            itemBuilder: (_, __) => const OfficePropertiesSkeleton(),
+            itemBuilder: (_, _) => const OfficePropertiesSkeleton(),
           );
         }
 
@@ -65,24 +65,7 @@ class _OfficePropertiesMobileLayoutState
               itemBuilder: (_, index) {
                 // Stats widget at the top
                 if (index == 0) {
-                  if (state.stats != null) {
-                    return PropertyStatsWidget(
-                      stats: state.stats!,
-                      isLoading: state.isLoadingStats,
-                    );
-                  } else if (state.isLoadingStats) {
-                    return const PropertyStatsWidget(
-                      stats: PropertyStatsEntity(
-                        total: 0,
-                        available: 0,
-                        reserved: 0,
-                        sold: 0,
-                        rented: 0,
-                      ),
-                      isLoading: true,
-                    );
-                  }
-                  return const SizedBox.shrink();
+                  return _buildStatsWidget();
                 }
 
                 final propertyIndex = index - 1;
@@ -118,6 +101,42 @@ class _OfficePropertiesMobileLayoutState
           );
         }
 
+        return const SizedBox.shrink();
+      },
+    );
+  }
+
+  Widget _buildStatsWidget() {
+    return BlocBuilder<OfficePropertiesCubit, OfficePropertiesState>(
+      buildWhen: (previous, current) {
+        // Only rebuild when stats or isLoadingStats changes
+        if (previous is OfficePropertiesSuccess &&
+            current is OfficePropertiesSuccess) {
+          return previous.stats != current.stats ||
+              previous.isLoadingStats != current.isLoadingStats;
+        }
+        return true;
+      },
+      builder: (context, state) {
+        if (state is OfficePropertiesSuccess) {
+          if (state.stats != null) {
+            return PropertyStatsWidget(
+              stats: state.stats!,
+              isLoading: state.isLoadingStats,
+            );
+          } else if (state.isLoadingStats) {
+            return const PropertyStatsWidget(
+              stats: PropertyStatsEntity(
+                total: 0,
+                available: 0,
+                reserved: 0,
+                sold: 0,
+                rented: 0,
+              ),
+              isLoading: true,
+            );
+          }
+        }
         return const SizedBox.shrink();
       },
     );

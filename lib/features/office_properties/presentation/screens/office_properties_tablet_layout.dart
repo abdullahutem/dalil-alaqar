@@ -112,20 +112,7 @@ class _OfficePropertiesTabletLayoutState
           slivers: [
             // Stats widget at the top
             if (state.stats != null || state.isLoadingStats)
-              SliverToBoxAdapter(
-                child: PropertyStatsWidget(
-                  stats:
-                      state.stats ??
-                      const PropertyStatsEntity(
-                        total: 0,
-                        available: 0,
-                        reserved: 0,
-                        sold: 0,
-                        rented: 0,
-                      ),
-                  isLoading: state.isLoadingStats,
-                ),
-              ),
+              SliverToBoxAdapter(child: _buildStatsWidget()),
             SliverPadding(
               padding: const EdgeInsets.all(24),
               sliver: SliverGrid(
@@ -172,6 +159,37 @@ class _OfficePropertiesTabletLayoutState
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildStatsWidget() {
+    return BlocBuilder<OfficePropertiesCubit, OfficePropertiesState>(
+      buildWhen: (previous, current) {
+        // Only rebuild when stats or isLoadingStats changes
+        if (previous is OfficePropertiesSuccess &&
+            current is OfficePropertiesSuccess) {
+          return previous.stats != current.stats ||
+              previous.isLoadingStats != current.isLoadingStats;
+        }
+        return true;
+      },
+      builder: (context, state) {
+        if (state is OfficePropertiesSuccess) {
+          return PropertyStatsWidget(
+            stats:
+                state.stats ??
+                const PropertyStatsEntity(
+                  total: 0,
+                  available: 0,
+                  reserved: 0,
+                  sold: 0,
+                  rented: 0,
+                ),
+            isLoading: state.isLoadingStats,
+          );
+        }
+        return const SizedBox.shrink();
+      },
     );
   }
 

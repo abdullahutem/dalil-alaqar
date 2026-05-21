@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/office_property_entity.dart';
 import '../cubit/office_properties_cubit.dart';
+import '../cubit/office_properties_state.dart';
 import '../screens/property_details_screen.dart';
 import 'property_status_badge.dart';
 
@@ -107,21 +108,46 @@ class OfficePropertyCard extends StatelessWidget {
   }
 
   Widget _buildDeleteButton(BuildContext context) {
-    return Material(
-      color: Colors.red,
-      borderRadius: BorderRadius.circular(8),
-      child: InkWell(
-        onTap: () => _showDeleteConfirmation(context),
-        borderRadius: BorderRadius.circular(8),
-        child: Container(
-          padding: const EdgeInsets.all(6),
-          child: const Icon(
-            Icons.delete_outline,
-            color: Colors.white,
-            size: 18,
+    return BlocBuilder<OfficePropertiesCubit, OfficePropertiesState>(
+      buildWhen: (previous, current) {
+        // Only rebuild when deletingPropertyId changes for this property
+        if (previous is OfficePropertiesSuccess &&
+            current is OfficePropertiesSuccess) {
+          return previous.deletingPropertyId != current.deletingPropertyId;
+        }
+        return false;
+      },
+      builder: (context, state) {
+        final isDeleting =
+            state is OfficePropertiesSuccess &&
+            state.deletingPropertyId == property.id;
+
+        return Material(
+          color: Colors.red,
+          borderRadius: BorderRadius.circular(8),
+          child: InkWell(
+            onTap: isDeleting ? null : () => _showDeleteConfirmation(context),
+            borderRadius: BorderRadius.circular(8),
+            child: Container(
+              padding: const EdgeInsets.all(6),
+              child: isDeleting
+                  ? const SizedBox(
+                      width: 18,
+                      height: 18,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ),
+                    )
+                  : const Icon(
+                      Icons.delete_outline,
+                      color: Colors.white,
+                      size: 18,
+                    ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 

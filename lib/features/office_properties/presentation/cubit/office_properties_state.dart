@@ -27,6 +27,7 @@ class OfficePropertiesSuccess extends OfficePropertiesState {
   final PropertyStatsEntity? stats;
   final bool isLoadingStats;
   final String? deleteSuccessMessage;
+  final int? deletingPropertyId;
 
   const OfficePropertiesSuccess({
     required this.properties,
@@ -37,6 +38,7 @@ class OfficePropertiesSuccess extends OfficePropertiesState {
     this.stats,
     this.isLoadingStats = false,
     this.deleteSuccessMessage,
+    this.deletingPropertyId,
   });
 
   OfficePropertiesSuccess copyWith({
@@ -48,6 +50,7 @@ class OfficePropertiesSuccess extends OfficePropertiesState {
     PropertyStatsEntity? stats,
     bool? isLoadingStats,
     String? deleteSuccessMessage,
+    int? deletingPropertyId,
   }) {
     return OfficePropertiesSuccess(
       properties: properties ?? this.properties,
@@ -58,6 +61,7 @@ class OfficePropertiesSuccess extends OfficePropertiesState {
       stats: stats ?? this.stats,
       isLoadingStats: isLoadingStats ?? this.isLoadingStats,
       deleteSuccessMessage: deleteSuccessMessage ?? this.deleteSuccessMessage,
+      deletingPropertyId: deletingPropertyId,
     );
   }
 
@@ -71,6 +75,7 @@ class OfficePropertiesSuccess extends OfficePropertiesState {
     stats,
     isLoadingStats,
     deleteSuccessMessage,
+    deletingPropertyId,
   ];
 }
 
