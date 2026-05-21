@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/office_property_entity.dart';
 import '../cubit/office_properties_cubit.dart';
+import '../screens/property_details_screen.dart';
 import 'property_status_badge.dart';
 
 class OfficePropertyCardTablet extends StatelessWidget {
@@ -12,27 +13,39 @@ class OfficePropertyCardTablet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Container(
-      decoration: BoxDecoration(
-        color: theme.cardColor,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
+    return GestureDetector(
+      onTap: () => _navigateToDetails(context),
+      child: Container(
+        decoration: BoxDecoration(
+          color: theme.cardColor,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.08),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildImage(context),
+            Padding(
+              padding: const EdgeInsets.all(14),
+              child: _buildContent(context, theme),
+            ),
+          ],
+        ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildImage(context),
-          Padding(
-            padding: const EdgeInsets.all(14),
-            child: _buildContent(context, theme),
-          ),
-        ],
+    );
+  }
+
+  void _navigateToDetails(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => PropertyDetailsScreen(propertyId: property.id),
       ),
     );
   }

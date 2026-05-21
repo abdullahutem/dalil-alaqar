@@ -9,11 +9,16 @@ class PropertyDetailsResponseModel extends PropertyDetailsResponseEntity {
   });
 
   factory PropertyDetailsResponseModel.fromJson(Map<String, dynamic> json) {
+    final dataJson = json['data'];
+
+    if (dataJson == null) {
+      throw Exception('Property data is null in response');
+    }
+
     return PropertyDetailsResponseModel(
       success: (json['success'] as bool?) ?? false,
       message: json['message'] as String? ?? '',
-      data: PropertyDetailsModel.fromJson(
-          json['data'] as Map<String, dynamic>),
+      data: PropertyDetailsModel.fromJson(dataJson as Map<String, dynamic>),
     );
   }
 }

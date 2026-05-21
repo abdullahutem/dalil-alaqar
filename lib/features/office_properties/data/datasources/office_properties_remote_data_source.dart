@@ -57,8 +57,11 @@ class OfficePropertiesRemoteDataSourceImpl
     required int propertyId,
   }) async {
     final response = await apiConsumer.get(
-      EndPoints.propertyDetails(propertyId),
+      EndPoints.officePropertyDetails(propertyId),
     );
-    return PropertyDetailsResponseModel.fromJson(response['data']);
+
+    print('Property Details Response: $response');
+
+    return PropertyDetailsResponseModel.fromJson(response);
   }
 }
