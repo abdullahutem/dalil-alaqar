@@ -45,5 +45,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>نحتاج إلى الوصول إلى الكاميرا لالتقاط صورة الشعار</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>نحتاج إلى الوصول إلى المعرض لاختيار صورة الشعار</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>نحتاج إلى الوصول إلى المعرض لحفظ الصور</string>
 </dict>
 </plist>

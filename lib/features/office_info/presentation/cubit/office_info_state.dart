@@ -59,3 +59,31 @@ class OfficeInfoUpdateError extends OfficeInfoState {
   @override
   List<Object?> get props => [message];
 }
+
+class OfficeLogoUploading extends OfficeInfoState {
+  const OfficeLogoUploading();
+}
+
+class OfficeLogoUploadSuccess extends OfficeInfoState {
+  final String logo;
+  final String logoUrl;
+  final String message;
+
+  const OfficeLogoUploadSuccess({
+    required this.logo,
+    required this.logoUrl,
+    required this.message,
+  });
+
+  @override
+  List<Object?> get props => [logo, logoUrl, message];
+}
+
+class OfficeLogoUploadError extends OfficeInfoState {
+  final String message;
+
+  const OfficeLogoUploadError({required this.message});
+
+  @override
+  List<Object?> get props => [message];
+}

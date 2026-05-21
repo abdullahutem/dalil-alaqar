@@ -7,4 +7,7 @@ abstract class OfficeInfoRepository {
   Future<Either<Failure, OfficeInfoEntity>> updateOfficeInfo(
     Map<String, dynamic> updateData,
   );
+  Future<Either<Failure, Map<String, String>>> uploadOfficeLogo(
+    String filePath,
+  );
 }

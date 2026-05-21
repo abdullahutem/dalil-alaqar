@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/office_info_entity.dart';
+import '../cubit/office_info_cubit.dart';
+import '../screens/upload_office_logo_screen.dart';
 
 class OfficeInfoHeader extends StatelessWidget {
   final OfficeInfoEntity officeInfo;
@@ -50,22 +53,60 @@ class OfficeInfoHeader extends StatelessWidget {
 
   Widget _buildLogo(BuildContext context, double size) {
     final theme = Theme.of(context);
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        color: theme.colorScheme.primary.withValues(alpha: 0.12),
-        shape: BoxShape.circle,
-      ),
-      child: officeInfo.logoUrl != null
-          ? ClipOval(
-              child: Image.network(
-                officeInfo.logoUrl!,
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, _) => _defaultIcon(context, size),
+    return Stack(
+      children: [
+        Container(
+          width: size,
+          height: size,
+          decoration: BoxDecoration(
+            color: theme.colorScheme.primary.withValues(alpha: 0.12),
+            shape: BoxShape.circle,
+          ),
+          child: officeInfo.logoUrl != null
+              ? ClipOval(
+                  child: Image.network(
+                    officeInfo.logoUrl!,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => _defaultIcon(context, size),
+                  ),
+                )
+              : _defaultIcon(context, size),
+        ),
+        Positioned(
+          bottom: 0,
+          right: 0,
+          child: GestureDetector(
+            onTap: () async {
+              final cubit = context.read<OfficeInfoCubit>();
+              final result = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BlocProvider.value(
+                    value: cubit,
+                    child: UploadOfficeLogoScreen(officeInfo: officeInfo),
+                  ),
+                ),
+              );
+              if (result == true && context.mounted) {
+                cubit.refresh();
+              }
+            },
+            child: Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.primary,
+                shape: BoxShape.circle,
+                border: Border.all(color: theme.cardColor, width: 2),
               ),
-            )
-          : _defaultIcon(context, size),
+              child: Icon(
+                Icons.camera_alt,
+                size: size * 0.2,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -79,8 +120,9 @@ class OfficeInfoHeader extends StatelessWidget {
 
   Widget _buildNameSection(BuildContext context, ThemeData theme) {
     return Column(
-      crossAxisAlignment:
-          isTablet ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+      crossAxisAlignment: isTablet
+          ? CrossAxisAlignment.start
+          : CrossAxisAlignment.center,
       children: [
         Text(
           officeInfo.name,

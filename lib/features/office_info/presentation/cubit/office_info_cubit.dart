@@ -8,15 +8,18 @@ import '../../data/datasources/office_info_remote_data_source.dart';
 import '../../data/repositories/office_info_repository_impl.dart';
 import '../../domain/usecases/get_office_info_usecase.dart';
 import '../../domain/usecases/update_office_info_usecase.dart';
+import '../../domain/usecases/upload_office_logo_usecase.dart';
 import 'office_info_state.dart';
 
 class OfficeInfoCubit extends Cubit<OfficeInfoState> {
   final GetOfficeInfoUseCase getOfficeInfoUseCase;
   final UpdateOfficeInfoUseCase updateOfficeInfoUseCase;
+  final UploadOfficeLogoUseCase uploadOfficeLogoUseCase;
 
   OfficeInfoCubit({
     required this.getOfficeInfoUseCase,
     required this.updateOfficeInfoUseCase,
+    required this.uploadOfficeLogoUseCase,
   }) : super(const OfficeInfoInitial());
 
   factory OfficeInfoCubit.create() {
@@ -31,9 +34,11 @@ class OfficeInfoCubit extends Cubit<OfficeInfoState> {
     );
     final getUseCase = GetOfficeInfoUseCase(repository);
     final updateUseCase = UpdateOfficeInfoUseCase(repository);
+    final uploadLogoUseCase = UploadOfficeLogoUseCase(repository);
     return OfficeInfoCubit(
       getOfficeInfoUseCase: getUseCase,
       updateOfficeInfoUseCase: updateUseCase,
+      uploadOfficeLogoUseCase: uploadLogoUseCase,
     );
   }
 
@@ -61,6 +66,25 @@ class OfficeInfoCubit extends Cubit<OfficeInfoState> {
         );
         // Then immediately emit the regular success state so the main screen displays the data
         emit(OfficeInfoSuccess(officeInfo: officeInfo));
+      },
+    );
+  }
+
+  Future<void> uploadOfficeLogo(String filePath) async {
+    emit(const OfficeLogoUploading());
+    final result = await uploadOfficeLogoUseCase(filePath);
+    result.fold(
+      (failure) => emit(OfficeLogoUploadError(message: failure.errMessage)),
+      (logoData) {
+        emit(
+          OfficeLogoUploadSuccess(
+            logo: logoData['logo']!,
+            logoUrl: logoData['logo_url']!,
+            message: 'تم رفع شعار المكتب بنجاح',
+          ),
+        );
+        // Refresh office info to get the updated logo
+        getOfficeInfo();
       },
     );
   }

@@ -161,7 +161,7 @@ class DioConsumer extends ApiConsumer {
 
       var res = await dio.post(
         path,
-        data: isFormData ? FormData.fromMap(data) : data,
+        data: isFormData && data is! FormData ? FormData.fromMap(data) : data,
         queryParameters: queryParameters,
       );
 
@@ -246,16 +246,16 @@ class DioConsumer extends ApiConsumer {
 
       var res = await dio.put(
         path,
-        data: isFormData ? FormData.fromMap(data) : data,
+        data: isFormData && data is! FormData ? FormData.fromMap(data) : data,
         queryParameters: queryParameters,
       );
 
-      print('🟢 PATCH Request Completed Successfully');
+      print('🟢 PUT Request Completed Successfully');
       print('Response Type: ${res.data.runtimeType}');
 
       return res.data;
     } on DioException catch (e) {
-      print('🔴 PATCH Request Failed');
+      print('🔴 PUT Request Failed');
       print('Error: ${e.message}');
       handleDioException(e);
     }
@@ -275,7 +275,7 @@ class DioConsumer extends ApiConsumer {
 
       var res = await dio.patch(
         path,
-        data: isFormData ? FormData.fromMap(data) : data,
+        data: isFormData && data is! FormData ? FormData.fromMap(data) : data,
         queryParameters: queryParameters,
       );
 

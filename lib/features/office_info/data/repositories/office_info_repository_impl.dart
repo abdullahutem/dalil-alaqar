@@ -44,4 +44,20 @@ class OfficeInfoRepositoryImpl implements OfficeInfoRepository {
       return Left(ServerFailure(errMessage: e.errorModel.errorMessage));
     }
   }
+
+  @override
+  Future<Either<Failure, Map<String, String>>> uploadOfficeLogo(
+    String filePath,
+  ) async {
+    if (!(await networkInfo.isConnected ?? false)) {
+      return Left(Failure(errMessage: 'لا يوجد اتصال بالإنترنت'));
+    }
+
+    try {
+      final result = await remoteDataSource.uploadOfficeLogo(filePath);
+      return Right({'logo': result.logo, 'logo_url': result.logoUrl});
+    } on ServerException catch (e) {
+      return Left(ServerFailure(errMessage: e.errorModel.errorMessage));
+    }
+  }
 }

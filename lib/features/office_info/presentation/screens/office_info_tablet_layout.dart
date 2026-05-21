@@ -16,7 +16,9 @@ class OfficeInfoTabletLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<OfficeInfoCubit, OfficeInfoState>(
       builder: (context, state) {
-        if (state is OfficeInfoLoading || state is OfficeInfoUpdating) {
+        if (state is OfficeInfoLoading ||
+            state is OfficeInfoUpdating ||
+            state is OfficeLogoUploading) {
           return const OfficeInfoSkeleton(isTablet: true);
         }
 

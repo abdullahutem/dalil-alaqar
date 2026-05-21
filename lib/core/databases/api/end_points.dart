@@ -20,6 +20,7 @@ class EndPoints {
   static const String dashboard = 'office/dashboard';
   static const String employees = 'office/employees';
   static const String officeInfo = 'office/office';
+  static const String officeLogo = 'office/office/logo';
 }
 
 class ApiKey {
