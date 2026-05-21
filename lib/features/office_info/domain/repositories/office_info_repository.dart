@@ -1,0 +1,7 @@
+import 'package:dartz/dartz.dart';
+import 'package:dalil_alaqar/core/errors/failure.dart';
+import '../entities/office_info_entity.dart';
+
+abstract class OfficeInfoRepository {
+  Future<Either<Failure, OfficeInfoEntity>> getOfficeInfo();
+}

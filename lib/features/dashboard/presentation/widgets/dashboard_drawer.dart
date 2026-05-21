@@ -75,10 +75,9 @@ class DashboardDrawer extends StatelessWidget {
                 ),
                 _buildDrawerItem(
                   icon: Icons.add_circle,
-                  title: 'إضافة عقار جديد',
+                  title: 'حالة المكتب',
                   onTap: () {
-                    Navigator.pop(context);
-                    // Navigate to add property
+                    Navigator.pushNamed(context, AppRoutes.officeInfoScreen);
                   },
                 ),
                 const Divider(),
