@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../cubit/office_properties_cubit.dart';
 import '../cubit/property_details_cubit.dart';
 import 'property_details_mobile_layout.dart';
 import 'property_details_tablet_layout.dart';
@@ -11,9 +12,14 @@ class PropertyDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) =>
-          PropertyDetailsCubit.create()..getPropertyDetails(propertyId),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) =>
+              PropertyDetailsCubit.create()..getPropertyDetails(propertyId),
+        ),
+        BlocProvider(create: (_) => OfficePropertiesCubit.create()),
+      ],
       child: Scaffold(
         body: LayoutBuilder(
           builder: (context, constraints) {

@@ -1,4 +1,5 @@
 import 'package:dalil_alaqar/core/utils/breakpoints.dart';
+import 'package:dalil_alaqar/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dalil_alaqar/features/dashboard/presentation/cubit/dashboard_cubit.dart';
@@ -10,8 +11,13 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => DashboardCubit.create()..getDashboardStats(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => DashboardCubit.create()..getDashboardStats(),
+        ),
+        BlocProvider(create: (context) => ProfileCubit.create()),
+      ],
       child: const DashboardResponsive(),
     );
   }

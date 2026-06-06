@@ -27,6 +27,8 @@ class EndPoints {
   static String officePropertyDetails(int id) => 'office/properties/$id';
   static String updateOfficePropertyStatus(int id) =>
       'office/properties/$id/status';
+  static const String profile = 'office/user';
+  static const String updateProfile = 'office/profile';
 }
 
 class ApiKey {

@@ -6,11 +6,7 @@ class PropertyImageGallery extends StatefulWidget {
   final List<PropertyImageEntity> images;
   final String? baseUrl;
 
-  const PropertyImageGallery({
-    super.key,
-    required this.images,
-    this.baseUrl,
-  });
+  const PropertyImageGallery({super.key, required this.images, this.baseUrl});
 
   @override
   State<PropertyImageGallery> createState() => _PropertyImageGalleryState();
@@ -54,7 +50,7 @@ class _PropertyImageGalleryState extends State<PropertyImageGallery> {
                 onTap: () => _openFullScreen(context, images, index),
                 child: CachedNetworkImage(
                   imageUrl: _buildUrl(images[index].imagePath),
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                   placeholder: (_, __) => Container(
                     color: Theme.of(context).cardColor,
                     child: const Center(child: CircularProgressIndicator()),
@@ -72,8 +68,7 @@ class _PropertyImageGalleryState extends State<PropertyImageGallery> {
             bottom: 12,
             right: 12,
             child: Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.6),
                 borderRadius: BorderRadius.circular(20),
@@ -126,8 +121,11 @@ class _PropertyImageGalleryState extends State<PropertyImageGallery> {
                 color: Colors.black.withOpacity(0.5),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: const Icon(Icons.fullscreen,
-                  color: Colors.white, size: 20),
+              child: const Icon(
+                Icons.fullscreen,
+                color: Colors.white,
+                size: 20,
+              ),
             ),
           ),
         ),
@@ -151,7 +149,10 @@ class _PropertyImageGalleryState extends State<PropertyImageGallery> {
   }
 
   void _openFullScreen(
-      BuildContext context, List<PropertyImageEntity> images, int index) {
+    BuildContext context,
+    List<PropertyImageEntity> images,
+    int index,
+  ) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -234,8 +235,11 @@ class _FullScreenGalleryState extends State<_FullScreenGallery> {
                 fit: BoxFit.contain,
                 placeholder: (_, __) =>
                     const Center(child: CircularProgressIndicator()),
-                errorWidget: (_, __, ___) => const Icon(Icons.broken_image,
-                    color: Colors.white54, size: 64),
+                errorWidget: (_, __, ___) => const Icon(
+                  Icons.broken_image,
+                  color: Colors.white54,
+                  size: 64,
+                ),
               ),
             ),
           );
