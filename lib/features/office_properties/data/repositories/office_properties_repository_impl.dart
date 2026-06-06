@@ -21,6 +21,14 @@ class OfficePropertiesRepositoryImpl implements OfficePropertiesRepository {
   Future<Either<Failure, OfficePropertiesResponseEntity>> getOfficeProperties({
     required int page,
     required int perPage,
+    String? search,
+    int? propertyTypeId,
+    int? offerTypeId,
+    int? governorateId,
+    int? districtId,
+    int? neighborhoodId,
+    double? minPrice,
+    double? maxPrice,
   }) async {
     if (!(await networkInfo.isConnected ?? false)) {
       return Left(Failure(errMessage: 'لا يوجد اتصال بالإنترنت'));
@@ -30,6 +38,14 @@ class OfficePropertiesRepositoryImpl implements OfficePropertiesRepository {
       final result = await remoteDataSource.getOfficeProperties(
         page: page,
         perPage: perPage,
+        search: search,
+        propertyTypeId: propertyTypeId,
+        offerTypeId: offerTypeId,
+        governorateId: governorateId,
+        districtId: districtId,
+        neighborhoodId: neighborhoodId,
+        minPrice: minPrice,
+        maxPrice: maxPrice,
       );
       return Right(result);
     } on ServerException catch (e) {

@@ -8,6 +8,14 @@ abstract class OfficePropertiesRepository {
   Future<Either<Failure, OfficePropertiesResponseEntity>> getOfficeProperties({
     required int page,
     required int perPage,
+    String? search,
+    int? propertyTypeId,
+    int? offerTypeId,
+    int? governorateId,
+    int? districtId,
+    int? neighborhoodId,
+    double? minPrice,
+    double? maxPrice,
   });
 
   Future<Either<Failure, PropertyStatsEntity>> getPropertyStats();

@@ -20,6 +20,16 @@ class OfficePropertiesCubit extends Cubit<OfficePropertiesState> {
 
   static const int _perPage = 15;
 
+  // Search parameters
+  String? _search;
+  int? _propertyTypeId;
+  int? _offerTypeId;
+  int? _governorateId;
+  int? _districtId;
+  int? _neighborhoodId;
+  double? _minPrice;
+  double? _maxPrice;
+
   OfficePropertiesCubit({
     required this.getOfficePropertiesUseCase,
     required this.getPropertyStatsUseCase,
@@ -49,9 +59,42 @@ class OfficePropertiesCubit extends Cubit<OfficePropertiesState> {
     );
   }
 
-  Future<void> getOfficeProperties() async {
+  Future<void> getOfficeProperties({
+    bool refresh = false,
+    String? search,
+    int? propertyTypeId,
+    int? offerTypeId,
+    int? governorateId,
+    int? districtId,
+    int? neighborhoodId,
+    double? minPrice,
+    double? maxPrice,
+  }) async {
+    if (refresh) {
+      // Update search parameters
+      _search = search;
+      _propertyTypeId = propertyTypeId;
+      _offerTypeId = offerTypeId;
+      _governorateId = governorateId;
+      _districtId = districtId;
+      _neighborhoodId = neighborhoodId;
+      _minPrice = minPrice;
+      _maxPrice = maxPrice;
+    }
+
     emit(const OfficePropertiesLoading());
-    final result = await getOfficePropertiesUseCase(page: 1, perPage: _perPage);
+    final result = await getOfficePropertiesUseCase(
+      page: 1,
+      perPage: _perPage,
+      search: _search,
+      propertyTypeId: _propertyTypeId,
+      offerTypeId: _offerTypeId,
+      governorateId: _governorateId,
+      districtId: _districtId,
+      neighborhoodId: _neighborhoodId,
+      minPrice: _minPrice,
+      maxPrice: _maxPrice,
+    );
     result.fold(
       (failure) => emit(OfficePropertiesError(message: failure.errMessage)),
       (response) {
@@ -157,6 +200,14 @@ class OfficePropertiesCubit extends Cubit<OfficePropertiesState> {
     final result = await getOfficePropertiesUseCase(
       page: nextPage,
       perPage: _perPage,
+      search: _search,
+      propertyTypeId: _propertyTypeId,
+      offerTypeId: _offerTypeId,
+      governorateId: _governorateId,
+      districtId: _districtId,
+      neighborhoodId: _neighborhoodId,
+      minPrice: _minPrice,
+      maxPrice: _maxPrice,
     );
 
     result.fold(
@@ -181,7 +232,29 @@ class OfficePropertiesCubit extends Cubit<OfficePropertiesState> {
     );
   }
 
-  Future<void> refresh() => getOfficeProperties();
+  Future<void> refresh() => getOfficeProperties(refresh: true);
+
+  void clearFilters() {
+    _search = null;
+    _propertyTypeId = null;
+    _offerTypeId = null;
+    _governorateId = null;
+    _districtId = null;
+    _neighborhoodId = null;
+    _minPrice = null;
+    _maxPrice = null;
+    getOfficeProperties(refresh: true);
+  }
+
+  bool get hasActiveFilters =>
+      _search != null ||
+      _propertyTypeId != null ||
+      _offerTypeId != null ||
+      _governorateId != null ||
+      _districtId != null ||
+      _neighborhoodId != null ||
+      _minPrice != null ||
+      _maxPrice != null;
 
   Future<void> getPropertyDetails({required int propertyId}) async {
     emit(const PropertyDetailsLoading());

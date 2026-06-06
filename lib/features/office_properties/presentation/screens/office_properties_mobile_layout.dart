@@ -4,8 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/office_properties_cubit.dart';
 import '../cubit/office_properties_state.dart';
 import '../widgets/office_property_card.dart';
-import '../widgets/property_stats_widget.dart';
-import '../../domain/entities/property_stats_entity.dart';
 
 class OfficePropertiesMobileLayout extends StatefulWidget {
   const OfficePropertiesMobileLayout({super.key});
@@ -61,24 +59,15 @@ class _OfficePropertiesMobileLayoutState
               controller: _scrollController,
               padding: const EdgeInsets.symmetric(vertical: 8),
               itemCount:
-                  1 + state.properties.length + (state.isLoadingMore ? 1 : 0),
+                  state.properties.length + (state.isLoadingMore ? 1 : 0),
               itemBuilder: (_, index) {
-                // Stats widget at the top
-                if (index == 0) {
-                  return _buildStatsWidget();
-                }
-
-                final propertyIndex = index - 1;
-
-                if (propertyIndex >= state.properties.length) {
+                if (index >= state.properties.length) {
                   return const Padding(
                     padding: EdgeInsets.symmetric(vertical: 16),
                     child: Center(child: CircularProgressIndicator()),
                   );
                 }
-                return OfficePropertyCard(
-                  property: state.properties[propertyIndex],
-                );
+                return OfficePropertyCard(property: state.properties[index]);
               },
             ),
           );
@@ -101,42 +90,6 @@ class _OfficePropertiesMobileLayoutState
           );
         }
 
-        return const SizedBox.shrink();
-      },
-    );
-  }
-
-  Widget _buildStatsWidget() {
-    return BlocBuilder<OfficePropertiesCubit, OfficePropertiesState>(
-      buildWhen: (previous, current) {
-        // Only rebuild when stats or isLoadingStats changes
-        if (previous is OfficePropertiesSuccess &&
-            current is OfficePropertiesSuccess) {
-          return previous.stats != current.stats ||
-              previous.isLoadingStats != current.isLoadingStats;
-        }
-        return true;
-      },
-      builder: (context, state) {
-        if (state is OfficePropertiesSuccess) {
-          if (state.stats != null) {
-            return PropertyStatsWidget(
-              stats: state.stats!,
-              isLoading: state.isLoadingStats,
-            );
-          } else if (state.isLoadingStats) {
-            return const PropertyStatsWidget(
-              stats: PropertyStatsEntity(
-                total: 0,
-                available: 0,
-                reserved: 0,
-                sold: 0,
-                rented: 0,
-              ),
-              isLoading: true,
-            );
-          }
-        }
         return const SizedBox.shrink();
       },
     );

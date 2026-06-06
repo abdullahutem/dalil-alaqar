@@ -11,7 +11,26 @@ class GetOfficePropertiesUseCase {
   Future<Either<Failure, OfficePropertiesResponseEntity>> call({
     required int page,
     required int perPage,
+    String? search,
+    int? propertyTypeId,
+    int? offerTypeId,
+    int? governorateId,
+    int? districtId,
+    int? neighborhoodId,
+    double? minPrice,
+    double? maxPrice,
   }) {
-    return repository.getOfficeProperties(page: page, perPage: perPage);
+    return repository.getOfficeProperties(
+      page: page,
+      perPage: perPage,
+      search: search,
+      propertyTypeId: propertyTypeId,
+      offerTypeId: offerTypeId,
+      governorateId: governorateId,
+      districtId: districtId,
+      neighborhoodId: neighborhoodId,
+      minPrice: minPrice,
+      maxPrice: maxPrice,
+    );
   }
 }
