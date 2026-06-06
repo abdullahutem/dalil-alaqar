@@ -24,4 +24,9 @@ abstract class OfficePropertiesRepository {
   Future<Either<Failure, PropertyDetailsResponseEntity>> getPropertyDetails({
     required int propertyId,
   });
+
+  Future<Either<Failure, PropertyDetailsResponseEntity>> updatePropertyStatus({
+    required int propertyId,
+    required String status,
+  });
 }

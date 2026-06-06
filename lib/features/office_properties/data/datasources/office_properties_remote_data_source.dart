@@ -24,6 +24,11 @@ abstract class OfficePropertiesRemoteDataSource {
   Future<PropertyStatsModel> getPropertyStats();
 
   Future<String> deleteProperty(int propertyId);
+
+  Future<PropertyDetailsResponseModel> updatePropertyStatus({
+    required int propertyId,
+    required String status,
+  });
 }
 
 class OfficePropertiesRemoteDataSourceImpl
@@ -107,6 +112,21 @@ class OfficePropertiesRemoteDataSourceImpl
     );
 
     print('Property Details Response: $response');
+
+    return PropertyDetailsResponseModel.fromJson(response);
+  }
+
+  @override
+  Future<PropertyDetailsResponseModel> updatePropertyStatus({
+    required int propertyId,
+    required String status,
+  }) async {
+    final response = await apiConsumer.patch(
+      EndPoints.updateOfficePropertyStatus(propertyId),
+      data: {'status': status},
+    );
+
+    print('Update Property Status Response: $response');
 
     return PropertyDetailsResponseModel.fromJson(response);
   }

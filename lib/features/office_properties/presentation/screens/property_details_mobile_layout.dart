@@ -5,6 +5,7 @@ import '../../domain/entities/property_details_entity.dart';
 import '../cubit/property_details_cubit.dart';
 import '../cubit/property_details_state.dart';
 import '../widgets/property_image_gallery.dart';
+import '../widgets/property_status_dropdown.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PropertyDetailsMobileLayout extends StatelessWidget {
@@ -256,15 +257,38 @@ class _PropertyView extends StatelessWidget {
               theme,
             ),
             const Divider(height: 24),
-            _buildInfoRow(
-              Icons.sell_outlined,
-              'الحالة',
-              _getStatusText(property.status ?? ''),
-              theme,
-            ),
+            _buildStatusRow(context, theme),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildStatusRow(BuildContext context, ThemeData theme) {
+    return Row(
+      children: [
+        Icon(Icons.sell_outlined, size: 20, color: theme.hintColor),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'الحالة',
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.hintColor,
+                ),
+              ),
+              const SizedBox(height: 6),
+              PropertyStatusDropdown(
+                propertyId: property.id,
+                currentStatus: property.status ?? 'available',
+                compact: false,
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -486,21 +510,6 @@ class _PropertyView extends StatelessWidget {
       return '$s ألف ر.ي';
     }
     return '${price.toInt()} ر.ي';
-  }
-
-  String _getStatusText(String status) {
-    switch (status) {
-      case 'available':
-        return 'متاح';
-      case 'reserved':
-        return 'محجوز';
-      case 'sold':
-        return 'مباع';
-      case 'rented':
-        return 'مؤجر';
-      default:
-        return status;
-    }
   }
 
   Future<void> _launchUrl(String url) async {

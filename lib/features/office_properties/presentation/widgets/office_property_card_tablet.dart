@@ -4,7 +4,7 @@ import '../../domain/entities/office_property_entity.dart';
 import '../cubit/office_properties_cubit.dart';
 import '../cubit/office_properties_state.dart';
 import '../screens/property_details_screen.dart';
-import 'property_status_badge.dart';
+import 'property_status_dropdown.dart';
 
 class OfficePropertyCardTablet extends StatelessWidget {
   final OfficePropertyEntity property;
@@ -94,7 +94,11 @@ class OfficePropertyCardTablet extends StatelessWidget {
               left: 10,
               child: Row(
                 children: [
-                  PropertyStatusBadge(status: property.status, fontSize: 12),
+                  PropertyStatusDropdown(
+                    propertyId: property.id,
+                    currentStatus: property.status,
+                    compact: true,
+                  ),
                   const SizedBox(width: 8),
                   _buildDeleteButton(context),
                 ],

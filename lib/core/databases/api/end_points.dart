@@ -25,6 +25,8 @@ class EndPoints {
   static const String officePropertiesStats = 'office/properties/stats';
   static String deleteOfficeProperty(int id) => 'office/properties/$id';
   static String officePropertyDetails(int id) => 'office/properties/$id';
+  static String updateOfficePropertyStatus(int id) =>
+      'office/properties/$id/status';
 }
 
 class ApiKey {

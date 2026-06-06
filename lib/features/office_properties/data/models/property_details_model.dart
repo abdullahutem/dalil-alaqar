@@ -1,20 +1,28 @@
 import '../../domain/entities/property_details_entity.dart';
 
-class PropertyImageModel extends PropertyImageEntity {
-  const PropertyImageModel({
-    required super.id,
-    required super.propertyId,
-    required super.imagePath,
-    required super.isPrimary,
-    required super.order,
-    super.createdAt,
-    super.updatedAt,
-  });
+class PropertyImageDetailsModel extends PropertyImageEntity {
+  const PropertyImageDetailsModel({
+    required int id,
+    required int propertyId,
+    required String imagePath,
+    required bool isPrimary,
+    required int order,
+    String? createdAt,
+    String? updatedAt,
+  }) : super(
+         id: id,
+         propertyId: propertyId,
+         imagePath: imagePath,
+         isPrimary: isPrimary,
+         order: order,
+         createdAt: createdAt,
+         updatedAt: updatedAt,
+       );
 
-  factory PropertyImageModel.fromJson(Map<String, dynamic> json) {
-    return PropertyImageModel(
+  factory PropertyImageDetailsModel.fromJson(Map<String, dynamic> json) {
+    return PropertyImageDetailsModel(
       id: json['id'] as int,
-      propertyId: json['property_id'] as int,
+      propertyId: json['property_id'] as int? ?? 0,
       imagePath: json['image_path'] as String,
       isPrimary: (json['is_primary'] as bool?) ?? false,
       order: (json['order'] as int?) ?? 0,
@@ -25,11 +33,7 @@ class PropertyImageModel extends PropertyImageEntity {
 }
 
 class PropertyTypeModel extends PropertyTypeEntity {
-  const PropertyTypeModel({
-    required super.id,
-    required super.name,
-    super.icon,
-  });
+  const PropertyTypeModel({required super.id, required super.name, super.icon});
 
   factory PropertyTypeModel.fromJson(Map<String, dynamic> json) {
     return PropertyTypeModel(
@@ -44,10 +48,7 @@ class OfferTypeModel extends OfferTypeEntity {
   const OfferTypeModel({required super.id, required super.name});
 
   factory OfferTypeModel.fromJson(Map<String, dynamic> json) {
-    return OfferTypeModel(
-      id: json['id'] as int,
-      name: json['name'] as String,
-    );
+    return OfferTypeModel(id: json['id'] as int, name: json['name'] as String);
   }
 }
 
@@ -134,8 +135,10 @@ class PropertyDetailsModel extends PropertyDetailsEntity {
       districtId: json['district_id'] as int?,
       neighborhoodId: json['neighborhood_id'] as int?,
       address: json['address'] as String?,
-      latitude: json['latitude'] as String?,
-      longitude: json['longitude'] as String?,
+      latitude: json['latitude'] != null ? json['latitude'].toString() : null,
+      longitude: json['longitude'] != null
+          ? json['longitude'].toString()
+          : null,
       status: json['status'] as String?,
       viewsCount: json['views_count'] as int?,
       publishedAt: json['published_at'] as String?,
@@ -143,33 +146,39 @@ class PropertyDetailsModel extends PropertyDetailsEntity {
       updatedAt: json['updated_at'] as String?,
       propertyType: json['property_type'] != null
           ? PropertyTypeModel.fromJson(
-              json['property_type'] as Map<String, dynamic>)
+              json['property_type'] as Map<String, dynamic>,
+            )
           : null,
       offerType: json['offer_type'] != null
-          ? OfferTypeModel.fromJson(
-              json['offer_type'] as Map<String, dynamic>)
+          ? OfferTypeModel.fromJson(json['offer_type'] as Map<String, dynamic>)
           : null,
       governorate: json['governorate'] != null
           ? PropertyGovernorateModel.fromJson(
-              json['governorate'] as Map<String, dynamic>)
+              json['governorate'] as Map<String, dynamic>,
+            )
           : null,
       district: json['district'] != null
           ? PropertyDistrictModel.fromJson(
-              json['district'] as Map<String, dynamic>)
+              json['district'] as Map<String, dynamic>,
+            )
           : null,
       neighborhood: json['neighborhood'] != null
           ? PropertyNeighborhoodModel.fromJson(
-              json['neighborhood'] as Map<String, dynamic>)
+              json['neighborhood'] as Map<String, dynamic>,
+            )
           : null,
-      images: (json['images'] as List<dynamic>?)
-              ?.map((e) =>
-                  PropertyImageModel.fromJson(e as Map<String, dynamic>))
+      images:
+          (json['images'] as List<dynamic>?)
+              ?.map(
+                (e) => PropertyImageDetailsModel.fromJson(
+                  e as Map<String, dynamic>,
+                ),
+              )
               .toList() ??
           [],
-      primaryImage: json['primary_image'] != null
-          ? PropertyImageModel.fromJson(
-              json['primary_image'] as Map<String, dynamic>)
-          : null,
+      // primary_image is a string path in the API, not an object
+      // Use the first image marked as primary from the images list
+      primaryImage: null,
     );
   }
 }

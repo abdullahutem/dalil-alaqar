@@ -28,6 +28,8 @@ class OfficePropertiesSuccess extends OfficePropertiesState {
   final bool isLoadingStats;
   final String? deleteSuccessMessage;
   final int? deletingPropertyId;
+  final String? updateStatusSuccessMessage;
+  final int? updatingStatusPropertyId;
 
   const OfficePropertiesSuccess({
     required this.properties,
@@ -39,6 +41,8 @@ class OfficePropertiesSuccess extends OfficePropertiesState {
     this.isLoadingStats = false,
     this.deleteSuccessMessage,
     this.deletingPropertyId,
+    this.updateStatusSuccessMessage,
+    this.updatingStatusPropertyId,
   });
 
   OfficePropertiesSuccess copyWith({
@@ -51,6 +55,8 @@ class OfficePropertiesSuccess extends OfficePropertiesState {
     bool? isLoadingStats,
     String? deleteSuccessMessage,
     int? deletingPropertyId,
+    String? updateStatusSuccessMessage,
+    int? updatingStatusPropertyId,
   }) {
     return OfficePropertiesSuccess(
       properties: properties ?? this.properties,
@@ -62,6 +68,9 @@ class OfficePropertiesSuccess extends OfficePropertiesState {
       isLoadingStats: isLoadingStats ?? this.isLoadingStats,
       deleteSuccessMessage: deleteSuccessMessage ?? this.deleteSuccessMessage,
       deletingPropertyId: deletingPropertyId,
+      updateStatusSuccessMessage:
+          updateStatusSuccessMessage ?? this.updateStatusSuccessMessage,
+      updatingStatusPropertyId: updatingStatusPropertyId,
     );
   }
 
@@ -76,6 +85,8 @@ class OfficePropertiesSuccess extends OfficePropertiesState {
     isLoadingStats,
     deleteSuccessMessage,
     deletingPropertyId,
+    updateStatusSuccessMessage,
+    updatingStatusPropertyId,
   ];
 }
 
@@ -165,4 +176,54 @@ class PropertyDetailsError extends OfficePropertiesState {
 
   @override
   List<Object?> get props => [message];
+}
+
+class OfficePropertiesUpdateStatusError extends OfficePropertiesState {
+  final String message;
+  final List<OfficePropertyEntity> properties;
+  final int currentPage;
+  final int lastPage;
+  final int total;
+  final PropertyStatsEntity? stats;
+
+  const OfficePropertiesUpdateStatusError({
+    required this.message,
+    required this.properties,
+    required this.currentPage,
+    required this.lastPage,
+    required this.total,
+    this.stats,
+  });
+
+  @override
+  List<Object?> get props => [
+    message,
+    properties,
+    currentPage,
+    lastPage,
+    total,
+    stats,
+  ];
+}
+
+class PropertyDetailsUpdatingStatus extends OfficePropertiesState {
+  final PropertyDetailsEntity property;
+
+  const PropertyDetailsUpdatingStatus({required this.property});
+
+  @override
+  List<Object?> get props => [property];
+}
+
+class PropertyDetailsUpdateStatusError extends OfficePropertiesState {
+  final String message;
+  final PropertyDetailsEntity property;
+
+  const PropertyDetailsUpdateStatusError({
+    required this.message,
+    required this.property,
+  });
+
+  @override
+  List<Object?> get props => [message, property];
 }

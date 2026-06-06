@@ -1,6 +1,7 @@
 import 'package:dalil_alaqar/core/connection/network_info.dart';
 import 'package:dalil_alaqar/core/databases/api/api_consumer.dart';
 import 'package:dalil_alaqar/features/office_properties/domain/usecases/get_property_details_usecase.dart';
+import 'package:dalil_alaqar/features/office_properties/domain/usecases/update_property_status_usecase.dart';
 import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +18,7 @@ class OfficePropertiesCubit extends Cubit<OfficePropertiesState> {
   final GetPropertyStatsUseCase getPropertyStatsUseCase;
   final DeletePropertyUseCase deletePropertyUseCase;
   final GetPropertyDetailsUseCase getPropertyDetailsUseCase;
+  final UpdatePropertyStatusUseCase updatePropertyStatusUseCase;
 
   static const int _perPage = 15;
 
@@ -35,6 +37,7 @@ class OfficePropertiesCubit extends Cubit<OfficePropertiesState> {
     required this.getPropertyStatsUseCase,
     required this.deletePropertyUseCase,
     required this.getPropertyDetailsUseCase,
+    required this.updatePropertyStatusUseCase,
   }) : super(const OfficePropertiesInitial());
 
   factory OfficePropertiesCubit.create() {
@@ -51,11 +54,13 @@ class OfficePropertiesCubit extends Cubit<OfficePropertiesState> {
     final getStatsUseCase = GetPropertyStatsUseCase(repository);
     final deleteUseCase = DeletePropertyUseCase(repository);
     final getPropertyDetailsUseCase = GetPropertyDetailsUseCase(repository);
+    final updateStatusUseCase = UpdatePropertyStatusUseCase(repository);
     return OfficePropertiesCubit(
       getOfficePropertiesUseCase: getPropertiesUseCase,
       getPropertyStatsUseCase: getStatsUseCase,
       deletePropertyUseCase: deleteUseCase,
       getPropertyDetailsUseCase: getPropertyDetailsUseCase,
+      updatePropertyStatusUseCase: updateStatusUseCase,
     );
   }
 
@@ -267,4 +272,100 @@ class OfficePropertiesCubit extends Cubit<OfficePropertiesState> {
 
   Future<void> refreshPropertyDetails({required int propertyId}) =>
       getPropertyDetails(propertyId: propertyId);
+
+  Future<bool> updatePropertyStatus({
+    required int propertyId,
+    required String status,
+  }) async {
+    final currentState = state;
+
+    // If we're in property details view, handle that separately
+    if (currentState is PropertyDetailsSuccess) {
+      emit(PropertyDetailsUpdatingStatus(property: currentState.property));
+
+      final result = await updatePropertyStatusUseCase(
+        propertyId: propertyId,
+        status: status,
+      );
+
+      return result.fold(
+        (failure) {
+          emit(
+            PropertyDetailsUpdateStatusError(
+              message: failure.errMessage,
+              property: currentState.property,
+            ),
+          );
+          return false;
+        },
+        (response) {
+          emit(PropertyDetailsSuccess(property: response.data));
+          return true;
+        },
+      );
+    }
+
+    // If we're in the list view
+    if (currentState is OfficePropertiesSuccess) {
+      // Mark the property as updating
+      emit(currentState.copyWith(updatingStatusPropertyId: propertyId));
+
+      final result = await updatePropertyStatusUseCase(
+        propertyId: propertyId,
+        status: status,
+      );
+
+      return result.fold(
+        (failure) {
+          emit(
+            OfficePropertiesUpdateStatusError(
+              message: failure.errMessage,
+              properties: currentState.properties,
+              currentPage: currentState.currentPage,
+              lastPage: currentState.lastPage,
+              total: currentState.total,
+              stats: currentState.stats,
+            ),
+          );
+          return false;
+        },
+        (response) {
+          // Update the property in the list with the new status
+          final updatedProperties = currentState.properties.map((property) {
+            if (property.id == propertyId) {
+              return property.copyWith(status: response.data.status);
+            }
+            return property;
+          }).toList();
+
+          emit(
+            OfficePropertiesSuccess(
+              properties: updatedProperties,
+              currentPage: currentState.currentPage,
+              lastPage: currentState.lastPage,
+              total: currentState.total,
+              stats: currentState.stats,
+              updateStatusSuccessMessage: response.message,
+              updatingStatusPropertyId: null,
+            ),
+          );
+
+          // Refresh stats after status update
+          getPropertyStats();
+
+          return true;
+        },
+      );
+    }
+
+    return false;
+  }
+
+  void clearUpdateStatusMessage() {
+    final currentState = state;
+    if (currentState is OfficePropertiesSuccess &&
+        currentState.updateStatusSuccessMessage != null) {
+      emit(currentState.copyWith(updateStatusSuccessMessage: ''));
+    }
+  }
 }

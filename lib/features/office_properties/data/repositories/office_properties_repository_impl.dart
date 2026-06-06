@@ -98,4 +98,24 @@ class OfficePropertiesRepositoryImpl implements OfficePropertiesRepository {
       return Left(ServerFailure(errMessage: e.errorModel.errorMessage));
     }
   }
+
+  @override
+  Future<Either<Failure, PropertyDetailsResponseEntity>> updatePropertyStatus({
+    required int propertyId,
+    required String status,
+  }) async {
+    if (!(await networkInfo.isConnected ?? false)) {
+      return Left(Failure(errMessage: 'لا يوجد اتصال بالإنترنت'));
+    }
+
+    try {
+      final result = await remoteDataSource.updatePropertyStatus(
+        propertyId: propertyId,
+        status: status,
+      );
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(errMessage: e.errorModel.errorMessage));
+    }
+  }
 }
