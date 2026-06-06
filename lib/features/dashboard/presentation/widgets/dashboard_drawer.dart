@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dalil_alaqar/core/databases/api/end_points.dart';
 import 'package:dalil_alaqar/core/routes/app_routes.dart';
+import 'package:dalil_alaqar/core/theme/app_colors.dart';
 import 'package:dalil_alaqar/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:dalil_alaqar/features/profile/presentation/cubit/profile_state.dart';
 import 'package:dalil_alaqar/features/profile/presentation/widgets/profile_header_skeleton.dart';
@@ -45,7 +46,7 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
                   ),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Colors.blue[700]!, Colors.blue[500]!],
+                      colors: [AppColors.primary, AppColors.primaryLight],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
@@ -251,10 +252,9 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
                 const Divider(),
                 _buildDrawerItem(
                   icon: Icons.card_membership,
-                  title: 'الاشتراك',
+                  title: 'الباقات والاشتراكات',
                   onTap: () {
-                    Navigator.pop(context);
-                    // Navigate to subscription
+                    Navigator.pushNamed(context, AppRoutes.plansScreen);
                   },
                 ),
                 _buildDrawerItem(

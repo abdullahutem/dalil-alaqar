@@ -29,6 +29,8 @@ class EndPoints {
       'office/properties/$id/status';
   static const String profile = 'office/user';
   static const String updateProfile = 'office/profile';
+  static const String plans = 'office/plans';
+  static String planDetails(int id) => 'office/plans/$id';
 }
 
 class ApiKey {

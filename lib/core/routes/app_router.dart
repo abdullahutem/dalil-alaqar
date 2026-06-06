@@ -6,6 +6,9 @@ import 'package:dalil_alaqar/features/main/presentation/screens/main_screen.dart
 import 'package:dalil_alaqar/features/office_details/presentation/screens/office_details_screen.dart';
 import 'package:dalil_alaqar/features/office_info/presentation/screens/office_info_screen.dart';
 import 'package:dalil_alaqar/features/office_properties/presentation/screens/office_properties_screen.dart';
+import 'package:dalil_alaqar/features/plans/domain/entities/plan_entity.dart';
+import 'package:dalil_alaqar/features/plans/presentation/screens/plan_details_screen.dart';
+import 'package:dalil_alaqar/features/plans/presentation/screens/plans_screen.dart';
 import 'package:dalil_alaqar/features/profile/presentation/screens/profile_screen.dart';
 import 'package:dalil_alaqar/features/properties/presentation/screens/property_details_screen.dart';
 import 'package:dalil_alaqar/features/splash/presentation/screens/splash_screen.dart';
@@ -34,6 +37,13 @@ class AppRouter {
         );
       case AppRoutes.profileScreen:
         return MaterialPageRoute(builder: (context) => const ProfileScreen());
+      case AppRoutes.plansScreen:
+        return MaterialPageRoute(builder: (context) => const PlansScreen());
+      case AppRoutes.planDetailsScreen:
+        final plan = settings.arguments as PlanEntity;
+        return MaterialPageRoute(
+          builder: (context) => PlanDetailsScreen(plan: plan),
+        );
       case AppRoutes.propertyDetailsScreen:
         final propertyId = settings.arguments as int;
         return MaterialPageRoute(
