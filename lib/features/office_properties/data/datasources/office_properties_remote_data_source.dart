@@ -1,8 +1,10 @@
 import 'package:dalil_alaqar/core/databases/api/api_consumer.dart';
 import 'package:dalil_alaqar/features/office_properties/data/models/property_details_response_model.dart';
+import 'package:dio/dio.dart';
 import '../../../../core/databases/api/end_points.dart';
 import '../models/office_properties_response_model.dart';
 import '../models/property_stats_model.dart';
+import '../models/upload_images_response_model.dart';
 
 abstract class OfficePropertiesRemoteDataSource {
   Future<OfficePropertiesResponseModel> getOfficeProperties({
@@ -28,6 +30,21 @@ abstract class OfficePropertiesRemoteDataSource {
   Future<PropertyDetailsResponseModel> updatePropertyStatus({
     required int propertyId,
     required String status,
+  });
+
+  Future<UploadImagesResponseModel> uploadPropertyImages({
+    required int propertyId,
+    required List<String> imagePaths,
+  });
+
+  Future<String> setPrimaryImage({
+    required int propertyId,
+    required int imageId,
+  });
+
+  Future<String> deletePropertyImage({
+    required int propertyId,
+    required int imageId,
   });
 }
 
@@ -129,5 +146,60 @@ class OfficePropertiesRemoteDataSourceImpl
     print('Update Property Status Response: $response');
 
     return PropertyDetailsResponseModel.fromJson(response);
+  }
+
+  @override
+  Future<UploadImagesResponseModel> uploadPropertyImages({
+    required int propertyId,
+    required List<String> imagePaths,
+  }) async {
+    // Create FormData with multiple images
+    final formData = FormData();
+
+    for (final imagePath in imagePaths) {
+      final file = await MultipartFile.fromFile(
+        imagePath,
+        filename: imagePath.split('/').last,
+      );
+      formData.files.add(MapEntry('images[]', file));
+    }
+
+    final response = await apiConsumer.post(
+      EndPoints.uploadPropertyImages(propertyId),
+      data: formData,
+      isFormData: true,
+    );
+
+    print('Upload Images Response: $response');
+
+    return UploadImagesResponseModel.fromJson(response);
+  }
+
+  @override
+  Future<String> setPrimaryImage({
+    required int propertyId,
+    required int imageId,
+  }) async {
+    final response = await apiConsumer.post(
+      EndPoints.setPrimaryImage(propertyId, imageId),
+    );
+
+    print('Set Primary Image Response: $response');
+
+    return response['message'] ?? 'تم تعيين الصورة كرئيسية بنجاح';
+  }
+
+  @override
+  Future<String> deletePropertyImage({
+    required int propertyId,
+    required int imageId,
+  }) async {
+    final response = await apiConsumer.delete(
+      EndPoints.deletePropertyImage(propertyId, imageId),
+    );
+
+    print('Delete Property Image Response: $response');
+
+    return response['message'] ?? 'تم حذف الصورة بنجاح';
   }
 }

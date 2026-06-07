@@ -77,6 +77,8 @@ class PropertiesSection extends StatelessWidget {
               }
 
               if (state is PropertiesError) {
+                debugPrint("===========================${state.message}");
+
                 return Container(
                   height: isTablet ? 320 : 280,
                   margin: EdgeInsets.symmetric(horizontal: isTablet ? 24 : 16),

@@ -2,6 +2,7 @@ import 'package:dalil_alaqar/core/connection/network_info.dart';
 import 'package:dalil_alaqar/core/errors/expentions.dart';
 import 'package:dalil_alaqar/core/errors/failure.dart';
 import 'package:dalil_alaqar/features/office_properties/domain/entities/property_details_response_entity.dart';
+import 'package:dalil_alaqar/features/office_properties/domain/entities/upload_images_response_entity.dart';
 import 'package:dartz/dartz.dart';
 import '../../domain/entities/office_properties_response_entity.dart';
 import '../../domain/entities/property_stats_entity.dart';
@@ -114,6 +115,66 @@ class OfficePropertiesRepositoryImpl implements OfficePropertiesRepository {
         status: status,
       );
       return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(errMessage: e.errorModel.errorMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UploadImagesResponseEntity>> uploadPropertyImages({
+    required int propertyId,
+    required List<String> imagePaths,
+  }) async {
+    if (!(await networkInfo.isConnected ?? false)) {
+      return Left(Failure(errMessage: 'لا يوجد اتصال بالإنترنت'));
+    }
+
+    try {
+      final result = await remoteDataSource.uploadPropertyImages(
+        propertyId: propertyId,
+        imagePaths: imagePaths,
+      );
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(errMessage: e.errorModel.errorMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> setPrimaryImage({
+    required int propertyId,
+    required int imageId,
+  }) async {
+    if (!(await networkInfo.isConnected ?? false)) {
+      return Left(Failure(errMessage: 'لا يوجد اتصال بالإنترنت'));
+    }
+
+    try {
+      final message = await remoteDataSource.setPrimaryImage(
+        propertyId: propertyId,
+        imageId: imageId,
+      );
+      return Right(message);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(errMessage: e.errorModel.errorMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> deletePropertyImage({
+    required int propertyId,
+    required int imageId,
+  }) async {
+    if (!(await networkInfo.isConnected ?? false)) {
+      return Left(Failure(errMessage: 'لا يوجد اتصال بالإنترنت'));
+    }
+
+    try {
+      final message = await remoteDataSource.deletePropertyImage(
+        propertyId: propertyId,
+        imageId: imageId,
+      );
+      return Right(message);
     } on ServerException catch (e) {
       return Left(ServerFailure(errMessage: e.errorModel.errorMessage));
     }

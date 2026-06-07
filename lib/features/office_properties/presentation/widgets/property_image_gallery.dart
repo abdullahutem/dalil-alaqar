@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/property_details_entity.dart';
+import '../cubit/property_details_cubit.dart';
 
 class PropertyImageGallery extends StatefulWidget {
   final List<PropertyImageEntity> images;
   final String? baseUrl;
+  final int? propertyId;
 
-  const PropertyImageGallery({super.key, required this.images, this.baseUrl});
+  const PropertyImageGallery({
+    super.key,
+    required this.images,
+    this.baseUrl,
+    this.propertyId,
+  });
 
   @override
   State<PropertyImageGallery> createState() => _PropertyImageGalleryState();
@@ -156,10 +164,14 @@ class _PropertyImageGalleryState extends State<PropertyImageGallery> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => _FullScreenGallery(
-          images: images,
-          initialIndex: index,
-          baseUrl: widget.baseUrl,
+        builder: (_) => BlocProvider.value(
+          value: context.read<PropertyDetailsCubit>(),
+          child: _FullScreenGallery(
+            images: images,
+            initialIndex: index,
+            baseUrl: widget.baseUrl,
+            propertyId: widget.propertyId,
+          ),
         ),
       ),
     );
@@ -176,11 +188,13 @@ class _FullScreenGallery extends StatefulWidget {
   final List<PropertyImageEntity> images;
   final int initialIndex;
   final String? baseUrl;
+  final int? propertyId;
 
   const _FullScreenGallery({
     required this.images,
     required this.initialIndex,
     this.baseUrl,
+    this.propertyId,
   });
 
   @override
@@ -212,6 +226,10 @@ class _FullScreenGalleryState extends State<_FullScreenGallery> {
 
   @override
   Widget build(BuildContext context) {
+    final currentImage = widget.images[_current];
+    final canSetPrimary = widget.propertyId != null && !currentImage.isPrimary;
+    final canDelete = widget.propertyId != null && widget.images.length > 1;
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -222,6 +240,51 @@ class _FullScreenGalleryState extends State<_FullScreenGallery> {
           style: const TextStyle(color: Colors.white),
         ),
         centerTitle: true,
+        actions: [
+          if (canSetPrimary)
+            IconButton(
+              icon: const Icon(Icons.star_border, color: Colors.white),
+              tooltip: 'تعيين كصورة رئيسية',
+              onPressed: () => _setPrimaryImage(context),
+            ),
+          if (canDelete)
+            IconButton(
+              icon: const Icon(Icons.delete_outline, color: Colors.red),
+              tooltip: 'حذف الصورة',
+              onPressed: () => _deleteImage(context),
+            ),
+          if (currentImage.isPrimary)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: Center(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.amber,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.star, color: Colors.white, size: 16),
+                      SizedBox(width: 4),
+                      Text(
+                        'رئيسية',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+        ],
       ),
       body: PageView.builder(
         controller: _ctrl,
@@ -246,5 +309,109 @@ class _FullScreenGalleryState extends State<_FullScreenGallery> {
         },
       ),
     );
+  }
+
+  Future<void> _setPrimaryImage(BuildContext context) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('تعيين صورة رئيسية'),
+        content: const Text('هل تريد تعيين هذه الصورة كصورة رئيسية للعقار؟'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: const Text('إلغاء'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: const Text('تعيين'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true && context.mounted) {
+      final cubit = context.read<PropertyDetailsCubit>();
+      final currentImage = widget.images[_current];
+
+      final success = await cubit.setPrimaryImage(
+        widget.propertyId!,
+        currentImage.id,
+      );
+
+      if (success && context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('تم تعيين الصورة كرئيسية بنجاح'),
+            backgroundColor: Colors.green,
+            duration: Duration(seconds: 2),
+          ),
+        );
+        // Just update the UI, don't close the fullscreen view
+        // The gallery will update automatically through BlocListener
+      } else if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('فشل تعيين الصورة كرئيسية'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> _deleteImage(BuildContext context) async {
+    final currentImage = widget.images[_current];
+
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('حذف الصورة'),
+        content: Text(
+          currentImage.isPrimary
+              ? 'هذه الصورة هي الصورة الرئيسية. عند حذفها، سيتم تعيين صورة أخرى تلقائياً كصورة رئيسية. هل تريد المتابعة؟'
+              : 'هل أنت متأكد من حذف هذه الصورة؟',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: const Text('إلغاء'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            child: const Text('حذف'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true && context.mounted) {
+      final cubit = context.read<PropertyDetailsCubit>();
+
+      final success = await cubit.deletePropertyImage(
+        widget.propertyId!,
+        currentImage.id,
+      );
+
+      if (success && context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('تم حذف الصورة بنجاح'),
+            backgroundColor: Colors.green,
+            duration: Duration(seconds: 2),
+          ),
+        );
+        // Close fullscreen view since the image list has changed
+        Navigator.of(context).pop();
+      } else if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('فشل حذف الصورة'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
   }
 }

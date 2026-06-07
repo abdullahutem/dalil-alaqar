@@ -45,6 +45,8 @@ class PropertyTypesSection extends StatelessWidget {
             }
 
             if (state is PropertyTypesError) {
+              debugPrint('ddd');
+              debugPrint("===========================${state.message}");
               return Center(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -53,7 +55,7 @@ class PropertyTypesSection extends StatelessWidget {
                       Icon(
                         Icons.error_outline,
                         size: 48,
-                        color: Colors.red[300],
+                        color: Colors.green[300],
                       ),
                       const SizedBox(height: 8),
                       Text(

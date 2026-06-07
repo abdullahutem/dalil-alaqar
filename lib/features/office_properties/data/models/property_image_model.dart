@@ -13,7 +13,7 @@ class PropertyImageModel extends PropertyImageEntity {
     return PropertyImageModel(
       id: json['id'] as int,
       imagePath: json['image_path'] as String,
-      imageUrl: json['image_url'] as String,
+      imageUrl: json['image_url'] as String? ?? "",
       isPrimary: json['is_primary'] as bool,
       order: json['order'] as int,
     );

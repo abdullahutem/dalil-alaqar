@@ -55,30 +55,71 @@ class PropertyModel extends PropertyEntity {
       publishedAt: json['published_at'] as String? ?? '',
       createdAt: json['created_at'] as String? ?? '',
       updatedAt: json['updated_at'] as String? ?? '',
-      office: PropertyOfficeModel.fromJson(
-        json['office'] as Map<String, dynamic>,
-      ),
-      propertyType: PropertyTypeModel.fromJson(
-        json['property_type'] as Map<String, dynamic>,
-      ),
-      offerType: OfferTypeModel.fromJson(
-        json['offer_type'] as Map<String, dynamic>,
-      ),
-      governorate: GovernorateModel.fromJson(
-        json['governorate'] as Map<String, dynamic>,
-      ),
-      district: DistrictModel.fromJson(
-        json['district'] as Map<String, dynamic>,
-      ),
-      neighborhood: NeighborhoodModel.fromJson(
-        json['neighborhood'] as Map<String, dynamic>,
-      ),
-      primaryImage: json['primary_image'] != null
-          ? PrimaryImageModel.fromJson(
-              json['primary_image'] as Map<String, dynamic>,
-            )
-          : null,
+      office: _parseOffice(json['office']),
+      propertyType: _parsePropertyType(json['property_type']),
+      offerType: _parseOfferType(json['offer_type']),
+      governorate: _parseGovernorate(json['governorate']),
+      district: _parseDistrict(json['district']),
+      neighborhood: _parseNeighborhood(json['neighborhood']),
+      primaryImage: _parsePrimaryImage(json['primary_image']),
     );
+  }
+
+  static PropertyOfficeModel _parseOffice(dynamic office) {
+    if (office is Map<String, dynamic>) {
+      return PropertyOfficeModel.fromJson(office);
+    }
+    // Fallback for when office is a string or null
+    return PropertyOfficeModel(id: 0, name: 'Unknown', slug: '');
+  }
+
+  static PropertyTypeModel _parsePropertyType(dynamic propertyType) {
+    if (propertyType is Map<String, dynamic>) {
+      return PropertyTypeModel.fromJson(propertyType);
+    }
+    // Fallback for when propertyType is a string or null
+    return PropertyTypeModel(id: 0, name: 'Unknown');
+  }
+
+  static OfferTypeModel _parseOfferType(dynamic offerType) {
+    if (offerType is Map<String, dynamic>) {
+      return OfferTypeModel.fromJson(offerType);
+    }
+    // Fallback for when offerType is a string or null
+    return OfferTypeModel(id: 0, name: 'Unknown');
+  }
+
+  static GovernorateModel _parseGovernorate(dynamic governorate) {
+    if (governorate is Map<String, dynamic>) {
+      return GovernorateModel.fromJson(governorate);
+    }
+    // Fallback for when governorate is a string or null
+    return GovernorateModel(id: 0, nameAr: 'غير معروف');
+  }
+
+  static DistrictModel _parseDistrict(dynamic district) {
+    if (district is Map<String, dynamic>) {
+      return DistrictModel.fromJson(district);
+    }
+    // Fallback for when district is a string or null
+    return DistrictModel(id: 0, nameAr: 'غير معروف');
+  }
+
+  static NeighborhoodModel _parseNeighborhood(dynamic neighborhood) {
+    if (neighborhood is Map<String, dynamic>) {
+      return NeighborhoodModel.fromJson(neighborhood);
+    }
+    // Fallback for when neighborhood is a string or null
+    return NeighborhoodModel(id: 0, nameAr: 'غير معروف');
+  }
+
+  static PrimaryImageModel? _parsePrimaryImage(dynamic primaryImage) {
+    if (primaryImage == null) return null;
+    if (primaryImage is Map<String, dynamic>) {
+      return PrimaryImageModel.fromJson(primaryImage);
+    }
+    // Fallback for when primaryImage is a string or invalid type
+    return null;
   }
 
   Map<String, dynamic> toJson() {

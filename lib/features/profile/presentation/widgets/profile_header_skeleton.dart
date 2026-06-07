@@ -1,3 +1,4 @@
+import 'package:dalil_alaqar/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class ProfileHeaderSkeleton extends StatefulWidget {
@@ -43,13 +44,13 @@ class _ProfileHeaderSkeletonState extends State<ProfileHeaderSkeleton>
           ),
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.blue[700]!, Colors.blue[500]!],
+              colors: [AppColors.primary, AppColors.primary],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Avatar skeleton
               _shimmerCircle(80),

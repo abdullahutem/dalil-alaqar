@@ -1,5 +1,6 @@
 import 'package:dalil_alaqar/core/errors/failure.dart';
 import 'package:dalil_alaqar/features/office_properties/domain/entities/property_details_response_entity.dart';
+import 'package:dalil_alaqar/features/office_properties/domain/entities/upload_images_response_entity.dart';
 import 'package:dartz/dartz.dart';
 import '../entities/office_properties_response_entity.dart';
 import '../entities/property_stats_entity.dart';
@@ -28,5 +29,20 @@ abstract class OfficePropertiesRepository {
   Future<Either<Failure, PropertyDetailsResponseEntity>> updatePropertyStatus({
     required int propertyId,
     required String status,
+  });
+
+  Future<Either<Failure, UploadImagesResponseEntity>> uploadPropertyImages({
+    required int propertyId,
+    required List<String> imagePaths,
+  });
+
+  Future<Either<Failure, String>> setPrimaryImage({
+    required int propertyId,
+    required int imageId,
+  });
+
+  Future<Either<Failure, String>> deletePropertyImage({
+    required int propertyId,
+    required int imageId,
   });
 }

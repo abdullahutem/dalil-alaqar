@@ -6,6 +6,7 @@ import '../cubit/property_details_cubit.dart';
 import '../cubit/property_details_state.dart';
 import '../widgets/property_image_gallery.dart';
 import '../widgets/property_status_dropdown.dart';
+import '../widgets/upload_property_images_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PropertyDetailsTabletLayout extends StatelessWidget {
@@ -78,16 +79,43 @@ class _PropertyView extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Image Gallery
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: SizedBox(
-                            height: 400,
-                            child: PropertyImageGallery(
-                              images: property.images,
-                              baseUrl: EndPoints.kBaseImageUrl,
+                        // Image Gallery with Upload Button
+                        Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: SizedBox(
+                                height: 400,
+                                child: PropertyImageGallery(
+                                  images: property.images,
+                                  baseUrl: EndPoints.kBaseImageUrl,
+                                  propertyId: property.id,
+                                ),
+                              ),
                             ),
-                          ),
+                            Positioned(
+                              top: 16,
+                              right: 16,
+                              child: ElevatedButton.icon(
+                                onPressed: () =>
+                                    _showUploadImagesBottomSheet(context),
+                                icon: const Icon(
+                                  Icons.add_photo_alternate,
+                                  size: 20,
+                                ),
+                                label: const Text('رفع صور'),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: theme.primaryColor,
+                                  foregroundColor: Colors.white,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                    vertical: 12,
+                                  ),
+                                  elevation: 4,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox(height: 24),
 
@@ -510,5 +538,27 @@ class _PropertyView extends StatelessWidget {
     final url =
         'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
     await _launchUrl(url);
+  }
+
+  void _showUploadImagesBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (sheetContext) => Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(sheetContext).viewInsets.bottom,
+        ),
+        child: UploadPropertyImagesWidget(
+          propertyId: property.id,
+          onUploadSuccess: () {
+            // Refresh property details after successful upload
+            context.read<PropertyDetailsCubit>().getPropertyDetails(
+              property.id,
+            );
+          },
+        ),
+      ),
+    );
   }
 }

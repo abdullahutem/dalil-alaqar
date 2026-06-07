@@ -6,6 +6,7 @@ import '../cubit/property_details_cubit.dart';
 import '../cubit/property_details_state.dart';
 import '../widgets/property_image_gallery.dart';
 import '../widgets/property_status_dropdown.dart';
+import '../widgets/upload_property_images_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PropertyDetailsMobileLayout extends StatelessWidget {
@@ -87,10 +88,29 @@ class _PropertyView extends StatelessWidget {
                 ),
                 onPressed: () => Navigator.of(context).pop(),
               ),
+              actions: [
+                // Upload Images Button
+                IconButton(
+                  icon: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: theme.primaryColor.withValues(alpha: 0.9),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.add_photo_alternate,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                  ),
+                  onPressed: () => _showUploadImagesBottomSheet(context),
+                ),
+              ],
               flexibleSpace: FlexibleSpaceBar(
                 background: PropertyImageGallery(
                   images: property.images,
                   baseUrl: EndPoints.kBaseImageUrl,
+                  propertyId: property.id,
                 ),
               ),
             ),
@@ -527,5 +547,27 @@ class _PropertyView extends StatelessWidget {
     final url =
         'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
     await _launchUrl(url);
+  }
+
+  void _showUploadImagesBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (sheetContext) => Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(sheetContext).viewInsets.bottom,
+        ),
+        child: UploadPropertyImagesWidget(
+          propertyId: property.id,
+          onUploadSuccess: () {
+            // Refresh property details after successful upload
+            context.read<PropertyDetailsCubit>().getPropertyDetails(
+              property.id,
+            );
+          },
+        ),
+      ),
+    );
   }
 }

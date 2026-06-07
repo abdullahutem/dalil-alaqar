@@ -56,37 +56,86 @@ class PropertyDetailsModel extends PropertyDetailsEntity {
       publishedAt: json['published_at'] as String? ?? '',
       createdAt: json['created_at'] as String? ?? '',
       updatedAt: json['updated_at'] as String? ?? '',
-      office: PropertyDetailsOfficeModel.fromJson(
-        json['office'] as Map<String, dynamic>,
-      ),
-      propertyType: PropertyDetailsTypeModel.fromJson(
-        json['property_type'] as Map<String, dynamic>,
-      ),
-      offerType: PropertyDetailsOfferTypeModel.fromJson(
-        json['offer_type'] as Map<String, dynamic>,
-      ),
-      governorate: PropertyDetailsGovernorateModel.fromJson(
-        json['governorate'] as Map<String, dynamic>,
-      ),
-      district: PropertyDetailsDistrictModel.fromJson(
-        json['district'] as Map<String, dynamic>,
-      ),
-      neighborhood: PropertyDetailsNeighborhoodModel.fromJson(
-        json['neighborhood'] as Map<String, dynamic>,
-      ),
-      images:
-          (json['images'] as List<dynamic>?)
-              ?.map(
-                (e) => PropertyImageModel.fromJson(e as Map<String, dynamic>),
-              )
-              .toList() ??
-          [],
-      primaryImage: json['primary_image'] != null
-          ? PropertyImageModel.fromJson(
-              json['primary_image'] as Map<String, dynamic>,
-            )
-          : null,
+      office: _parseOffice(json['office']),
+      propertyType: _parsePropertyType(json['property_type']),
+      offerType: _parseOfferType(json['offer_type']),
+      governorate: _parseGovernorate(json['governorate']),
+      district: _parseDistrict(json['district']),
+      neighborhood: _parseNeighborhood(json['neighborhood']),
+      images: _parseImages(json['images']),
+      primaryImage: _parsePrimaryImage(json['primary_image']),
     );
+  }
+
+  static PropertyDetailsOfficeModel _parseOffice(dynamic office) {
+    if (office is Map<String, dynamic>) {
+      return PropertyDetailsOfficeModel.fromJson(office);
+    }
+    return PropertyDetailsOfficeModel(
+      id: 0,
+      name: 'Unknown',
+      slug: '',
+      email: '',
+      phone: '',
+      whatsappNumber: '',
+    );
+  }
+
+  static PropertyDetailsTypeModel _parsePropertyType(dynamic propertyType) {
+    if (propertyType is Map<String, dynamic>) {
+      return PropertyDetailsTypeModel.fromJson(propertyType);
+    }
+    return PropertyDetailsTypeModel(id: 0, name: 'Unknown', icon: '');
+  }
+
+  static PropertyDetailsOfferTypeModel _parseOfferType(dynamic offerType) {
+    if (offerType is Map<String, dynamic>) {
+      return PropertyDetailsOfferTypeModel.fromJson(offerType);
+    }
+    return PropertyDetailsOfferTypeModel(id: 0, name: 'Unknown');
+  }
+
+  static PropertyDetailsGovernorateModel _parseGovernorate(
+    dynamic governorate,
+  ) {
+    if (governorate is Map<String, dynamic>) {
+      return PropertyDetailsGovernorateModel.fromJson(governorate);
+    }
+    return PropertyDetailsGovernorateModel(id: 0, nameAr: 'غير معروف');
+  }
+
+  static PropertyDetailsDistrictModel _parseDistrict(dynamic district) {
+    if (district is Map<String, dynamic>) {
+      return PropertyDetailsDistrictModel.fromJson(district);
+    }
+    return PropertyDetailsDistrictModel(id: 0, nameAr: 'غير معروف');
+  }
+
+  static PropertyDetailsNeighborhoodModel _parseNeighborhood(
+    dynamic neighborhood,
+  ) {
+    if (neighborhood is Map<String, dynamic>) {
+      return PropertyDetailsNeighborhoodModel.fromJson(neighborhood);
+    }
+    return PropertyDetailsNeighborhoodModel(id: 0, nameAr: 'غير معروف');
+  }
+
+  static List<PropertyImageModel> _parseImages(dynamic images) {
+    if (images is List<dynamic>) {
+      return images
+          .where((e) => e is Map<String, dynamic>)
+          .map((e) => PropertyImageModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+    }
+    return [];
+  }
+
+  static PropertyImageModel? _parsePrimaryImage(dynamic primaryImage) {
+    if (primaryImage == null) return null;
+    if (primaryImage is Map<String, dynamic>) {
+      return PropertyImageModel.fromJson(primaryImage);
+    }
+    return null;
   }
 }
 

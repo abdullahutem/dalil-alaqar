@@ -27,6 +27,12 @@ class EndPoints {
   static String officePropertyDetails(int id) => 'office/properties/$id';
   static String updateOfficePropertyStatus(int id) =>
       'office/properties/$id/status';
+  static String uploadPropertyImages(int id) =>
+      'office/properties/$id/images/multiple';
+  static String setPrimaryImage(int propertyId, int imageId) =>
+      'office/properties/$propertyId/images/$imageId/primary';
+  static String deletePropertyImage(int propertyId, int imageId) =>
+      'office/properties/$propertyId/images/$imageId';
   static const String profile = 'office/user';
   static const String updateProfile = 'office/profile';
   static const String plans = 'office/plans';

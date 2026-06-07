@@ -63,14 +63,16 @@ class OfficePropertyCard extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            CachedNetworkImage(
-              imageUrl: imageUrl!,
-              fit: BoxFit.cover,
-              placeholder: (context, url) =>
-                  ImageCacheConfig.defaultPlaceholder(),
-              errorWidget: (_, __, ___) =>
-                  ImageCacheConfig.defaultPlaceholder(),
-            ),
+            imageUrl != null
+                ? CachedNetworkImage(
+                    imageUrl: imageUrl,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) =>
+                        ImageCacheConfig.defaultPlaceholder(),
+                    errorWidget: (_, __, ___) =>
+                        ImageCacheConfig.defaultPlaceholder(),
+                  )
+                : ImageCacheConfig.defaultPlaceholder(),
             Positioned(
               top: 8,
               right: 8,
