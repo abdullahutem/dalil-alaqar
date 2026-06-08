@@ -2,6 +2,7 @@ import 'package:dalil_alaqar/core/databases/api/api_consumer.dart';
 import 'package:dalil_alaqar/features/office_properties/data/models/property_details_response_model.dart';
 import 'package:dio/dio.dart';
 import '../../../../core/databases/api/end_points.dart';
+import '../models/create_property_model.dart';
 import '../models/office_properties_response_model.dart';
 import '../models/property_stats_model.dart';
 import '../models/upload_images_response_model.dart';
@@ -45,6 +46,10 @@ abstract class OfficePropertiesRemoteDataSource {
   Future<String> deletePropertyImage({
     required int propertyId,
     required int imageId,
+  });
+
+  Future<PropertyDetailsResponseModel> createProperty({
+    required CreatePropertyModel property,
   });
 }
 
@@ -201,5 +206,19 @@ class OfficePropertiesRemoteDataSourceImpl
     print('Delete Property Image Response: $response');
 
     return response['message'] ?? 'تم حذف الصورة بنجاح';
+  }
+
+  @override
+  Future<PropertyDetailsResponseModel> createProperty({
+    required CreatePropertyModel property,
+  }) async {
+    final response = await apiConsumer.post(
+      EndPoints.createOfficeProperty,
+      data: property.toJson(),
+    );
+
+    print('Create Property Response: $response');
+
+    return PropertyDetailsResponseModel.fromJson(response);
   }
 }

@@ -1,9 +1,11 @@
 import 'package:dalil_alaqar/core/connection/network_info.dart';
 import 'package:dalil_alaqar/core/errors/expentions.dart';
 import 'package:dalil_alaqar/core/errors/failure.dart';
+import 'package:dalil_alaqar/features/office_properties/domain/entities/create_property_entity.dart';
 import 'package:dalil_alaqar/features/office_properties/domain/entities/property_details_response_entity.dart';
 import 'package:dalil_alaqar/features/office_properties/domain/entities/upload_images_response_entity.dart';
 import 'package:dartz/dartz.dart';
+import '../../data/models/create_property_model.dart';
 import '../../domain/entities/office_properties_response_entity.dart';
 import '../../domain/entities/property_stats_entity.dart';
 import '../../domain/repositories/office_properties_repository.dart';
@@ -175,6 +177,25 @@ class OfficePropertiesRepositoryImpl implements OfficePropertiesRepository {
         imageId: imageId,
       );
       return Right(message);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(errMessage: e.errorModel.errorMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, PropertyDetailsResponseEntity>> createProperty({
+    required CreatePropertyEntity property,
+  }) async {
+    if (!(await networkInfo.isConnected ?? false)) {
+      return Left(Failure(errMessage: 'لا يوجد اتصال بالإنترنت'));
+    }
+
+    try {
+      final propertyModel = CreatePropertyModel.fromEntity(property);
+      final result = await remoteDataSource.createProperty(
+        property: propertyModel,
+      );
+      return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(errMessage: e.errorModel.errorMessage));
     }

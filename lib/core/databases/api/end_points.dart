@@ -15,6 +15,7 @@ class EndPoints {
       "public/data/governorates/$governorateId/districts";
   static String neighborhoodsByDistrict(int districtId) =>
       "public/data/districts/$districtId/neighborhoods";
+  static const String currencies = "public/data/currencies";
   static const String offices = 'public/offices';
   static const String promotions = 'public/promotions';
   static const String dashboard = 'office/dashboard';
@@ -33,6 +34,7 @@ class EndPoints {
       'office/properties/$propertyId/images/$imageId/primary';
   static String deletePropertyImage(int propertyId, int imageId) =>
       'office/properties/$propertyId/images/$imageId';
+  static const String createOfficeProperty = 'office/properties';
   static const String profile = 'office/user';
   static const String updateProfile = 'office/profile';
   static const String plans = 'office/plans';

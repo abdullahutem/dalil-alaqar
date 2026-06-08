@@ -8,6 +8,7 @@ import 'package:dalil_alaqar/features/property_types/presentation/widgets/proper
 import 'package:dalil_alaqar/features/offer_types/presentation/cubit/offer_types_cubit.dart';
 import 'package:dalil_alaqar/features/offer_types/presentation/cubit/offer_types_state.dart';
 import 'package:dalil_alaqar/features/offer_types/presentation/widgets/offer_type_filter_chip.dart';
+import 'package:dalil_alaqar/features/currencies/presentation/cubit/currencies_cubit.dart';
 import 'package:dalil_alaqar/features/governorates/presentation/cubit/governorates_cubit.dart';
 import 'package:dalil_alaqar/features/governorates/presentation/cubit/governorates_state.dart';
 import 'package:dalil_alaqar/features/governorates/presentation/widgets/governorate_filter_chip.dart';
@@ -22,6 +23,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/office_properties_cubit.dart';
 import 'office_properties_mobile_layout.dart';
 import 'office_properties_tablet_layout.dart';
+import 'create_property_screen.dart';
 
 class OfficePropertiesScreen extends StatelessWidget {
   const OfficePropertiesScreen({super.key});
@@ -138,6 +140,40 @@ class _OfficePropertiesScreenContentState
             },
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () async {
+          final result = await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (_) =>
+                        PropertyTypesCubit.create()..getPropertyTypes(),
+                  ),
+                  BlocProvider(
+                    create: (_) => OfferTypesCubit.create()..getOfferTypes(),
+                  ),
+                  BlocProvider(
+                    create: (_) => CurrenciesCubit.create()..getCurrencies(),
+                  ),
+                  BlocProvider(create: (_) => GovernoratesCubit.create()),
+                  BlocProvider(create: (_) => DistrictsCubit.create()),
+                  BlocProvider(create: (_) => NeighborhoodsCubit.create()),
+                ],
+                child: const CreatePropertyScreen(),
+              ),
+            ),
+          );
+          // Refresh list if property was created
+          if (result != null && mounted) {
+            context.read<OfficePropertiesCubit>().refresh();
+          }
+        },
+        icon: const Icon(Icons.add),
+        label: const Text('إضافة عقار'),
+        tooltip: 'إضافة عقار جديد',
       ),
       body: Column(
         children: [
