@@ -29,6 +29,7 @@ class PropertyModel extends PropertyEntity {
     required super.governorate,
     required super.district,
     required super.neighborhood,
+    super.currency,
     super.primaryImage,
   });
 
@@ -61,6 +62,7 @@ class PropertyModel extends PropertyEntity {
       governorate: _parseGovernorate(json['governorate']),
       district: _parseDistrict(json['district']),
       neighborhood: _parseNeighborhood(json['neighborhood']),
+      currency: _parseCurrency(json['currency']),
       primaryImage: _parsePrimaryImage(json['primary_image']),
     );
   }
@@ -113,6 +115,15 @@ class PropertyModel extends PropertyEntity {
     return NeighborhoodModel(id: 0, nameAr: 'غير معروف');
   }
 
+  static PropertyCurrencyModel? _parseCurrency(dynamic currency) {
+    if (currency == null) return null;
+    if (currency is Map<String, dynamic>) {
+      return PropertyCurrencyModel.fromJson(currency);
+    }
+    // Fallback for when currency is invalid
+    return null;
+  }
+
   static PrimaryImageModel? _parsePrimaryImage(dynamic primaryImage) {
     if (primaryImage == null) return null;
     if (primaryImage is Map<String, dynamic>) {
@@ -151,6 +162,9 @@ class PropertyModel extends PropertyEntity {
       'governorate': (governorate as GovernorateModel).toJson(),
       'district': (district as DistrictModel).toJson(),
       'neighborhood': (neighborhood as NeighborhoodModel).toJson(),
+      'currency': currency != null
+          ? (currency as PropertyCurrencyModel).toJson()
+          : null,
       'primary_image': primaryImage != null
           ? (primaryImage as PrimaryImageModel).toJson()
           : null,
@@ -253,6 +267,28 @@ class NeighborhoodModel extends Neighborhood {
   }
 }
 
+class PropertyCurrencyModel extends PropertyCurrency {
+  PropertyCurrencyModel({
+    required super.id,
+    required super.name,
+    required super.code,
+    required super.symbol,
+  });
+
+  factory PropertyCurrencyModel.fromJson(Map<String, dynamic> json) {
+    return PropertyCurrencyModel(
+      id: json['id'] as int,
+      name: json['name'] as String? ?? '',
+      code: json['code'] as String? ?? '',
+      symbol: json['symbol'] as String? ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'id': id, 'name': name, 'code': code, 'symbol': symbol};
+  }
+}
+
 class PrimaryImageModel extends PrimaryImage {
   PrimaryImageModel({
     required super.id,
@@ -262,8 +298,8 @@ class PrimaryImageModel extends PrimaryImage {
 
   factory PrimaryImageModel.fromJson(Map<String, dynamic> json) {
     return PrimaryImageModel(
-      id: json['id'] as int,
-      propertyId: json['property_id'] as int,
+      id: json['id'] as int? ?? 0,
+      propertyId: json['property_id'] as int? ?? 0,
       imagePath: json['image_path'] as String? ?? '',
     );
   }

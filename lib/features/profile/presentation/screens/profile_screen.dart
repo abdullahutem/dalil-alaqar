@@ -32,12 +32,18 @@ class ProfileScreenContent extends StatelessWidget {
       appBar: AppBar(
         title: const Text('الملف الشخصي'),
         centerTitle: true,
+        iconTheme: IconThemeData(
+          color: isDark ? AppColors.darkIcon : AppColors.primary,
+        ),
         actions: [
           BlocBuilder<ProfileCubit, ProfileState>(
             builder: (context, state) {
               if (state is ProfileLoaded) {
                 return IconButton(
-                  icon: const Icon(Icons.edit),
+                  icon: Icon(
+                    Icons.edit,
+                    color: isDark ? AppColors.darkIcon : AppColors.primary,
+                  ),
                   onPressed: () async {
                     final result = await Navigator.of(context).push<bool>(
                       MaterialPageRoute(
@@ -109,13 +115,17 @@ class ProfileScreenContent extends StatelessWidget {
             return SingleChildScrollView(
               child: Column(
                 children: [
+                  SizedBox(height: 20),
                   // Header Section
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(24),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [AppColors.primary, AppColors.primaryLight],
+                        colors: [
+                          isDark ? AppColors.darkBackground : AppColors.primary,
+                          isDark ? AppColors.darkBackground : AppColors.primary,
+                        ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
@@ -140,12 +150,13 @@ class ProfileScreenContent extends StatelessWidget {
                                     strokeWidth: 2,
                                   ),
                                 ),
-                                errorWidget: (context, url, error) =>
-                                    const Icon(
-                                      Icons.business,
-                                      size: 60,
-                                      color: Colors.blue,
-                                    ),
+                                errorWidget: (context, url, error) => Icon(
+                                  Icons.business,
+                                  size: 60,
+                                  color: isDark
+                                      ? AppColors.darkBackground
+                                      : AppColors.primary,
+                                ),
                               ),
                             ),
                           )
@@ -291,6 +302,7 @@ class ProfileScreenContent extends StatelessWidget {
   }) {
     return Card(
       elevation: isDark ? 2 : 1,
+
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -302,10 +314,16 @@ class ProfileScreenContent extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.blue.withValues(alpha: 0.1),
+                    color: isDark
+                        ? AppColors.darkBackground
+                        : AppColors.primary,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Icon(icon, color: Colors.blue[700], size: 20),
+                  child: Icon(
+                    icon,
+                    color: isDark ? Colors.grey[400] : Colors.grey[600],
+                    size: 20,
+                  ),
                 ),
                 const SizedBox(width: 12),
                 Text(

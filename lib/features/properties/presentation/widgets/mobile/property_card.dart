@@ -16,6 +16,7 @@ class OfficeInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
+    width: double.infinity,
     margin: margin,
     decoration: BoxDecoration(
       color: surface,

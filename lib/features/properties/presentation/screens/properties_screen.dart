@@ -187,11 +187,15 @@ class _PropertiesScreenContentState extends State<_PropertiesScreenContent> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
+      backgroundColor: isDark
+          ? AppColors.darkBackground
+          : AppColors.lightBackground,
       appBar: AppBar(
         title: const Text('العقارات'),
         centerTitle: true,
-        backgroundColor: AppColors.primary,
         actions: [
           // Clear filters button
           BlocBuilder<SearchFiltersCubit, SearchFiltersState>(
@@ -228,10 +232,14 @@ class _PropertiesScreenContentState extends State<_PropertiesScreenContent> {
   }
 
   Widget _buildSearchSection(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return BlocBuilder<SearchFiltersCubit, SearchFiltersState>(
       builder: (context, filtersState) {
         return Container(
-          decoration: BoxDecoration(color: Colors.white),
+          decoration: BoxDecoration(
+            color: isDark ? AppColors.darkSurface : Colors.white,
+          ),
           child: Column(
             children: [
               // Search bar
@@ -264,7 +272,9 @@ class _PropertiesScreenContentState extends State<_PropertiesScreenContent> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                           filled: true,
-                          fillColor: Colors.grey[100],
+                          fillColor: isDark
+                              ? AppColors.darkSurface
+                              : Colors.grey[100],
                           contentPadding: const EdgeInsets.symmetric(
                             horizontal: 16,
                             vertical: 12,
@@ -284,6 +294,8 @@ class _PropertiesScreenContentState extends State<_PropertiesScreenContent> {
                       decoration: BoxDecoration(
                         color: filtersState.showAdvancedFilters
                             ? AppColors.primary
+                            : isDark
+                            ? AppColors.darkSurface
                             : Colors.grey[100],
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
@@ -341,20 +353,24 @@ class _PropertiesScreenContentState extends State<_PropertiesScreenContent> {
                     ElevatedButton(
                       onPressed: () => _applySearch(context),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
+                        backgroundColor: isDark
+                            ? AppColors.darkSurface
+                            : AppColors.primary,
                         padding: const EdgeInsets.symmetric(
                           horizontal: 24,
                           vertical: 12,
                         ),
                         shape: RoundedRectangleBorder(
+                          side: BorderSide(color: AppColors.darkIcon),
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: const Text(
+                      child: Text(
                         'بحث',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
+                          color: isDark ? Colors.grey[100] : Colors.white,
                         ),
                       ),
                     ),

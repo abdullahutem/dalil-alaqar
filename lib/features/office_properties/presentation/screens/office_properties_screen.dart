@@ -171,8 +171,8 @@ class _OfficePropertiesScreenContentState
             context.read<OfficePropertiesCubit>().refresh();
           }
         },
-        icon: const Icon(Icons.add),
-        label: const Text('إضافة عقار'),
+        icon: const Icon(Icons.add, color: Colors.white),
+        label: const Text('إضافة عقار', style: TextStyle(color: Colors.white)),
         tooltip: 'إضافة عقار جديد',
       ),
       body: Column(
@@ -415,6 +415,7 @@ class _OfficePropertiesScreenContentState
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
+                          color: Colors.white,
                         ),
                       ),
                     ),

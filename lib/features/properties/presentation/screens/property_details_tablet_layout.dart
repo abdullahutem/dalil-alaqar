@@ -7,6 +7,7 @@ import 'package:dalil_alaqar/features/properties/presentation/widgets/office_con
 import 'package:dalil_alaqar/features/properties/presentation/widgets/tablet/tablet_quick_info_strip.dart';
 import 'package:dalil_alaqar/features/properties/presentation/widgets/tablet/tablet_action_button.dart';
 import 'package:dalil_alaqar/features/properties/presentation/widgets/tablet/tablet_image_gallery.dart';
+import 'package:dalil_alaqar/core/utils/price_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dalil_alaqar/features/properties/domain/entities/property_details_entity.dart';
@@ -52,6 +53,14 @@ class _PropertyTabletViewState extends State<_PropertyTabletView> {
   int _currentImageIndex = 0;
   final PageController _pageController = PageController();
   bool _showOfficeContacts = false;
+
+  String _formatPrice(String price) {
+    return PriceFormatter.formatWithSeparators(price, locale: 'ar');
+  }
+
+  String _getCurrencySymbol() {
+    return widget.property.currency?.symbol ?? 'ريال';
+  }
 
   @override
   void dispose() {
@@ -263,7 +272,7 @@ class _PropertyTabletViewState extends State<_PropertyTabletView> {
                               textBaseline: TextBaseline.alphabetic,
                               children: [
                                 Text(
-                                  p.price,
+                                  '${_formatPrice(p.price)} ${_getCurrencySymbol()}',
                                   style: const TextStyle(
                                     fontSize: 24,
                                     fontWeight: FontWeight.w700,

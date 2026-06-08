@@ -28,6 +28,7 @@ class PropertyEntity {
   final Governorate governorate;
   final District district;
   final Neighborhood neighborhood;
+  final PropertyCurrency? currency;
   final PrimaryImage? primaryImage;
 
   PropertyEntity({
@@ -58,6 +59,7 @@ class PropertyEntity {
     required this.governorate,
     required this.district,
     required this.neighborhood,
+    this.currency,
     this.primaryImage,
   });
 }
@@ -103,6 +105,20 @@ class Neighborhood {
   final String nameAr;
 
   Neighborhood({required this.id, required this.nameAr});
+}
+
+class PropertyCurrency {
+  final int id;
+  final String name;
+  final String code;
+  final String symbol;
+
+  PropertyCurrency({
+    required this.id,
+    required this.name,
+    required this.code,
+    required this.symbol,
+  });
 }
 
 class PrimaryImage {

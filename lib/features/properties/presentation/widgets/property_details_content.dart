@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dalil_alaqar/core/theme/app_colors.dart';
+import 'package:dalil_alaqar/core/utils/price_formatter.dart';
 import 'package:dalil_alaqar/features/properties/domain/entities/property_details_entity.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
@@ -15,13 +16,11 @@ class PropertyDetailsContent extends StatelessWidget {
   });
 
   String _formatPrice(String price) {
-    try {
-      final numPrice = double.parse(price);
-      final formatter = NumberFormat('#,###', 'ar');
-      return formatter.format(numPrice);
-    } catch (e) {
-      return price;
-    }
+    return PriceFormatter.formatWithSeparators(price, locale: 'ar');
+  }
+
+  String _getCurrencySymbol() {
+    return property.currency?.symbol ?? 'ريال';
   }
 
   String _formatDate(String dateStr) {
@@ -205,9 +204,9 @@ class PropertyDetailsContent extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 4),
                 child: Text(
-                  'IQD',
+                  _getCurrencySymbol(),
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: Colors.white.withOpacity(0.9),
+                    color: Colors.white.withValues(alpha: 0.9),
                   ),
                 ),
               ),

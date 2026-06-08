@@ -29,6 +29,7 @@ class PropertyDetailsModel extends PropertyDetailsEntity {
     required super.governorate,
     required super.district,
     required super.neighborhood,
+    super.currency,
     required super.images,
     super.primaryImage,
   });
@@ -62,6 +63,7 @@ class PropertyDetailsModel extends PropertyDetailsEntity {
       governorate: _parseGovernorate(json['governorate']),
       district: _parseDistrict(json['district']),
       neighborhood: _parseNeighborhood(json['neighborhood']),
+      currency: _parseCurrency(json['currency']),
       images: _parseImages(json['images']),
       primaryImage: _parsePrimaryImage(json['primary_image']),
     );
@@ -118,6 +120,14 @@ class PropertyDetailsModel extends PropertyDetailsEntity {
       return PropertyDetailsNeighborhoodModel.fromJson(neighborhood);
     }
     return PropertyDetailsNeighborhoodModel(id: 0, nameAr: 'غير معروف');
+  }
+
+  static PropertyDetailsCurrencyModel? _parseCurrency(dynamic currency) {
+    if (currency == null) return null;
+    if (currency is Map<String, dynamic>) {
+      return PropertyDetailsCurrencyModel.fromJson(currency);
+    }
+    return null;
   }
 
   static List<PropertyImageModel> _parseImages(dynamic images) {
@@ -221,6 +231,24 @@ class PropertyDetailsNeighborhoodModel extends PropertyDetailsNeighborhood {
   }
 }
 
+class PropertyDetailsCurrencyModel extends PropertyDetailsCurrency {
+  PropertyDetailsCurrencyModel({
+    required super.id,
+    required super.name,
+    required super.code,
+    required super.symbol,
+  });
+
+  factory PropertyDetailsCurrencyModel.fromJson(Map<String, dynamic> json) {
+    return PropertyDetailsCurrencyModel(
+      id: json['id'] as int,
+      name: json['name'] as String? ?? '',
+      code: json['code'] as String? ?? '',
+      symbol: json['symbol'] as String? ?? '',
+    );
+  }
+}
+
 class PropertyImageModel extends PropertyImage {
   PropertyImageModel({
     required super.id,
@@ -234,8 +262,8 @@ class PropertyImageModel extends PropertyImage {
 
   factory PropertyImageModel.fromJson(Map<String, dynamic> json) {
     return PropertyImageModel(
-      id: json['id'] as int,
-      propertyId: json['property_id'] as int,
+      id: json['id'] as int? ?? 0,
+      propertyId: json['property_id'] as int? ?? 0,
       imagePath: json['image_path'] as String? ?? '',
       isPrimary: json['is_primary'] as bool? ?? false,
       order: json['order'] as int? ?? 0,

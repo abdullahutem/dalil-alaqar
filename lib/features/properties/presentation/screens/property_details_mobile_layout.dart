@@ -1,4 +1,5 @@
 import 'package:dalil_alaqar/core/databases/api/end_points.dart';
+import 'package:dalil_alaqar/core/utils/price_formatter.dart';
 import 'package:dalil_alaqar/features/properties/presentation/widgets/mobile/bottom_bar.dart';
 import 'package:dalil_alaqar/features/properties/presentation/widgets/mobile/circle_btn.dart';
 import 'package:dalil_alaqar/features/properties/presentation/widgets/mobile/quick_info_strip.dart';
@@ -28,6 +29,7 @@ class PropertyDetailsMobileLayout extends StatelessWidget {
           return const PropertyLoadingView();
         }
         if (state is PropertyDetailsError) {
+          print(state.message);
           return PropertyErrorView(message: state.message);
         }
         if (state is PropertyDetailsSuccess) {
@@ -221,7 +223,7 @@ class _PropertyViewState extends State<_PropertyView> {
                               textBaseline: TextBaseline.alphabetic,
                               children: [
                                 Text(
-                                  p.price,
+                                  '${_formatPrice(p.price)} ${_getCurrencySymbol(p)}',
                                   style: const TextStyle(
                                     fontSize: 22,
                                     fontWeight: FontWeight.w700,
@@ -567,5 +569,13 @@ class _PropertyViewState extends State<_PropertyView> {
     final url =
         'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
     await _launchUrl(url);
+  }
+
+  String _formatPrice(String price) {
+    return PriceFormatter.formatWithSeparators(price, locale: 'ar');
+  }
+
+  String _getCurrencySymbol(PropertyDetailsEntity property) {
+    return property.currency?.symbol ?? 'ريال';
   }
 }

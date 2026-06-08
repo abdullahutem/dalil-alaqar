@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dalil_alaqar/core/localization/app_localizations.dart';
-import 'package:dalil_alaqar/core/localization/locale_cubit.dart';
 import 'package:dalil_alaqar/core/routes/app_routes.dart';
 import 'package:dalil_alaqar/core/theme/app_colors.dart';
 import 'package:dalil_alaqar/core/theme/theme_cubit.dart';
@@ -17,7 +16,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context);
-    final isRTL = context.read<LocaleCubit>().isArabic;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(

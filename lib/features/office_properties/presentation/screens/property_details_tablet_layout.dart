@@ -1,4 +1,5 @@
 import 'package:dalil_alaqar/core/databases/api/end_points.dart';
+import 'package:dalil_alaqar/core/utils/price_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/property_details_entity.dart';
@@ -223,7 +224,7 @@ class _PropertyView extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Text(
-              _formatPrice(property.price ?? 0),
+              '${_formatPrice(property.price ?? 0)} ${_getCurrencySymbol()}',
               style: const TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
@@ -506,21 +507,11 @@ class _PropertyView extends StatelessWidget {
   }
 
   String _formatPrice(double price) {
-    if (price >= 1000000) {
-      final m = price / 1000000;
-      final s = m == m.truncateToDouble()
-          ? '${m.toInt()}'
-          : m.toStringAsFixed(1);
-      return '$s مليون ر.ي';
-    }
-    if (price >= 1000) {
-      final k = price / 1000;
-      final s = k == k.truncateToDouble()
-          ? '${k.toInt()}'
-          : k.toStringAsFixed(1);
-      return '$s ألف ر.ي';
-    }
-    return '${price.toInt()} ر.ي';
+    return PriceFormatter.formatCompact(price.toString(), showDecimals: true);
+  }
+
+  String _getCurrencySymbol() {
+    return property.currency?.symbol ?? 'ريال';
   }
 
   Future<void> _launchUrl(String url) async {

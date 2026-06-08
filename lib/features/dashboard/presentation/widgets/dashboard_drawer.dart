@@ -25,6 +25,8 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Drawer(
       child: Column(
         children: [
@@ -46,7 +48,10 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
                   ),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [AppColors.primary, AppColors.primaryLight],
+                      colors: [
+                        isDark ? AppColors.darkBackground : AppColors.primary,
+                        isDark ? AppColors.darkBackground : AppColors.primary,
+                      ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
@@ -163,7 +168,10 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
                   ),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Colors.blue[700]!, Colors.blue[500]!],
+                      colors: [
+                        isDark ? AppColors.darkBackground : AppColors.primary,
+                        isDark ? AppColors.darkBackground : AppColors.primary,
+                      ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
@@ -241,36 +249,12 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
                     Navigator.pushNamed(context, AppRoutes.officeProperties);
                   },
                 ),
-                _buildDrawerItem(
-                  icon: Icons.bar_chart,
-                  title: 'التقارير',
-                  onTap: () {
-                    Navigator.pop(context);
-                    // Navigate to reports
-                  },
-                ),
-                const Divider(),
+
                 _buildDrawerItem(
                   icon: Icons.card_membership,
                   title: 'الباقات والاشتراكات',
                   onTap: () {
                     Navigator.pushNamed(context, AppRoutes.plansScreen);
-                  },
-                ),
-                _buildDrawerItem(
-                  icon: Icons.settings,
-                  title: 'الإعدادات',
-                  onTap: () {
-                    Navigator.pop(context);
-                    // Navigate to settings
-                  },
-                ),
-                _buildDrawerItem(
-                  icon: Icons.help,
-                  title: 'المساعدة',
-                  onTap: () {
-                    Navigator.pop(context);
-                    // Navigate to help
                   },
                 ),
               ],

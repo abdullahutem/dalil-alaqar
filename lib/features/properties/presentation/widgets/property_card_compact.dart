@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dalil_alaqar/core/theme/app_colors.dart';
 import 'package:dalil_alaqar/core/utils/image_cache_config.dart';
+import 'package:dalil_alaqar/core/utils/price_formatter.dart';
 import 'package:dalil_alaqar/features/properties/domain/entities/property_entity.dart';
 import 'package:dalil_alaqar/features/properties/presentation/screens/property_details_screen.dart';
 
@@ -11,17 +12,11 @@ class PropertyCardCompact extends StatelessWidget {
   const PropertyCardCompact({super.key, required this.property, this.onTap});
 
   String _formatPrice(String price) {
-    try {
-      final numPrice = double.parse(price);
-      if (numPrice >= 1000000) {
-        return '${(numPrice / 1000000).toStringAsFixed(1)} مليون';
-      } else if (numPrice >= 1000) {
-        return '${(numPrice / 1000).toStringAsFixed(0)} ألف';
-      }
-      return numPrice.toStringAsFixed(0);
-    } catch (e) {
-      return price;
-    }
+    return PriceFormatter.formatCompact(price, showDecimals: true);
+  }
+
+  String _getCurrencySymbol() {
+    return property.currency?.symbol ?? 'ريال';
   }
 
   String _getImageUrl() {
@@ -37,6 +32,7 @@ class PropertyCardCompact extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final imageUrl = _getImageUrl();
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return GestureDetector(
       onTap:
@@ -53,7 +49,7 @@ class PropertyCardCompact extends StatelessWidget {
         width: 280,
         margin: const EdgeInsets.only(left: 16),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: isDark ? AppColors.darkSurface : Colors.white,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -174,7 +170,7 @@ class PropertyCardCompact extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                '${_formatPrice(property.price)} ريال',
+                                '${_formatPrice(property.price)} ${_getCurrencySymbol()}',
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
@@ -199,7 +195,9 @@ class PropertyCardCompact extends StatelessWidget {
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.grey[100],
+                            color: isDark
+                                ? AppColors.darkSurface
+                                : Colors.grey[100],
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Row(

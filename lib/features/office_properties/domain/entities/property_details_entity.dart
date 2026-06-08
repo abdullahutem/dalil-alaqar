@@ -23,11 +23,7 @@ class PropertyTypeEntity {
   final String name;
   final String? icon;
 
-  const PropertyTypeEntity({
-    required this.id,
-    required this.name,
-    this.icon,
-  });
+  const PropertyTypeEntity({required this.id, required this.name, this.icon});
 }
 
 class OfferTypeEntity {
@@ -58,6 +54,20 @@ class PropertyNeighborhoodEntity {
   const PropertyNeighborhoodEntity({required this.id, required this.nameAr});
 }
 
+class PropertyCurrencyEntity {
+  final int id;
+  final String name;
+  final String code;
+  final String symbol;
+
+  const PropertyCurrencyEntity({
+    required this.id,
+    required this.name,
+    required this.code,
+    required this.symbol,
+  });
+}
+
 class PropertyDetailsEntity {
   final int id;
   final int? officeId;
@@ -68,6 +78,7 @@ class PropertyDetailsEntity {
   final String? referenceNumber;
   final double? price;
   final int? currencyId;
+  final PropertyCurrencyEntity? currency;
   final bool priceNegotiable;
   final int? governorateId;
   final int? districtId;
@@ -100,6 +111,7 @@ class PropertyDetailsEntity {
     this.referenceNumber,
     this.price,
     this.currencyId,
+    this.currency,
     required this.priceNegotiable,
     this.governorateId,
     this.districtId,
@@ -122,8 +134,10 @@ class PropertyDetailsEntity {
   });
 
   // Computed helpers
-  bool get isForRent => offerType?.id == 2 || offerType?.name.contains('إيجار') == true;
-  bool get isForSale => offerType?.id == 1 || offerType?.name.contains('بيع') == true;
+  bool get isForRent =>
+      offerType?.id == 2 || offerType?.name.contains('إيجار') == true;
+  bool get isForSale =>
+      offerType?.id == 1 || offerType?.name.contains('بيع') == true;
 
   bool get isAvailable => status == 'available';
   bool get isReserved => status == 'reserved';

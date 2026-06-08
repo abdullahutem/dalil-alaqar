@@ -1,4 +1,5 @@
 import 'package:dalil_alaqar/core/databases/api/end_points.dart';
+import 'package:dalil_alaqar/core/utils/price_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/property_details_entity.dart';
@@ -219,7 +220,7 @@ class _PropertyView extends StatelessWidget {
               textBaseline: TextBaseline.alphabetic,
               children: [
                 Text(
-                  _formatPrice(property.price ?? 0),
+                  '${_formatPrice(property.price ?? 0)} ${_getCurrencySymbol()}',
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -317,25 +318,29 @@ class _PropertyView extends StatelessWidget {
     ThemeData theme,
     bool isDark,
   ) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'وصف العقار',
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
+    return SizedBox(
+      width: double.infinity,
+
+      child: Card(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'وصف العقار',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              property.description!,
-              style: theme.textTheme.bodyMedium?.copyWith(height: 1.6),
-            ),
-          ],
+              const SizedBox(height: 12),
+              Text(
+                property.description!,
+                style: theme.textTheme.bodyMedium?.copyWith(height: 1.6),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -433,8 +438,11 @@ class _PropertyView extends StatelessWidget {
                   child: ElevatedButton.icon(
                     onPressed: () =>
                         _launchUrl('tel:${property.referenceNumber}'),
-                    icon: const Icon(Icons.phone),
-                    label: const Text('اتصال'),
+                    icon: const Icon(Icons.phone, color: Colors.white),
+                    label: const Text(
+                      'اتصال',
+                      style: TextStyle(color: Colors.white),
+                    ),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 12),
                     ),
@@ -515,21 +523,11 @@ class _PropertyView extends StatelessWidget {
   }
 
   String _formatPrice(double price) {
-    if (price >= 1000000) {
-      final m = price / 1000000;
-      final s = m == m.truncateToDouble()
-          ? '${m.toInt()}'
-          : m.toStringAsFixed(1);
-      return '$s مليون ر.ي';
-    }
-    if (price >= 1000) {
-      final k = price / 1000;
-      final s = k == k.truncateToDouble()
-          ? '${k.toInt()}'
-          : k.toStringAsFixed(1);
-      return '$s ألف ر.ي';
-    }
-    return '${price.toInt()} ر.ي';
+    return PriceFormatter.formatCompact(price.toString(), showDecimals: true);
+  }
+
+  String _getCurrencySymbol() {
+    return property.currency?.symbol ?? 'ريال';
   }
 
   Future<void> _launchUrl(String url) async {

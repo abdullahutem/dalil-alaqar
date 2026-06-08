@@ -1,5 +1,19 @@
 import 'property_image_entity.dart';
 
+class OfficePropertyCurrency {
+  final int id;
+  final String name;
+  final String code;
+  final String symbol;
+
+  const OfficePropertyCurrency({
+    required this.id,
+    required this.name,
+    required this.code,
+    required this.symbol,
+  });
+}
+
 class OfficePropertyEntity {
   final int id;
   final int officeId;
@@ -14,6 +28,8 @@ class OfficePropertyEntity {
   final String description;
   final String referenceNumber;
   final double price;
+  final int? currencyId;
+  final OfficePropertyCurrency? currency;
   final bool priceNegotiable;
   final int governorateId;
   final String governorateName;
@@ -51,6 +67,8 @@ class OfficePropertyEntity {
     required this.description,
     required this.referenceNumber,
     required this.price,
+    this.currencyId,
+    this.currency,
     required this.priceNegotiable,
     required this.governorateId,
     required this.governorateName,
@@ -103,6 +121,8 @@ class OfficePropertyEntity {
     String? description,
     String? referenceNumber,
     double? price,
+    int? currencyId,
+    OfficePropertyCurrency? currency,
     bool? priceNegotiable,
     int? governorateId,
     String? governorateName,
@@ -140,6 +160,8 @@ class OfficePropertyEntity {
       description: description ?? this.description,
       referenceNumber: referenceNumber ?? this.referenceNumber,
       price: price ?? this.price,
+      currencyId: currencyId ?? this.currencyId,
+      currency: currency ?? this.currency,
       priceNegotiable: priceNegotiable ?? this.priceNegotiable,
       governorateId: governorateId ?? this.governorateId,
       governorateName: governorateName ?? this.governorateName,

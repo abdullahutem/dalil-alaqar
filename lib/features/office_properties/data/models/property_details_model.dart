@@ -85,6 +85,24 @@ class PropertyNeighborhoodModel extends PropertyNeighborhoodEntity {
   }
 }
 
+class PropertyCurrencyModel extends PropertyCurrencyEntity {
+  const PropertyCurrencyModel({
+    required super.id,
+    required super.name,
+    required super.code,
+    required super.symbol,
+  });
+
+  factory PropertyCurrencyModel.fromJson(Map<String, dynamic> json) {
+    return PropertyCurrencyModel(
+      id: json['id'] as int,
+      name: json['name'] as String? ?? '',
+      code: json['code'] as String? ?? '',
+      symbol: json['symbol'] as String? ?? '',
+    );
+  }
+}
+
 class PropertyDetailsModel extends PropertyDetailsEntity {
   const PropertyDetailsModel({
     required super.id,
@@ -96,6 +114,7 @@ class PropertyDetailsModel extends PropertyDetailsEntity {
     super.referenceNumber,
     super.price,
     super.currencyId,
+    super.currency,
     required super.priceNegotiable,
     super.governorateId,
     super.districtId,
@@ -130,6 +149,11 @@ class PropertyDetailsModel extends PropertyDetailsEntity {
           ? double.tryParse(json['price'].toString())
           : null,
       currencyId: json['currency_id'] as int?,
+      currency: json['currency'] != null
+          ? PropertyCurrencyModel.fromJson(
+              json['currency'] as Map<String, dynamic>,
+            )
+          : null,
       priceNegotiable: (json['price_negotiable'] as bool?) ?? false,
       governorateId: json['governorate_id'] as int?,
       districtId: json['district_id'] as int?,

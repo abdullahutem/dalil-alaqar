@@ -1,3 +1,4 @@
+import 'package:dalil_alaqar/core/utils/price_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/office_property_entity.dart';
@@ -275,7 +276,7 @@ class OfficePropertyCardTablet extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  _formatPrice(property.price),
+                  '${_formatPrice(property.price)} ${_getCurrencySymbol()}',
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: theme.colorScheme.primary,
                     fontWeight: FontWeight.w700,
@@ -348,20 +349,10 @@ class OfficePropertyCardTablet extends StatelessWidget {
   }
 
   String _formatPrice(double price) {
-    if (price >= 1000000) {
-      final m = price / 1000000;
-      final s = m == m.truncateToDouble()
-          ? '${m.toInt()}'
-          : m.toStringAsFixed(1);
-      return '$s م ر.ي';
-    }
-    if (price >= 1000) {
-      final k = price / 1000;
-      final s = k == k.truncateToDouble()
-          ? '${k.toInt()}'
-          : k.toStringAsFixed(1);
-      return '$s ألف ر.ي';
-    }
-    return '${price.toInt()} ر.ي';
+    return PriceFormatter.formatCompact(price.toString(), showDecimals: true);
+  }
+
+  String _getCurrencySymbol() {
+    return property.currency?.symbol ?? 'ريال';
   }
 }

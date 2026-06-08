@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:dalil_alaqar/core/theme/app_colors.dart';
+import 'package:dalil_alaqar/core/utils/price_formatter.dart';
 import 'package:dalil_alaqar/features/properties/domain/entities/property_entity.dart';
 import 'package:dalil_alaqar/features/properties/presentation/screens/property_details_screen.dart';
-import 'package:intl/intl.dart';
 
 class PropertyCard extends Widget {
   final PropertyEntity property;
@@ -15,13 +15,11 @@ class PropertyCard extends Widget {
   Element createElement() => _PropertyCardElement(this);
 
   String _formatPrice(String price) {
-    try {
-      final numPrice = double.parse(price);
-      final formatter = NumberFormat('#,###', 'ar');
-      return formatter.format(numPrice);
-    } catch (e) {
-      return price;
-    }
+    return PriceFormatter.formatWithSeparators(price, locale: 'ar');
+  }
+
+  String _getCurrencySymbol() {
+    return property.currency?.symbol ?? 'ريال';
   }
 
   String _getImageUrl() {
@@ -187,7 +185,7 @@ class _PropertyCardElement extends ComponentElement {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '${widget._formatPrice(property.price)} ريال',
+                            '${widget._formatPrice(property.price)} ${widget._getCurrencySymbol()}',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,

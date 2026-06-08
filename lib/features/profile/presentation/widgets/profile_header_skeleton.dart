@@ -31,6 +31,8 @@ class _ProfileHeaderSkeletonState extends State<ProfileHeaderSkeleton>
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return AnimatedBuilder(
       animation: _animation,
       builder: (context, _) {
@@ -44,7 +46,10 @@ class _ProfileHeaderSkeletonState extends State<ProfileHeaderSkeleton>
           ),
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [AppColors.primary, AppColors.primary],
+              colors: [
+                isDark ? AppColors.darkBackground : AppColors.primary,
+                isDark ? AppColors.darkBackground : AppColors.primary,
+              ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),

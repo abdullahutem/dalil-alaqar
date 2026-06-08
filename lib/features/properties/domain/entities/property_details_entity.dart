@@ -28,6 +28,7 @@ class PropertyDetailsEntity {
   final PropertyDetailsGovernorate governorate;
   final PropertyDetailsDistrict district;
   final PropertyDetailsNeighborhood neighborhood;
+  final PropertyDetailsCurrency? currency;
   final List<PropertyImage> images;
   final PropertyImage? primaryImage;
 
@@ -59,6 +60,7 @@ class PropertyDetailsEntity {
     required this.governorate,
     required this.district,
     required this.neighborhood,
+    this.currency,
     required this.images,
     this.primaryImage,
   });
@@ -120,6 +122,20 @@ class PropertyDetailsNeighborhood {
   final String nameAr;
 
   PropertyDetailsNeighborhood({required this.id, required this.nameAr});
+}
+
+class PropertyDetailsCurrency {
+  final int id;
+  final String name;
+  final String code;
+  final String symbol;
+
+  PropertyDetailsCurrency({
+    required this.id,
+    required this.name,
+    required this.code,
+    required this.symbol,
+  });
 }
 
 class PropertyImage {

@@ -1,6 +1,28 @@
 import '../../domain/entities/office_property_entity.dart';
 import 'property_image_model.dart';
 
+class OfficePropertyCurrencyModel extends OfficePropertyCurrency {
+  const OfficePropertyCurrencyModel({
+    required super.id,
+    required super.name,
+    required super.code,
+    required super.symbol,
+  });
+
+  factory OfficePropertyCurrencyModel.fromJson(Map<String, dynamic> json) {
+    return OfficePropertyCurrencyModel(
+      id: json['id'] as int,
+      name: json['name'] as String? ?? '',
+      code: json['code'] as String? ?? '',
+      symbol: json['symbol'] as String? ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'id': id, 'name': name, 'code': code, 'symbol': symbol};
+  }
+}
+
 class OfficePropertyModel extends OfficePropertyEntity {
   const OfficePropertyModel({
     required super.id,
@@ -16,6 +38,8 @@ class OfficePropertyModel extends OfficePropertyEntity {
     required super.description,
     required super.referenceNumber,
     required super.price,
+    super.currencyId,
+    super.currency,
     required super.priceNegotiable,
     required super.governorateId,
     required super.governorateName,
@@ -59,6 +83,8 @@ class OfficePropertyModel extends OfficePropertyEntity {
       description: json['description'] as String,
       referenceNumber: json['reference_number'] as String,
       price: (json['price'] as num).toDouble(),
+      currencyId: json['currency_id'] as int?,
+      currency: _parseCurrency(json['currency']),
       priceNegotiable: json['price_negotiable'] as bool,
       governorateId: json['governorate_id'] as int,
       governorateName: json['governorate_name'] as String,
@@ -84,6 +110,14 @@ class OfficePropertyModel extends OfficePropertyEntity {
     );
   }
 
+  static OfficePropertyCurrencyModel? _parseCurrency(dynamic currency) {
+    if (currency == null) return null;
+    if (currency is Map<String, dynamic>) {
+      return OfficePropertyCurrencyModel.fromJson(currency);
+    }
+    return null;
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -99,6 +133,10 @@ class OfficePropertyModel extends OfficePropertyEntity {
       'description': description,
       'reference_number': referenceNumber,
       'price': price,
+      'currency_id': currencyId,
+      'currency': currency != null
+          ? (currency as OfficePropertyCurrencyModel).toJson()
+          : null,
       'price_negotiable': priceNegotiable,
       'governorate_id': governorateId,
       'governorate_name': governorateName,
@@ -112,9 +150,7 @@ class OfficePropertyModel extends OfficePropertyEntity {
       'status': status,
       'views_count': viewsCount,
       'published_at': publishedAt,
-      'images': images
-          .map((e) => (e as PropertyImageModel).toJson())
-          .toList(),
+      'images': images.map((e) => (e as PropertyImageModel).toJson()).toList(),
       'primary_image': primaryImage,
       'created_by': createdBy,
       'creator_name': creatorName,
