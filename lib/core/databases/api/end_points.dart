@@ -35,6 +35,7 @@ class EndPoints {
   static String deletePropertyImage(int propertyId, int imageId) =>
       'office/properties/$propertyId/images/$imageId';
   static const String createOfficeProperty = 'office/properties';
+  static String updateOfficeProperty(int id) => 'office/properties/$id';
   static const String profile = 'office/user';
   static const String updateProfile = 'office/profile';
   static const String plans = 'office/plans';

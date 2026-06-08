@@ -1,6 +1,7 @@
 import 'package:dalil_alaqar/core/errors/failure.dart';
 import 'package:dalil_alaqar/features/office_properties/domain/entities/create_property_entity.dart';
 import 'package:dalil_alaqar/features/office_properties/domain/entities/property_details_response_entity.dart';
+import 'package:dalil_alaqar/features/office_properties/domain/entities/update_property_entity.dart';
 import 'package:dalil_alaqar/features/office_properties/domain/entities/upload_images_response_entity.dart';
 import 'package:dartz/dartz.dart';
 import '../entities/office_properties_response_entity.dart';
@@ -49,5 +50,9 @@ abstract class OfficePropertiesRepository {
 
   Future<Either<Failure, PropertyDetailsResponseEntity>> createProperty({
     required CreatePropertyEntity property,
+  });
+
+  Future<Either<Failure, PropertyDetailsResponseEntity>> updateProperty({
+    required UpdatePropertyEntity property,
   });
 }

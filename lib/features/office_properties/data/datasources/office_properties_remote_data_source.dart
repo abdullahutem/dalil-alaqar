@@ -51,6 +51,11 @@ abstract class OfficePropertiesRemoteDataSource {
   Future<PropertyDetailsResponseModel> createProperty({
     required CreatePropertyModel property,
   });
+
+  Future<PropertyDetailsResponseModel> updateProperty({
+    required int propertyId,
+    required Map<String, dynamic> data,
+  });
 }
 
 class OfficePropertiesRemoteDataSourceImpl
@@ -218,6 +223,21 @@ class OfficePropertiesRemoteDataSourceImpl
     );
 
     print('Create Property Response: $response');
+
+    return PropertyDetailsResponseModel.fromJson(response);
+  }
+
+  @override
+  Future<PropertyDetailsResponseModel> updateProperty({
+    required int propertyId,
+    required Map<String, dynamic> data,
+  }) async {
+    final response = await apiConsumer.put(
+      EndPoints.updateOfficeProperty(propertyId),
+      data: data,
+    );
+
+    print('Update Property Response: $response');
 
     return PropertyDetailsResponseModel.fromJson(response);
   }

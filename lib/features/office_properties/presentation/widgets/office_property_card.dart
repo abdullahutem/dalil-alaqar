@@ -3,10 +3,16 @@ import 'package:dalil_alaqar/core/utils/image_cache_config.dart';
 import 'package:dalil_alaqar/core/utils/price_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../property_types/presentation/cubit/property_types_cubit.dart';
+import '../../../offer_types/presentation/cubit/offer_types_cubit.dart';
+import '../../../governorates/presentation/cubit/governorates_cubit.dart';
 import '../../domain/entities/office_property_entity.dart';
 import '../cubit/office_properties_cubit.dart';
 import '../cubit/office_properties_state.dart';
+import '../cubit/update_property_cubit.dart';
+import '../cubit/property_details_cubit.dart';
 import '../screens/property_details_screen.dart';
+import '../screens/update_property_screen.dart';
 import 'property_status_dropdown.dart';
 
 class OfficePropertyCard extends StatelessWidget {
@@ -104,7 +110,7 @@ class OfficePropertyCard extends StatelessWidget {
                     compact: true,
                   ),
                   const SizedBox(width: 8),
-                  _buildDeleteButton(context),
+                  _buildActionsMenu(context),
                 ],
               ),
             ),
@@ -114,10 +120,9 @@ class OfficePropertyCard extends StatelessWidget {
     );
   }
 
-  Widget _buildDeleteButton(BuildContext context) {
+  Widget _buildActionsMenu(BuildContext context) {
     return BlocBuilder<OfficePropertiesCubit, OfficePropertiesState>(
       buildWhen: (previous, current) {
-        // Only rebuild when deletingPropertyId changes for this property
         if (previous is OfficePropertiesSuccess &&
             current is OfficePropertiesSuccess) {
           return previous.deletingPropertyId != current.deletingPropertyId;
@@ -130,32 +135,118 @@ class OfficePropertyCard extends StatelessWidget {
             state.deletingPropertyId == property.id;
 
         return Material(
-          color: Colors.red,
+          color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.95),
           borderRadius: BorderRadius.circular(8),
-          child: InkWell(
-            onTap: isDeleting ? null : () => _showDeleteConfirmation(context),
-            borderRadius: BorderRadius.circular(8),
-            child: Container(
-              padding: const EdgeInsets.all(6),
-              child: isDeleting
-                  ? const SizedBox(
-                      width: 18,
-                      height: 18,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+          child: isDeleting
+              ? Container(
+                  padding: const EdgeInsets.all(6),
+                  child: const SizedBox(
+                    width: 18,
+                    height: 18,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  ),
+                )
+              : PopupMenuButton<String>(
+                  icon: const Icon(Icons.more_vert, size: 18),
+                  iconColor: Theme.of(context).textTheme.bodyMedium?.color,
+                  padding: EdgeInsets.zero,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  onSelected: (value) {
+                    if (value == 'update') {
+                      _navigateToUpdate(context);
+                    } else if (value == 'delete') {
+                      _showDeleteConfirmation(context);
+                    }
+                  },
+                  itemBuilder: (context) => [
+                    PopupMenuItem<String>(
+                      value: 'update',
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.edit_outlined,
+                            size: 18,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          const SizedBox(width: 12),
+                          const Text('تعديل العقار'),
+                        ],
                       ),
-                    )
-                  : const Icon(
-                      Icons.delete_outline,
-                      color: Colors.white,
-                      size: 18,
                     ),
-            ),
-          ),
+                    const PopupMenuDivider(),
+                    PopupMenuItem<String>(
+                      value: 'delete',
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.delete_outline,
+                            size: 18,
+                            color: Colors.red,
+                          ),
+                          const SizedBox(width: 12),
+                          Text(
+                            'حذف العقار',
+                            style: TextStyle(color: Colors.red.shade700),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
         );
       },
     );
+  }
+
+  Future<void> _navigateToUpdate(BuildContext context) async {
+    // First, get the full property details
+    final detailsCubit = PropertyDetailsCubit.create();
+    await detailsCubit.getPropertyDetails(property.id);
+
+    final detailsState = detailsCubit.state;
+    if (detailsState is! PropertyDetailsSuccess) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('فشل في تحميل تفاصيل العقار'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+      detailsCubit.close();
+      return;
+    }
+
+    // Cast to PropertyDetailsSuccess to access property
+    final propertyDetails = (detailsState as PropertyDetailsSuccess).property;
+
+    if (!context.mounted) {
+      detailsCubit.close();
+      return;
+    }
+
+    final result = await Navigator.of(context).push<bool>(
+      MaterialPageRoute(
+        builder: (context) => MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (_) => UpdatePropertyCubit.create()),
+            BlocProvider(create: (_) => PropertyTypesCubit.create()),
+            BlocProvider(create: (_) => OfferTypesCubit.create()),
+            BlocProvider(create: (_) => GovernoratesCubit.create()),
+          ],
+          child: UpdatePropertyScreen(property: propertyDetails),
+        ),
+      ),
+    );
+
+    detailsCubit.close();
+
+    // Refresh the list if update was successful
+    if (result == true && context.mounted) {
+      context.read<OfficePropertiesCubit>().getOfficeProperties(refresh: true);
+    }
   }
 
   Future<void> _showDeleteConfirmation(BuildContext context) async {

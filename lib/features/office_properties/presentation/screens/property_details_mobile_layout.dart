@@ -8,6 +8,7 @@ import '../cubit/property_details_state.dart';
 import '../widgets/property_image_gallery.dart';
 import '../widgets/property_status_dropdown.dart';
 import '../widgets/upload_property_images_widget.dart';
+import '../widgets/edit_property_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PropertyDetailsMobileLayout extends StatelessWidget {
@@ -66,6 +67,7 @@ class _PropertyView extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
+        floatingActionButton: EditPropertyButton(property: property),
         body: CustomScrollView(
           slivers: [
             // Image Gallery App Bar
