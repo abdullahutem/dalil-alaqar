@@ -20,4 +20,12 @@ class CurrencyEntity {
     required this.decimalPlaces,
     required this.position,
   });
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CurrencyEntity && other.id == id);
+
+  @override
+  int get hashCode => id.hashCode;
 }

@@ -11,8 +11,8 @@ import '../widgets/upload_property_images_widget.dart';
 import '../widgets/edit_property_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class PropertyDetailsTabletLayout extends StatelessWidget {
-  const PropertyDetailsTabletLayout({super.key});
+class OfficePropertyDetailsTabletLayout extends StatelessWidget {
+  const OfficePropertyDetailsTabletLayout({super.key});
 
   @override
   Widget build(BuildContext context) {

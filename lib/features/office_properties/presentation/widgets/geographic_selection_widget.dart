@@ -113,7 +113,7 @@ class _GeographicSelectionWidgetState extends State<GeographicSelectionWidget> {
 
   Widget _buildGovernorateDropdown(List<GovernorateEntity> governorates) {
     return DropdownButtonFormField<GovernorateEntity>(
-      value: widget.selectedGovernorate,
+      initialValue: widget.selectedGovernorate,
       decoration: InputDecoration(
         labelText: 'المحافظة',
         prefixIcon: const Icon(Icons.location_city),
@@ -171,7 +171,7 @@ class _GeographicSelectionWidgetState extends State<GeographicSelectionWidget> {
 
   Widget _buildDistrictDropdown(List<DistrictEntity> districts) {
     return DropdownButtonFormField<DistrictEntity>(
-      value: widget.selectedDistrict,
+      initialValue: widget.selectedDistrict,
       decoration: InputDecoration(
         labelText: 'المديرية',
         prefixIcon: const Icon(Icons.map),
@@ -229,7 +229,7 @@ class _GeographicSelectionWidgetState extends State<GeographicSelectionWidget> {
 
   Widget _buildNeighborhoodDropdown(List<NeighborhoodEntity> neighborhoods) {
     return DropdownButtonFormField<NeighborhoodEntity>(
-      value: widget.selectedNeighborhood,
+      initialValue: widget.selectedNeighborhood,
       decoration: InputDecoration(
         labelText: 'الحي',
         prefixIcon: const Icon(Icons.place),

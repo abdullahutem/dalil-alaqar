@@ -575,7 +575,7 @@ class _AddEmployeesMobileLayoutState extends State<AddEmployeesMobileLayout> {
         ),
         const SizedBox(height: 8),
         DropdownButtonFormField<String>(
-          value: _selectedUserType,
+          initialValue: _selectedUserType,
           decoration: InputDecoration(
             filled: true,
             fillColor: isDark ? AppColors.darkSurface : AppColors.lightSurface,

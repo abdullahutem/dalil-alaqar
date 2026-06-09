@@ -45,12 +45,15 @@ class PropertyDetailsCubit extends Cubit<PropertyDetailsState> {
   Future<void> getPropertyDetails(int propertyId) async {
     emit(const PropertyDetailsLoading());
 
-    final result = await getPropertyDetailsUseCase(propertyId: propertyId);
-
-    result.fold(
-      (failure) => emit(PropertyDetailsError(message: failure.errMessage)),
-      (response) => emit(PropertyDetailsSuccess(property: response.data)),
-    );
+    try {
+      final result = await getPropertyDetailsUseCase(propertyId: propertyId);
+      result.fold(
+        (failure) => emit(PropertyDetailsError(message: failure.errMessage)),
+        (response) => emit(PropertyDetailsSuccess(property: response.data)),
+      );
+    } catch (e) {
+      emit(PropertyDetailsError(message: e.toString()));
+    }
   }
 
   Future<bool> setPrimaryImage(int propertyId, int imageId) async {

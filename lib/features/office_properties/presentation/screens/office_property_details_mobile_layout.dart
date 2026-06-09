@@ -11,8 +11,8 @@ import '../widgets/upload_property_images_widget.dart';
 import '../widgets/edit_property_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class PropertyDetailsMobileLayout extends StatelessWidget {
-  const PropertyDetailsMobileLayout({super.key});
+class OfficePropertyDetailsMobileLayout extends StatelessWidget {
+  const OfficePropertyDetailsMobileLayout({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -22,4 +22,12 @@ class GovernorateEntity {
     this.deletedAt,
     required this.districtsCount,
   });
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is GovernorateEntity && other.id == id);
+
+  @override
+  int get hashCode => id.hashCode;
 }

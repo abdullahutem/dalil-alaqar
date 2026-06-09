@@ -1,3 +1,4 @@
+import 'package:dalil_alaqar/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/office_info_cubit.dart';
@@ -59,6 +60,8 @@ class OfficeInfoMobileLayout extends StatelessWidget {
   }
 
   Widget _buildEditButton(BuildContext context, officeInfo) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return SizedBox(
       width: double.infinity,
       child: Builder(
@@ -79,9 +82,17 @@ class OfficeInfoMobileLayout extends StatelessWidget {
                 cubit.refresh();
               }
             },
-            icon: const Icon(Icons.edit_outlined),
-            label: const Text('تعديل معلومات المكتب'),
+            icon: Icon(Icons.edit_outlined),
+            label: Text(
+              'تعديل معلومات المكتب',
+              style: TextStyle(
+                color: isDark ? AppColors.darkText : AppColors.white,
+              ),
+            ),
             style: ElevatedButton.styleFrom(
+              backgroundColor: isDark
+                  ? AppColors.darkDivider
+                  : AppColors.primary,
               padding: const EdgeInsets.symmetric(vertical: 14),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),

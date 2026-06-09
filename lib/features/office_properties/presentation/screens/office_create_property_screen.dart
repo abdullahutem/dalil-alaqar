@@ -21,16 +21,17 @@ import '../cubit/property_location_state.dart';
 import '../widgets/property_form_field.dart';
 import '../widgets/property_location_picker.dart';
 import '../widgets/geographic_selection_widget.dart';
-import 'property_details_screen.dart';
+import 'office_property_details_screen.dart';
 
-class CreatePropertyScreen extends StatefulWidget {
-  const CreatePropertyScreen({super.key});
+class OfficeCreatePropertyScreen extends StatefulWidget {
+  const OfficeCreatePropertyScreen({super.key});
 
   @override
-  State<CreatePropertyScreen> createState() => _CreatePropertyScreenState();
+  State<OfficeCreatePropertyScreen> createState() =>
+      _CreatePropertyScreenState();
 }
 
-class _CreatePropertyScreenState extends State<CreatePropertyScreen> {
+class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
   int _currentStep = 0;
   final _formKey = GlobalKey<FormState>();
 
@@ -284,7 +285,7 @@ class _CreatePropertyScreenState extends State<CreatePropertyScreen> {
           builder: (context, state) {
             if (state is PropertyTypesSuccess) {
               return DropdownButtonFormField<PropertyTypeEntity>(
-                value: _selectedPropertyType,
+                initialValue: _selectedPropertyType,
                 decoration: InputDecoration(
                   labelText: 'نوع العقار',
                   prefixIcon: const Icon(Icons.home),
@@ -320,7 +321,7 @@ class _CreatePropertyScreenState extends State<CreatePropertyScreen> {
           builder: (context, state) {
             if (state is OfferTypesSuccess) {
               return DropdownButtonFormField<OfferTypeEntity>(
-                value: _selectedOfferType,
+                initialValue: _selectedOfferType,
                 decoration: InputDecoration(
                   labelText: 'نوع العرض',
                   prefixIcon: const Icon(Icons.sell),
@@ -447,7 +448,7 @@ class _CreatePropertyScreenState extends State<CreatePropertyScreen> {
               }
 
               return DropdownButtonFormField<CurrencyEntity>(
-                value: _selectedCurrency,
+                initialValue: _selectedCurrency,
                 decoration: InputDecoration(
                   labelText: 'العملة',
                   prefixIcon: const Icon(Icons.monetization_on),

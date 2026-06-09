@@ -22,4 +22,12 @@ class DistrictEntity {
     required this.updatedAt,
     this.deletedAt,
   });
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DistrictEntity && other.id == id);
+
+  @override
+  int get hashCode => id.hashCode;
 }

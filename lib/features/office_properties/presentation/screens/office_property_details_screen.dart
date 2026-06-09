@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/office_properties_cubit.dart';
 import '../cubit/property_details_cubit.dart';
-import 'property_details_mobile_layout.dart';
-import 'property_details_tablet_layout.dart';
+import 'office_property_details_mobile_layout.dart';
+import 'office_property_details_tablet_layout.dart';
 
 class PropertyDetailsScreen extends StatelessWidget {
   final int propertyId;
@@ -24,9 +24,9 @@ class PropertyDetailsScreen extends StatelessWidget {
         body: LayoutBuilder(
           builder: (context, constraints) {
             if (constraints.maxWidth >= 600) {
-              return const PropertyDetailsTabletLayout();
+              return const OfficePropertyDetailsTabletLayout();
             }
-            return const PropertyDetailsMobileLayout();
+            return const OfficePropertyDetailsMobileLayout();
           },
         ),
       ),

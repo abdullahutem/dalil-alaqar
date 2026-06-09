@@ -69,7 +69,7 @@ class EmployeesResponsive extends StatelessWidget {
             context.read<EmployeeStatsCubit>().getStats();
           }
         },
-        backgroundColor: AppColors.primary,
+        backgroundColor: isDark ? AppColors.darkDivider : AppColors.primary,
         icon: const Icon(Icons.add, color: Colors.white),
         label: Text(
           localizations.translate('add_employee'),

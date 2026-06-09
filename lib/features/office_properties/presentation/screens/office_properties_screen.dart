@@ -23,7 +23,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/office_properties_cubit.dart';
 import 'office_properties_mobile_layout.dart';
 import 'office_properties_tablet_layout.dart';
-import 'create_property_screen.dart';
+import 'office_create_property_screen.dart';
 
 class OfficePropertiesScreen extends StatelessWidget {
   const OfficePropertiesScreen({super.key});
@@ -162,7 +162,7 @@ class _OfficePropertiesScreenContentState
                   BlocProvider(create: (_) => DistrictsCubit.create()),
                   BlocProvider(create: (_) => NeighborhoodsCubit.create()),
                 ],
-                child: const CreatePropertyScreen(),
+                child: const OfficeCreatePropertyScreen(),
               ),
             ),
           );

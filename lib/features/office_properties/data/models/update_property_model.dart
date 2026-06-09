@@ -3,12 +3,17 @@ import '../../domain/entities/update_property_entity.dart';
 class UpdatePropertyModel extends UpdatePropertyEntity {
   const UpdatePropertyModel({
     required super.propertyId,
-    super.title,
-    super.propertyTypeId,
-    super.offerTypeId,
-    super.description,
-    super.governorateId,
-    super.price,
+    required super.title,
+    required super.propertyTypeId,
+    required super.offerTypeId,
+    required super.description,
+    required super.governorateId,
+    required super.districtId,
+    required super.neighborhoodId,
+    required super.address,
+    required super.price,
+    required super.priceNegotiable,
+    required super.currencyId,
   });
 
   factory UpdatePropertyModel.fromEntity(UpdatePropertyEntity entity) {
@@ -19,20 +24,28 @@ class UpdatePropertyModel extends UpdatePropertyEntity {
       offerTypeId: entity.offerTypeId,
       description: entity.description,
       governorateId: entity.governorateId,
+      districtId: entity.districtId,
+      neighborhoodId: entity.neighborhoodId,
+      address: entity.address,
       price: entity.price,
+      priceNegotiable: entity.priceNegotiable,
+      currencyId: entity.currencyId,
     );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {};
-
-    if (title != null) data['title'] = title;
-    if (propertyTypeId != null) data['property_type_id'] = propertyTypeId;
-    if (offerTypeId != null) data['offer_type_id'] = offerTypeId;
-    if (description != null) data['description'] = description;
-    if (governorateId != null) data['governorate_id'] = governorateId;
-    if (price != null) data['price'] = price;
-
-    return data;
+    return {
+      'title': title,
+      'property_type_id': propertyTypeId,
+      'offer_type_id': offerTypeId,
+      'description': description,
+      'governorate_id': governorateId,
+      'district_id': districtId,
+      'neighborhood_id': neighborhoodId,
+      'address': address,
+      'price': price,
+      'price_negotiable': priceNegotiable,
+      'currency_id': currencyId,
+    };
   }
 }

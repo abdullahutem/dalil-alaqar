@@ -1,3 +1,4 @@
+import 'package:dalil_alaqar/features/office_properties/presentation/screens/office_update_property_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../property_types/presentation/cubit/property_types_cubit.dart';
@@ -6,7 +7,6 @@ import '../../../governorates/presentation/cubit/governorates_cubit.dart';
 import '../../domain/entities/property_details_entity.dart';
 import '../cubit/property_details_cubit.dart';
 import '../cubit/update_property_cubit.dart';
-import '../screens/update_property_screen.dart';
 
 class EditPropertyButton extends StatelessWidget {
   final PropertyDetailsEntity property;
@@ -23,7 +23,7 @@ class EditPropertyButton extends StatelessWidget {
             BlocProvider(create: (_) => OfferTypesCubit.create()),
             BlocProvider(create: (_) => GovernoratesCubit.create()),
           ],
-          child: UpdatePropertyScreen(property: property),
+          child: OfficeUpdatePropertyScreen(property: property),
         ),
       ),
     );

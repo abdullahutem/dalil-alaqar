@@ -101,6 +101,8 @@ class OfficePropertiesRepositoryImpl implements OfficePropertiesRepository {
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(errMessage: e.errorModel.errorMessage));
+    } catch (e) {
+      return Left(Failure(errMessage: e.toString()));
     }
   }
 

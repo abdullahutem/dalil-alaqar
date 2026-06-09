@@ -262,11 +262,12 @@ class OfficePropertiesCubit extends Cubit<OfficePropertiesState> {
       _maxPrice != null;
 
   Future<void> getPropertyDetails({required int propertyId}) async {
-    emit(const PropertyDetailsLoading());
+    emit(const OfficePropertyDetailsLoading());
     final result = await getPropertyDetailsUseCase(propertyId: propertyId);
     result.fold(
-      (failure) => emit(PropertyDetailsError(message: failure.errMessage)),
-      (response) => emit(PropertyDetailsSuccess(property: response.data)),
+      (failure) =>
+          emit(OfficePropertyDetailsError(message: failure.errMessage)),
+      (response) => emit(OfficePropertyDetailsSuccess(property: response.data)),
     );
   }
 
@@ -280,8 +281,10 @@ class OfficePropertiesCubit extends Cubit<OfficePropertiesState> {
     final currentState = state;
 
     // If we're in property details view, handle that separately
-    if (currentState is PropertyDetailsSuccess) {
-      emit(PropertyDetailsUpdatingStatus(property: currentState.property));
+    if (currentState is OfficePropertyDetailsSuccess) {
+      emit(
+        OfficePropertyDetailsUpdatingStatus(property: currentState.property),
+      );
 
       final result = await updatePropertyStatusUseCase(
         propertyId: propertyId,
@@ -291,7 +294,7 @@ class OfficePropertiesCubit extends Cubit<OfficePropertiesState> {
       return result.fold(
         (failure) {
           emit(
-            PropertyDetailsUpdateStatusError(
+            OfficePropertyDetailsUpdateStatusError(
               message: failure.errMessage,
               property: currentState.property,
             ),
@@ -299,7 +302,7 @@ class OfficePropertiesCubit extends Cubit<OfficePropertiesState> {
           return false;
         },
         (response) {
-          emit(PropertyDetailsSuccess(property: response.data));
+          emit(OfficePropertyDetailsSuccess(property: response.data));
           return true;
         },
       );

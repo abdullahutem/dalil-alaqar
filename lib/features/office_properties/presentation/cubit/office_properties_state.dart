@@ -152,27 +152,27 @@ class OfficePropertiesDeleteError extends OfficePropertiesState {
   ];
 }
 
-class PropertyDetailsInitial extends OfficePropertiesState {
-  const PropertyDetailsInitial();
+class OfficePropertyDetailsInitial extends OfficePropertiesState {
+  const OfficePropertyDetailsInitial();
 }
 
-class PropertyDetailsLoading extends OfficePropertiesState {
-  const PropertyDetailsLoading();
+class OfficePropertyDetailsLoading extends OfficePropertiesState {
+  const OfficePropertyDetailsLoading();
 }
 
-class PropertyDetailsSuccess extends OfficePropertiesState {
+class OfficePropertyDetailsSuccess extends OfficePropertiesState {
   final PropertyDetailsEntity property;
 
-  const PropertyDetailsSuccess({required this.property});
+  const OfficePropertyDetailsSuccess({required this.property});
 
   @override
   List<Object?> get props => [property];
 }
 
-class PropertyDetailsError extends OfficePropertiesState {
+class OfficePropertyDetailsError extends OfficePropertiesState {
   final String message;
 
-  const PropertyDetailsError({required this.message});
+  const OfficePropertyDetailsError({required this.message});
 
   @override
   List<Object?> get props => [message];
@@ -206,20 +206,20 @@ class OfficePropertiesUpdateStatusError extends OfficePropertiesState {
   ];
 }
 
-class PropertyDetailsUpdatingStatus extends OfficePropertiesState {
+class OfficePropertyDetailsUpdatingStatus extends OfficePropertiesState {
   final PropertyDetailsEntity property;
 
-  const PropertyDetailsUpdatingStatus({required this.property});
+  const OfficePropertyDetailsUpdatingStatus({required this.property});
 
   @override
   List<Object?> get props => [property];
 }
 
-class PropertyDetailsUpdateStatusError extends OfficePropertiesState {
+class OfficePropertyDetailsUpdateStatusError extends OfficePropertiesState {
   final String message;
   final PropertyDetailsEntity property;
 
-  const PropertyDetailsUpdateStatusError({
+  const OfficePropertyDetailsUpdateStatusError({
     required this.message,
     required this.property,
   });

@@ -24,4 +24,12 @@ class PropertyTypeEntity {
     required this.updatedAt,
     this.deletedAt,
   });
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PropertyTypeEntity && other.id == id);
+
+  @override
+  int get hashCode => id.hashCode;
 }

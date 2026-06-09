@@ -4,13 +4,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../property_types/presentation/cubit/property_types_cubit.dart';
 import '../../../offer_types/presentation/cubit/offer_types_cubit.dart';
 import '../../../governorates/presentation/cubit/governorates_cubit.dart';
+import '../../../districts/presentation/cubit/districts_cubit.dart';
+import '../../../neighborhoods/presentation/cubit/neighborhoods_cubit.dart';
+import '../../../currencies/presentation/cubit/currencies_cubit.dart';
 import '../../domain/entities/office_property_entity.dart';
 import '../cubit/office_properties_cubit.dart';
 import '../cubit/office_properties_state.dart';
 import '../cubit/update_property_cubit.dart';
 import '../cubit/property_details_cubit.dart';
-import '../screens/property_details_screen.dart';
-import '../screens/update_property_screen.dart';
+import '../cubit/property_details_state.dart';
+import '../screens/office_property_details_screen.dart';
+import '../screens/office_update_property_screen.dart';
 import 'property_status_dropdown.dart';
 
 class OfficePropertyCardTablet extends StatelessWidget {
@@ -234,24 +238,40 @@ class OfficePropertyCardTablet extends StatelessWidget {
   Future<void> _navigateToUpdate(BuildContext context) async {
     // First, get the full property details
     final detailsCubit = PropertyDetailsCubit.create();
+
+    // Show loading indicator
+    if (!context.mounted) return;
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(child: CircularProgressIndicator()),
+    );
+
+    // Wait for property details to load
     await detailsCubit.getPropertyDetails(property.id);
+
+    // Close loading indicator
+    if (context.mounted) {
+      Navigator.of(context).pop();
+    }
 
     final detailsState = detailsCubit.state;
     if (detailsState is! PropertyDetailsSuccess) {
       if (context.mounted) {
+        final errorMsg = detailsState is PropertyDetailsError
+            ? detailsState.message
+            : 'فشل في تحميل تفاصيل العقار';
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('فشل في تحميل تفاصيل العقار'),
-            backgroundColor: Colors.red,
-          ),
+          SnackBar(content: Text(errorMsg), backgroundColor: Colors.red),
         );
       }
       detailsCubit.close();
       return;
     }
 
-    // Cast to PropertyDetailsSuccess to access property
-    final propertyDetails = (detailsState as PropertyDetailsSuccess).property;
+    // Get property details
+    final propertyDetails = detailsState.property;
 
     if (!context.mounted) {
       detailsCubit.close();
@@ -266,8 +286,11 @@ class OfficePropertyCardTablet extends StatelessWidget {
             BlocProvider(create: (_) => PropertyTypesCubit.create()),
             BlocProvider(create: (_) => OfferTypesCubit.create()),
             BlocProvider(create: (_) => GovernoratesCubit.create()),
+            BlocProvider(create: (_) => DistrictsCubit.create()),
+            BlocProvider(create: (_) => NeighborhoodsCubit.create()),
+            BlocProvider(create: (_) => CurrenciesCubit.create()),
           ],
-          child: UpdatePropertyScreen(property: propertyDetails),
+          child: OfficeUpdatePropertyScreen(property: propertyDetails),
         ),
       ),
     );

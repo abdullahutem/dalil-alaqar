@@ -32,12 +32,17 @@ class UpdatePropertyCubit extends Cubit<UpdatePropertyState> {
 
   Future<void> updateProperty({
     required int propertyId,
-    String? title,
-    int? propertyTypeId,
-    int? offerTypeId,
-    String? description,
-    int? governorateId,
-    double? price,
+    required String title,
+    required int propertyTypeId,
+    required int offerTypeId,
+    required String description,
+    required int governorateId,
+    required int districtId,
+    required int neighborhoodId,
+    required String address,
+    required double price,
+    required bool priceNegotiable,
+    required int currencyId,
   }) async {
     emit(UpdatePropertyLoading());
 
@@ -48,7 +53,12 @@ class UpdatePropertyCubit extends Cubit<UpdatePropertyState> {
       offerTypeId: offerTypeId,
       description: description,
       governorateId: governorateId,
+      districtId: districtId,
+      neighborhoodId: neighborhoodId,
+      address: address,
       price: price,
+      priceNegotiable: priceNegotiable,
+      currencyId: currencyId,
     );
 
     final result = await updatePropertyUseCase.call(property: updateEntity);
