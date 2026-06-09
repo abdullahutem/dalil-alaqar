@@ -1,6 +1,5 @@
 import 'package:dalil_alaqar/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dalil_alaqar/features/auth/presentation/cubit/auth_state.dart';
-import 'package:dalil_alaqar/features/dashboard/presentation/cubit/dashboard_cubit.dart';
 import 'package:dalil_alaqar/features/dashboard/presentation/screens/dashboard_screen.dart';
 import 'package:dalil_alaqar/features/home/presentation/screens/home_screen.dart';
 import 'package:dalil_alaqar/features/main/presentation/cubit/main_cubit.dart';

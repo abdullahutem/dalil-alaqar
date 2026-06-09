@@ -1,4 +1,5 @@
 import 'package:dalil_alaqar/features/promotions/presentation/widgets/promotion_card_tablet.dart';
+import 'package:dalil_alaqar/features/promotions/presentation/widgets/promotion_card_tablet_skeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dalil_alaqar/features/promotions/presentation/cubit/promotions_cubit.dart';
@@ -12,7 +13,17 @@ class PromotionsTabletLayout extends StatelessWidget {
     return BlocBuilder<PromotionsCubit, PromotionsState>(
       builder: (context, state) {
         if (state is PromotionsLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 1400),
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                itemCount: 3,
+                itemBuilder: (context, index) =>
+                    const PromotionCardTabletSkeleton(),
+              ),
+            ),
+          );
         }
         if (state is PromotionsError) {
           return _buildErrorState(context, state.message);

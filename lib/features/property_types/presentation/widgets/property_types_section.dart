@@ -5,6 +5,7 @@ import 'package:dalil_alaqar/features/property_types/presentation/cubit/property
 import 'package:dalil_alaqar/features/property_types/presentation/cubit/property_types_state.dart';
 import 'package:dalil_alaqar/features/property_types/domain/entities/property_type_entity.dart';
 import 'package:dalil_alaqar/features/properties/presentation/screens/properties_screen.dart';
+import 'package:dalil_alaqar/features/property_types/presentation/widgets/property_types_skeleton.dart';
 
 class PropertyTypesSection extends StatelessWidget {
   final bool isTablet;
@@ -36,12 +37,7 @@ class PropertyTypesSection extends StatelessWidget {
         BlocBuilder<PropertyTypesCubit, PropertyTypesState>(
           builder: (context, state) {
             if (state is PropertyTypesLoading) {
-              return const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(32.0),
-                  child: CircularProgressIndicator(),
-                ),
-              );
+              return PropertyTypesSkeleton(isTablet: isTablet);
             }
 
             if (state is PropertyTypesError) {

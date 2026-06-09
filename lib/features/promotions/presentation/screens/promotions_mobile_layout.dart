@@ -1,6 +1,7 @@
 import 'package:dalil_alaqar/features/promotions/presentation/cubit/promotions_cubit.dart';
 import 'package:dalil_alaqar/features/promotions/presentation/cubit/promotions_state.dart';
 import 'package:dalil_alaqar/features/promotions/presentation/widgets/promotion_card_mobile.dart';
+import 'package:dalil_alaqar/features/promotions/presentation/widgets/promotion_card_mobile_skeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,7 +13,12 @@ class PromotionsMobileLayout extends StatelessWidget {
     return BlocBuilder<PromotionsCubit, PromotionsState>(
       builder: (context, state) {
         if (state is PromotionsLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return ListView.builder(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            itemCount: 4,
+            itemBuilder: (context, index) =>
+                const PromotionCardMobileSkeleton(),
+          );
         }
         if (state is PromotionsError) {
           return _buildErrorState(context, state.message);

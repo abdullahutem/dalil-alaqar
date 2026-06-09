@@ -1,5 +1,6 @@
 import 'package:dalil_alaqar/features/advertisements/presentation/cubit/slider_cubit.dart';
 import 'package:dalil_alaqar/features/advertisements/presentation/widgets/slider_widget.dart';
+import 'package:dalil_alaqar/features/offices/presentation/widgets/offices_section.dart';
 import 'package:dalil_alaqar/features/properties/presentation/cubit/properties_cubit.dart';
 import 'package:dalil_alaqar/features/property_types/presentation/cubit/property_types_cubit.dart';
 import 'package:flutter/material.dart';
@@ -67,6 +68,10 @@ class _HomeTabletLayoutState extends State<HomeTabletLayout>
 
                 // Properties Section
                 PropertiesSection(isTablet: true),
+                SizedBox(height: 24),
+
+                // Offices Section
+                OfficesSection(),
 
                 SizedBox(height: 80),
               ],

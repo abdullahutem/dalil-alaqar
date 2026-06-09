@@ -1,3 +1,4 @@
+import 'package:dalil_alaqar/core/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dalil_alaqar/core/theme/app_colors.dart';
@@ -128,13 +129,13 @@ class _PropertiesTabletLayoutState extends State<PropertiesTabletLayout> {
                     Expanded(
                       child: GridView.builder(
                         controller: _scrollController,
-                        padding: const EdgeInsets.all(24),
+                        padding: const EdgeInsets.all(2),
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
-                              childAspectRatio: 0.75,
-                              crossAxisSpacing: 24,
-                              mainAxisSpacing: 24,
+                              childAspectRatio: 1.0,
+                              crossAxisSpacing: 2,
+                              mainAxisSpacing: 2,
                             ),
                         itemCount: properties.length + (isLoadingMore ? 1 : 0),
                         itemBuilder: (context, index) {
@@ -146,14 +147,10 @@ class _PropertiesTabletLayoutState extends State<PropertiesTabletLayout> {
                           return PropertyCard(
                             property: property,
                             onTap: () {
-                              // TODO: Navigate to property details
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    'تم النقر على: ${property.title}',
-                                  ),
-                                  duration: const Duration(seconds: 2),
-                                ),
+                              Navigator.pushNamed(
+                                context,
+                                AppRoutes.propertyDetailsScreen,
+                                arguments: property.id,
                               );
                             },
                           );

@@ -6,6 +6,7 @@ import 'package:dalil_alaqar/features/offices/presentation/screens/offices_scree
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'office_card_compact.dart';
+import 'offices_skeleton.dart';
 
 class OfficesSection extends StatefulWidget {
   const OfficesSection({super.key});
@@ -119,30 +120,9 @@ class _OfficesSectionState extends State<OfficesSection> {
           ),
         ),
         const SizedBox(height: 8),
-        SizedBox(
-          height: 130,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.only(right: 16),
-            itemCount: 4,
-            itemBuilder: (context, index) => _buildSkeletonCard(context),
-          ),
-        ),
+        const OfficesSkeleton(),
         const SizedBox(height: 16),
       ],
-    );
-  }
-
-  Widget _buildSkeletonCard(BuildContext context) {
-    final theme = Theme.of(context);
-    return Container(
-      width: 280,
-      margin: const EdgeInsets.only(left: 12, bottom: 4),
-      decoration: BoxDecoration(
-        color: theme.cardColor,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: const Center(child: CircularProgressIndicator(strokeWidth: 2)),
     );
   }
 }
