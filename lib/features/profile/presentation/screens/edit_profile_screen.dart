@@ -117,7 +117,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     hintText: 'أدخل اسمك الكامل',
                     prefixIcon: const Icon(Icons.person_outline),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                   validator: (value) {
@@ -141,7 +141,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     hintText: 'أدخل رقم هاتفك',
                     prefixIcon: const Icon(Icons.phone_outlined),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                   keyboardType: TextInputType.phone,
@@ -166,7 +166,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     hintText: 'أدخل رقم الواتساب',
                     prefixIcon: const Icon(Icons.chat_outlined),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                   keyboardType: TextInputType.phone,
@@ -193,7 +193,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         backgroundColor: Colors.blue[700],
                         foregroundColor: Colors.white,

@@ -191,7 +191,7 @@ Card(
   color: Theme.of(context).cardColor,
   elevation: 2,
   shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(12),
+    borderRadius: BorderRadius.circular(8),
   ),
   child: Padding(
     padding: EdgeInsets.all(16),
@@ -214,7 +214,7 @@ Card(
 Container(
   decoration: BoxDecoration(
     color: Theme.of(context).cardColor,
-    borderRadius: BorderRadius.circular(12),
+    borderRadius: BorderRadius.circular(8),
     
       BoxShadow(
         color: Colors.black.withOpacity(0.08),
@@ -360,7 +360,7 @@ class PropertyCard extends StatelessWidget {
       color: Theme.of(context).cardColor,
       elevation: 2,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -490,7 +490,7 @@ class InfoContainer extends StatelessWidget {
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         
           BoxShadow(
             color: Colors.black.withOpacity(0.08),

@@ -415,7 +415,7 @@ class _PropertyCardSkeleton extends StatelessWidget {
       width: 168,
       decoration: BoxDecoration(
         color: surface,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: border, width: 0.5),
       ),
       child: Column(

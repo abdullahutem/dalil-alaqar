@@ -710,8 +710,8 @@ void initState() {
 Container(
   decoration: BoxDecoration(
     color: Colors.white,
-    borderRadius: BorderRadius.circular(12),
-    boxShadow: [
+    borderRadius: BorderRadius.circular(8),
+    : [
       BoxShadow(
         color: Colors.black.withOpacity(0.15),
         blurRadius: 8,
@@ -730,7 +730,7 @@ TextFormField(
     hintText: hint,
     prefixIcon: Icon(icon, color: AppColors.primary),
     border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(8),
     ),
     filled: true,
     fillColor: Colors.grey[50],
@@ -747,7 +747,7 @@ ElevatedButton(
     foregroundColor: Colors.white,
     padding: EdgeInsets.symmetric(vertical: 16),
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(8),
     ),
     elevation: 2,
   ),
@@ -791,7 +791,7 @@ ScaffoldMessenger.of(context).showSnackBar(
     backgroundColor: Colors.green[600],
     behavior: SnackBarBehavior.floating,
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(8),
     ),
   ),
 )

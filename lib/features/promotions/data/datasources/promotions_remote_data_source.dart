@@ -13,7 +13,7 @@ class PromotionsRemoteDataSourceImpl implements PromotionsRemoteDataSource {
 
   @override
   Future<PromotionsResponseModel> getPromotions() async {
-    final response = await apiConsumer.get(EndPoints.offices);
+    final response = await apiConsumer.get(EndPoints.promotions);
 
     return PromotionsResponseModel.fromJson(response);
   }

@@ -139,7 +139,7 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
                         ),
                         decoration: BoxDecoration(
                           color: Colors.white.withValues(alpha: 0.2),
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
                           user.role == 'owner' ? 'مالك' : user.role,

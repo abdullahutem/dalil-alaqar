@@ -79,7 +79,7 @@ class _PropertyImageGalleryState extends State<PropertyImageGallery> {
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.6),
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
                 '${_currentIndex + 1} / ${images.length}',
@@ -264,7 +264,7 @@ class _FullScreenGalleryState extends State<_FullScreenGallery> {
                   ),
                   decoration: BoxDecoration(
                     color: Colors.amber,
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Row(
                     mainAxisSize: MainAxisSize.min,

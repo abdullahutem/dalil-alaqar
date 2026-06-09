@@ -45,7 +45,7 @@ class _EmployeesSkeletonState extends State<EmployeesSkeleton>
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             color: theme.cardColor,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Row(
             children: [
@@ -83,7 +83,7 @@ class _EmployeesSkeletonState extends State<EmployeesSkeleton>
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: theme.cardColor,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

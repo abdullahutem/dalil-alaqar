@@ -126,7 +126,7 @@ class _PropertyImageGalleryState extends State<PropertyImageGallery> {
                 ),
                 decoration: BoxDecoration(
                   color: Colors.black.withOpacity(0.6),
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
                   '${_currentPage + 1} / ${images.length}',

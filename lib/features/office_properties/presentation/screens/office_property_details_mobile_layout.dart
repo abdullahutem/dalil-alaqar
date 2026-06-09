@@ -86,7 +86,7 @@ class _PropertyView extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
-                    Icons.arrow_back,
+                    Icons.arrow_forward_ios,
                     color: Colors.white,
                     size: 20,
                   ),

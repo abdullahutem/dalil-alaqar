@@ -151,7 +151,7 @@ class _PropertyTypeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(8),
       child: Container(
         width: isTablet ? 140 : 110,
         decoration: BoxDecoration(

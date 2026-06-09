@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dalil_alaqar/core/databases/api/end_points.dart';
 import 'package:dalil_alaqar/core/utils/image_cache_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -172,7 +173,7 @@ class _SliderContentState extends State<_SliderContent> {
     // We need to prepend the storage base URL
     final imageUrl = slide.image.startsWith('http')
         ? slide.image
-        : 'https://dalil-alaqar.codebrains.net/storage/${slide.image}';
+        : '${EndPoints.kBaseImageUrl}${slide.image}';
 
     return Stack(
       fit: StackFit.expand,
@@ -202,7 +203,7 @@ class _SliderContentState extends State<_SliderContent> {
               Text(
                 slide.title,
                 style: TextStyle(
-                  fontSize: widget.isTablet ? 36 : 28,
+                  fontSize: widget.isTablet ? 36 : 16,
                   fontWeight: FontWeight.bold,
                   color: AppColors.white,
                   height: 1.2,
@@ -212,7 +213,7 @@ class _SliderContentState extends State<_SliderContent> {
               Text(
                 slide.description,
                 style: TextStyle(
-                  fontSize: widget.isTablet ? 16 : 14,
+                  fontSize: widget.isTablet ? 16 : 11,
                   color: AppColors.white.withValues(alpha: 0.9),
                   height: 1.5,
                 ),

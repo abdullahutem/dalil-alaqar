@@ -35,9 +35,7 @@ class _PlanCardSkeletonState extends State<PlanCardSkeleton>
       builder: (context, _) {
         return Card(
           elevation: 1,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Row(

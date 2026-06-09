@@ -49,7 +49,7 @@ class _PropertyLocationPickerState extends State<PropertyLocationPicker> {
               backgroundColor: Colors.orange,
               behavior: SnackBarBehavior.floating,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
             ),
           );
@@ -66,7 +66,7 @@ class _PropertyLocationPickerState extends State<PropertyLocationPicker> {
               backgroundColor: Colors.red,
               behavior: SnackBarBehavior.floating,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
             ),
           );
@@ -80,7 +80,7 @@ class _PropertyLocationPickerState extends State<PropertyLocationPicker> {
           children: [
             // Map View
             ClipRRect(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               child: FlutterMap(
                 mapController: _mapController,
                 options: MapOptions(
@@ -109,13 +109,6 @@ class _PropertyLocationPickerState extends State<PropertyLocationPicker> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.3),
-                                blurRadius: 8,
-                                offset: const Offset(0, 2),
-                              ),
-                            ],
                           ),
                           child: const Icon(
                             Icons.location_on,
@@ -142,14 +135,7 @@ class _PropertyLocationPickerState extends State<PropertyLocationPicker> {
                 ),
                 decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.95),
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 8,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Row(
                   children: [
@@ -218,7 +204,7 @@ class _PropertyLocationPickerState extends State<PropertyLocationPicker> {
               Container(
                 decoration: BoxDecoration(
                   color: Colors.black.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Center(
                   child: Card(
@@ -252,17 +238,7 @@ class _PropertyLocationPickerState extends State<PropertyLocationPicker> {
       child: Container(
         width: 44,
         height: 44,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              blurRadius: 6,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
+        decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle),
         child: Icon(icon, color: color ?? Colors.black87, size: 24),
       ),
     );

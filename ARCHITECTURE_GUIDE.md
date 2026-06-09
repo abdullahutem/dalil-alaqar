@@ -560,7 +560,7 @@ Card(
   color: Theme.of(context).cardColor,
   elevation: 2,
   shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(12),
+    borderRadius: BorderRadius.circular(8),
   ),
   child: Padding(
     padding: EdgeInsets.all(16),

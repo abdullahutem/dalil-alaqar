@@ -327,7 +327,7 @@ class _OfficePropertiesScreenContentState
                                 )
                               : null,
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(8),
                           ),
                           filled: true,
                           fillColor: isDark
@@ -355,7 +355,7 @@ class _OfficePropertiesScreenContentState
                             : isDark
                             ? AppColors.darkSurface
                             : Colors.grey[100],
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(8),
                         border: Border.all(
                           color: filtersState.showAdvancedFilters
                               ? AppColors.primary
@@ -420,7 +420,7 @@ class _OfficePropertiesScreenContentState
                         ),
                         shape: RoundedRectangleBorder(
                           side: BorderSide(color: AppColors.darkIcon),
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                       ),
                       child: Text(

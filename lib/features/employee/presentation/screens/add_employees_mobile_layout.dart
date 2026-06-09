@@ -343,7 +343,7 @@ class _AddEmployeesMobileLayoutState extends State<AddEmployeesMobileLayout> {
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                     elevation: 0,
                   ),
@@ -425,27 +425,27 @@ class _AddEmployeesMobileLayoutState extends State<AddEmployeesMobileLayout> {
             filled: true,
             fillColor: isDark ? AppColors.darkSurface : AppColors.lightSurface,
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide(
                 color: isDark ? AppColors.darkDivider : Colors.grey.shade300,
               ),
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide(
                 color: isDark ? AppColors.darkDivider : Colors.grey.shade300,
               ),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: AppColors.primary, width: 2),
             ),
             errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: AppColors.error),
             ),
             focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: AppColors.error, width: 2),
             ),
             contentPadding: const EdgeInsets.symmetric(
@@ -478,7 +478,7 @@ class _AddEmployeesMobileLayoutState extends State<AddEmployeesMobileLayout> {
         Container(
           decoration: BoxDecoration(
             color: isDark ? AppColors.darkSurface : AppColors.lightSurface,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
             border: Border.all(
               color: isDark ? AppColors.darkDivider : Colors.grey.shade300,
             ),
@@ -582,19 +582,19 @@ class _AddEmployeesMobileLayoutState extends State<AddEmployeesMobileLayout> {
             filled: true,
             fillColor: isDark ? AppColors.darkSurface : AppColors.lightSurface,
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide(
                 color: isDark ? AppColors.darkDivider : Colors.grey.shade300,
               ),
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide(
                 color: isDark ? AppColors.darkDivider : Colors.grey.shade300,
               ),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: AppColors.primary, width: 2),
             ),
             contentPadding: const EdgeInsets.symmetric(

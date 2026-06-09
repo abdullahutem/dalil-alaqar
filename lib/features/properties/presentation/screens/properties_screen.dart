@@ -269,7 +269,7 @@ class _PropertiesScreenContentState extends State<_PropertiesScreenContent> {
                                 )
                               : null,
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(8),
                           ),
                           filled: true,
                           fillColor: isDark
@@ -297,7 +297,7 @@ class _PropertiesScreenContentState extends State<_PropertiesScreenContent> {
                             : isDark
                             ? AppColors.darkSurface
                             : Colors.grey[100],
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(8),
                         border: Border.all(
                           color: filtersState.showAdvancedFilters
                               ? AppColors.primary
@@ -362,7 +362,7 @@ class _PropertiesScreenContentState extends State<_PropertiesScreenContent> {
                         ),
                         shape: RoundedRectangleBorder(
                           side: BorderSide(color: AppColors.darkIcon),
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                       ),
                       child: Text(

@@ -63,7 +63,7 @@ class OfficeInfoRow extends StatelessWidget {
               ),
             ),
             if (onTap != null)
-              Icon(Icons.arrow_back_ios_new_rounded, size: 12, color: muted),
+              Icon(Icons.arrow_forward_ios, size: 12, color: muted),
           ],
         ),
       ),

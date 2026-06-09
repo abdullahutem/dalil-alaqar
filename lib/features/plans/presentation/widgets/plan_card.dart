@@ -22,14 +22,14 @@ class PlanCard extends StatelessWidget {
     return Card(
       elevation: isCurrentPlan ? 3 : 1,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         side: isCurrentPlan
             ? BorderSide(color: primaryColor, width: 2)
             : BorderSide.none,
       ),
       child: InkWell(
         onTap: onSelect,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Row(
@@ -41,7 +41,7 @@ class PlanCard extends StatelessWidget {
                   color: isDark
                       ? Colors.grey.withValues(alpha: 0.1)
                       : Colors.grey.withValues(alpha: 0.05),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(
                   _getPlanIcon(plan.slug),

@@ -50,7 +50,8 @@ class PropertiesSection extends StatelessWidget {
                     ),
                   ],
                 ),
-                TextButton.icon(
+
+                TextButton(
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -59,10 +60,16 @@ class PropertiesSection extends StatelessWidget {
                       ),
                     );
                   },
-                  icon: const Icon(Icons.arrow_back),
-                  label: const Text('عرض الكل'),
                   style: TextButton.styleFrom(
                     foregroundColor: AppColors.primary,
+                  ),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text('عرض الكل'),
+                      SizedBox(width: 8), // Optional spacing
+                      Icon(Icons.arrow_forward_ios),
+                    ],
                   ),
                 ),
               ],
@@ -188,13 +195,16 @@ class PropertiesSection extends StatelessWidget {
                               ),
                             );
                           },
-                          icon: const Icon(Icons.arrow_back),
+                          icon: const Icon(Icons.arrow_forward_ios),
                           label: Text(
                             'عرض جميع العقارات (${state.propertiesResponse.meta.total})',
                             style: TextStyle(fontSize: isTablet ? 16 : 14),
                           ),
                           style: OutlinedButton.styleFrom(
                             foregroundColor: AppColors.primary,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
                             side: BorderSide(color: AppColors.primary),
                             padding: EdgeInsets.symmetric(
                               vertical: isTablet ? 16 : 12,
@@ -287,7 +297,7 @@ class _PropertyCardSkeleton extends StatelessWidget {
       margin: const EdgeInsets.only(left: 16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

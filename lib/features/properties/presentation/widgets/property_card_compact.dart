@@ -1,3 +1,4 @@
+import 'package:dalil_alaqar/core/databases/api/end_points.dart';
 import 'package:flutter/material.dart';
 import 'package:dalil_alaqar/core/theme/app_colors.dart';
 import 'package:dalil_alaqar/core/utils/image_cache_config.dart';
@@ -11,22 +12,15 @@ class PropertyCardCompact extends StatelessWidget {
 
   const PropertyCardCompact({super.key, required this.property, this.onTap});
 
-  String _formatPrice(String price) {
-    return PriceFormatter.formatCompact(price, showDecimals: true);
-  }
+  String _formatPrice(String price) =>
+      PriceFormatter.formatCompact(price, showDecimals: true);
 
-  String _getCurrencySymbol() {
-    return property.currency?.symbol ?? 'ريال';
-  }
+  String _getCurrencySymbol() => property.currency?.symbol ?? 'ريال';
 
   String _getImageUrl() {
-    if (property.primaryImage == null) {
-      return '';
-    }
-    final imagePath = property.primaryImage!.imagePath;
-    return imagePath.startsWith('http')
-        ? imagePath
-        : 'https://dalil-alaqar.codebrains.net/storage/$imagePath';
+    if (property.primaryImage == null) return '';
+    final path = property.primaryImage!.imagePath;
+    return path.startsWith('http') ? path : '${EndPoints.kBaseImageUrl}$path';
   }
 
   @override
@@ -37,26 +31,27 @@ class PropertyCardCompact extends StatelessWidget {
     return GestureDetector(
       onTap:
           onTap ??
-          () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) =>
-                    PropertyDetailsScreen(propertyId: property.id),
-              ),
-            );
-          },
+          () => Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => PropertyDetailsScreen(propertyId: property.id),
+            ),
+          ),
       child: Container(
-        width: 280,
+        width: 260,
         margin: const EdgeInsets.only(left: 16),
         decoration: BoxDecoration(
           color: isDark ? AppColors.darkSurface : Colors.white,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: isDark ? Colors.white10 : Colors.black12,
+            width: 0.5,
+          ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Property Image
+            // Image
             Stack(
               children: [
                 ClipRRect(
@@ -73,161 +68,167 @@ class PropertyCardCompact extends StatelessWidget {
                         : ImageCacheConfig.defaultPlaceholder(),
                   ),
                 ),
-                // Offer Type Badge
                 Positioned(
                   top: 8,
                   right: 8,
                   child: Container(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 4,
+                      horizontal: 9,
+                      vertical: 3,
                     ),
                     decoration: BoxDecoration(
                       color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
                       property.offerType.name,
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 11,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 8,
+                  left: 8,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 9,
+                      vertical: 3,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      property.propertyType.name,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
                 ),
               ],
             ),
-            // Property Details
-            Flexible(
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // Title
-                    Text(
-                      property.title,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        height: 1.3,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+
+            // Body
+            Padding(
+              padding: const EdgeInsets.fromLTRB(14, 12, 14, 14),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Title
+                  Text(
+                    property.title,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      height: 1.35,
                     ),
-                    const SizedBox(height: 8),
-                    // Property Type
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.category_outlined,
-                          size: 14,
-                          color: Colors.grey[600],
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          property.propertyType.name,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey[600],
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+
+                  const SizedBox(height: 3),
+
+                  // Location
+                  _MetaRow(
+                    icon: Icons.location_on_outlined,
+                    label:
+                        '${property.district.nameAr}، ${property.governorate.nameAr}',
+                  ),
+
+                  // Divider
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Divider(
+                      height: 0.5,
+                      thickness: 0.5,
+                      color: isDark ? Colors.white12 : Colors.black12,
+                    ),
+                  ),
+
+                  // Price + Views
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            '${_formatPrice(property.price)} ${_getCurrencySymbol()}',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.primary,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 6),
-                    // Location
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.location_on_outlined,
-                          size: 14,
-                          color: Colors.grey[600],
-                        ),
-                        const SizedBox(width: 4),
-                        Expanded(
-                          child: Text(
-                            '${property.district.nameAr}، ${property.governorate.nameAr}',
+                          if (property.priceNegotiable)
+                            Text(
+                              'قابل للتفاوض',
+                              style: TextStyle(
+                                fontSize: 11,
+                                color: Colors.grey[500],
+                              ),
+                            ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.visibility_outlined,
+                            size: 14,
+                            color: Colors.grey[500],
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            '${property.viewsCount}',
                             style: TextStyle(
                               fontSize: 12,
-                              color: Colors.grey[600],
+                              color: Colors.grey[500],
                             ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    // Price
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                '${_formatPrice(property.price)} ${_getCurrencySymbol()}',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.primary,
-                                ),
-                              ),
-                              if (property.priceNegotiable)
-                                Text(
-                                  'قابل للتفاوض',
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    color: Colors.grey[600],
-                                  ),
-                                ),
-                            ],
-                          ),
-                        ),
-                        // Views
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
-                          ),
-                          decoration: BoxDecoration(
-                            color: isDark
-                                ? AppColors.darkSurface
-                                : Colors.grey[100],
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.visibility_outlined,
-                                size: 12,
-                                color: Colors.grey[600],
-                              ),
-                              const SizedBox(width: 4),
-                              Text(
-                                '${property.viewsCount}',
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  color: Colors.grey[700],
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _MetaRow extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  const _MetaRow({required this.icon, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon, size: 13, color: Colors.grey[500]),
+        const SizedBox(width: 5),
+        Expanded(
+          child: Text(
+            label,
+            style: TextStyle(fontSize: 12, color: Colors.grey[500]),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ],
     );
   }
 }

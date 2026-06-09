@@ -1,10 +1,10 @@
 import 'package:dalil_alaqar/core/routes/app_routes.dart';
+import 'package:dalil_alaqar/features/properties/presentation/widgets/property_card_compact.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dalil_alaqar/core/theme/app_colors.dart';
 import 'package:dalil_alaqar/features/properties/presentation/cubit/properties_cubit.dart';
 import 'package:dalil_alaqar/features/properties/presentation/cubit/properties_state.dart';
-import 'package:dalil_alaqar/features/properties/presentation/widgets/property_card.dart';
 import 'package:dalil_alaqar/features/properties/presentation/widgets/property_card_skeleton.dart';
 
 class PropertiesTabletLayout extends StatefulWidget {
@@ -144,7 +144,7 @@ class _PropertiesTabletLayoutState extends State<PropertiesTabletLayout> {
                           }
 
                           final property = properties[index];
-                          return PropertyCard(
+                          return PropertyCardCompact(
                             property: property,
                             onTap: () {
                               Navigator.pushNamed(

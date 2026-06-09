@@ -19,7 +19,7 @@ class PromotionCardCompact extends StatelessWidget {
         margin: const EdgeInsets.only(left: 12, bottom: 4),
         decoration: BoxDecoration(
           color: theme.cardColor,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

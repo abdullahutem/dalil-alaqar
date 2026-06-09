@@ -158,7 +158,7 @@ class _AddEmployeesTabletLayoutState extends State<AddEmployeesTabletLayout> {
           constraints: const BoxConstraints(maxWidth: 800),
           decoration: BoxDecoration(
             color: isDark ? AppColors.darkSurface : AppColors.lightSurface,
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(8),
           ),
           padding: const EdgeInsets.all(32),
           child: Form(
@@ -388,7 +388,7 @@ class _AddEmployeesTabletLayoutState extends State<AddEmployeesTabletLayout> {
                           foregroundColor: Colors.white,
                           padding: const EdgeInsets.symmetric(vertical: 18),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(8),
                           ),
                           elevation: 0,
                         ),
@@ -475,27 +475,27 @@ class _AddEmployeesTabletLayoutState extends State<AddEmployeesTabletLayout> {
             filled: true,
             fillColor: isDark ? AppColors.darkCard : Colors.grey.shade50,
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide(
                 color: isDark ? AppColors.darkDivider : Colors.grey.shade300,
               ),
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide(
                 color: isDark ? AppColors.darkDivider : Colors.grey.shade300,
               ),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: AppColors.primary, width: 2),
             ),
             errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: AppColors.error),
             ),
             focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: AppColors.error, width: 2),
             ),
             contentPadding: const EdgeInsets.symmetric(
@@ -528,7 +528,7 @@ class _AddEmployeesTabletLayoutState extends State<AddEmployeesTabletLayout> {
         Container(
           decoration: BoxDecoration(
             color: isDark ? AppColors.darkCard : Colors.grey.shade50,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
             border: Border.all(
               color: isDark ? AppColors.darkDivider : Colors.grey.shade300,
             ),
@@ -632,19 +632,19 @@ class _AddEmployeesTabletLayoutState extends State<AddEmployeesTabletLayout> {
             filled: true,
             fillColor: isDark ? AppColors.darkCard : Colors.grey.shade50,
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide(
                 color: isDark ? AppColors.darkDivider : Colors.grey.shade300,
               ),
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide(
                 color: isDark ? AppColors.darkDivider : Colors.grey.shade300,
               ),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: AppColors.primary, width: 2),
             ),
             contentPadding: const EdgeInsets.symmetric(

@@ -42,7 +42,7 @@ class OfficeContactButton extends StatelessWidget {
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
           color: bg,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: bc, width: 0.5),
         ),
         child: Row(
@@ -58,7 +58,7 @@ class OfficeContactButton extends StatelessWidget {
                     : (isDark
                           ? Colors.white.withValues(alpha: 0.07)
                           : Colors.black.withValues(alpha: 0.05)),
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(icon, size: 19, color: fg),
             ),
@@ -80,7 +80,7 @@ class OfficeContactButton extends StatelessWidget {
                 ],
               ),
             ),
-            Icon(Icons.arrow_back_ios_new_rounded, size: 13, color: muted),
+            Icon(Icons.arrow_forward_ios, size: 13, color: muted),
           ],
         ),
       ),

@@ -42,7 +42,7 @@ class OfficePropertyCardTablet extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: surface,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: cardBorder, width: 0.5),
       ),
       child: Column(

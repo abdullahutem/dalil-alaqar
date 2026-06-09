@@ -18,7 +18,7 @@ class OfficeCard extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           color: theme.cardColor,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
         ),
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -45,14 +45,6 @@ class OfficeCard extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            if (office.isVerified) ...[
-                              const SizedBox(width: 6),
-                              Icon(
-                                Icons.verified,
-                                color: Colors.blue,
-                                size: 18,
-                              ),
-                            ],
                           ],
                         ),
                         if (office.ownerName != null) ...[
@@ -72,10 +64,7 @@ class OfficeCard extends StatelessWidget {
                   ),
                 ],
               ),
-              if (office.subscriptionType != null) ...[
-                const SizedBox(height: 8),
-                _buildSubscriptionBadge(context),
-              ],
+
               const SizedBox(height: 12),
               const Divider(height: 1),
               const SizedBox(height: 12),
@@ -83,10 +72,6 @@ class OfficeCard extends StatelessWidget {
               if (office.address != null) ...[
                 const SizedBox(height: 10),
                 _buildAddressRow(context),
-              ],
-              if (office.phone != null) ...[
-                const SizedBox(height: 8),
-                _buildContactRow(context),
               ],
             ],
           ),
@@ -102,11 +87,11 @@ class OfficeCard extends StatelessWidget {
       height: 56,
       decoration: BoxDecoration(
         color: theme.colorScheme.primary.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: office.logo != null
           ? ClipRRect(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(8),
               child: CachedNetworkImage(
                 imageUrl: office.logo!,
                 fit: BoxFit.cover,
@@ -128,38 +113,6 @@ class OfficeCard extends StatelessWidget {
     final theme = Theme.of(context);
     return Center(
       child: Icon(Icons.business, color: theme.colorScheme.primary, size: 28),
-    );
-  }
-
-  Widget _buildSubscriptionBadge(BuildContext context) {
-    final theme = Theme.of(context);
-    Color badgeColor;
-    final subType = office.subscriptionType ?? '';
-
-    if (subType.contains('ذهبية') || subType.contains('Gold')) {
-      badgeColor = const Color(0xFFFFD700);
-    } else if (subType.contains('VIP')) {
-      badgeColor = const Color(0xFF9C27B0);
-    } else if (subType.contains('فضية') || subType.contains('Silver')) {
-      badgeColor = Colors.grey;
-    } else {
-      badgeColor = theme.colorScheme.primary;
-    }
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-      decoration: BoxDecoration(
-        color: badgeColor.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: badgeColor.withValues(alpha: 0.4)),
-      ),
-      child: Text(
-        subType,
-        style: theme.textTheme.labelSmall?.copyWith(
-          color: badgeColor,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
     );
   }
 
@@ -259,35 +212,6 @@ class OfficeCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
         ),
-      ],
-    );
-  }
-
-  Widget _buildContactRow(BuildContext context) {
-    final theme = Theme.of(context);
-    return Row(
-      children: [
-        Icon(Icons.phone_outlined, size: 16, color: Colors.green),
-        const SizedBox(width: 6),
-        Text(
-          office.phone!,
-          style: theme.textTheme.bodySmall?.copyWith(
-            color: Colors.green,
-            fontWeight: FontWeight.w500,
-          ),
-          textDirection: TextDirection.ltr,
-        ),
-        if (office.whatsappNumber != null) ...[
-          const SizedBox(width: 16),
-          Icon(Icons.chat_outlined, size: 16, color: const Color(0xFF25D366)),
-          const SizedBox(width: 4),
-          Text(
-            'واتساب',
-            style: theme.textTheme.labelSmall?.copyWith(
-              color: const Color(0xFF25D366),
-            ),
-          ),
-        ],
       ],
     );
   }

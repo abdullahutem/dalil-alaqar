@@ -20,17 +20,14 @@ class CircleBtn extends StatelessWidget {
       height: 36,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
+        // color: Colors.red.withValues(alpha: 0.3),
         color: Colors.black.withValues(alpha: 0.3),
         border: Border.all(
           color: Colors.white.withValues(alpha: 0.2),
           width: 0.5,
         ),
       ),
-      child: const Icon(
-        Icons.arrow_forward_ios_rounded,
-        size: 14,
-        color: Colors.white,
-      ),
+      child: Icon(icon, size: 14, color: Colors.white),
     ),
   );
 }

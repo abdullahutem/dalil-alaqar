@@ -25,10 +25,10 @@ class SplashView extends StatelessWidget {
       listener: (context, state) {
         if (state is SplashCompletedAuthenticated) {
           // User is logged in or guest - go to main screen
-          Navigator.of(context).pushReplacementNamed(AppRoutes.login);
+          Navigator.of(context).pushReplacementNamed(AppRoutes.main);
         } else if (state is SplashCompletedUnauthenticated) {
           // User needs to login
-          Navigator.of(context).pushReplacementNamed(AppRoutes.login);
+          Navigator.of(context).pushReplacementNamed(AppRoutes.main);
         }
       },
       child: Scaffold(

@@ -25,7 +25,7 @@ class EmployeeCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       decoration: BoxDecoration(
         color: theme.cardColor,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Padding(
         padding: const EdgeInsets.all(12),
@@ -47,7 +47,7 @@ class EmployeeCard extends StatelessWidget {
     final theme = Theme.of(context);
     return PopupMenuButton<String>(
       icon: Icon(Icons.more_vert, color: theme.iconTheme.color),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       onSelected: (value) async {
         if (value == 'update') {
           final result = await Navigator.push(

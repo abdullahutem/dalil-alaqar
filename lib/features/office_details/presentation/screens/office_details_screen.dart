@@ -62,7 +62,7 @@ class OfficeDetailsContent extends StatelessWidget {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    icon: const Icon(Icons.arrow_back),
+                    icon: const Icon(Icons.arrow_forward_ios),
                     label: const Text('العودة'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,

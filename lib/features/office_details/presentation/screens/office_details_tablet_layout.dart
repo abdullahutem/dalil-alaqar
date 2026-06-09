@@ -54,7 +54,7 @@ class OfficeDetailsTabletLayout extends StatelessWidget {
           title: Row(
             children: [
               OfficeCircleButton(
-                icon: Icons.arrow_back_ios_rounded,
+                icon: Icons.arrow_forward_ios,
                 isDark: isDark,
                 border: border,
                 onTap: () => Navigator.of(context).maybePop(),

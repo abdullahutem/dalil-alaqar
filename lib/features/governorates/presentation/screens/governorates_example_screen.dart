@@ -96,7 +96,7 @@ class _GovernoratesExampleScreenState extends State<GovernoratesExampleScreen> {
                             )
                           : null,
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(8),
                       ),
                       filled: true,
                       fillColor: Colors.grey[100],
@@ -175,7 +175,7 @@ class _GovernoratesExampleScreenState extends State<GovernoratesExampleScreen> {
                         margin: const EdgeInsets.only(bottom: 12),
                         elevation: isSelected ? 4 : 1,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(8),
                           side: BorderSide(
                             color: isSelected
                                 ? AppColors.primary
@@ -249,7 +249,7 @@ class _GovernoratesExampleScreenState extends State<GovernoratesExampleScreen> {
                               color: governorate.isActive
                                   ? Colors.green[100]
                                   : Colors.grey[300],
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
                               governorate.isActive ? 'نشط' : 'غير نشط',

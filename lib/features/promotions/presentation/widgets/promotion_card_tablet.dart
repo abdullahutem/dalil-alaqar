@@ -20,10 +20,10 @@ class PromotionCardTablet extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         decoration: BoxDecoration(
           color: theme.cardColor,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(8),
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(8),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -50,7 +50,7 @@ class PromotionCardTablet extends StatelessWidget {
                               ),
                               decoration: BoxDecoration(
                                 color: Colors.red.withValues(alpha: 0.15),
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
                                   color: Colors.red.withValues(alpha: 0.3),
                                 ),
@@ -180,7 +180,7 @@ class PromotionCardTablet extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: color.withValues(alpha: 0.3), width: 1.5),
       ),
       child: Row(
@@ -223,7 +223,7 @@ class PromotionCardTablet extends StatelessWidget {
         gradient: LinearGradient(
           colors: [color.withValues(alpha: 0.2), color.withValues(alpha: 0.1)],
         ),
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: color.withValues(alpha: 0.4), width: 2),
       ),
       child: Row(
@@ -360,7 +360,7 @@ class PromotionCardTablet extends StatelessWidget {
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: Colors.grey.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: Colors.grey.withValues(alpha: 0.2)),
       ),
       child: Row(

@@ -139,11 +139,11 @@ class _UploadOfficeLogoScreenState extends State<UploadOfficeLogoScreen> {
                     height: 200,
                     decoration: BoxDecoration(
                       color: Colors.grey.shade100,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(8),
                       border: Border.all(color: Colors.grey.shade300),
                     ),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(8),
                       child: Image.network(
                         widget.officeInfo.logoUrl!,
                         fit: BoxFit.contain,
@@ -174,7 +174,7 @@ class _UploadOfficeLogoScreenState extends State<UploadOfficeLogoScreen> {
                     height: 250,
                     decoration: BoxDecoration(
                       color: Colors.grey.shade100,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(8),
                       border: Border.all(
                         color: _selectedImage != null
                             ? theme.colorScheme.primary
@@ -184,7 +184,7 @@ class _UploadOfficeLogoScreenState extends State<UploadOfficeLogoScreen> {
                     ),
                     child: _selectedImage != null
                         ? ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(8),
                             child: Image.file(
                               _selectedImage!,
                               fit: BoxFit.contain,
@@ -226,7 +226,7 @@ class _UploadOfficeLogoScreenState extends State<UploadOfficeLogoScreen> {
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 14),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(8),
                       ),
                     ),
                   ),
@@ -259,7 +259,7 @@ class _UploadOfficeLogoScreenState extends State<UploadOfficeLogoScreen> {
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                 ),
@@ -271,7 +271,7 @@ class _UploadOfficeLogoScreenState extends State<UploadOfficeLogoScreen> {
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: Colors.blue.shade50,
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: Colors.blue.shade200),
                   ),
                   child: Row(

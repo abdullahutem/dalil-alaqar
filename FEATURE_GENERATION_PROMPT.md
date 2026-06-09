@@ -149,7 +149,7 @@ class _[FeatureName]SkeletonState extends State<[FeatureName]Skeleton>
           // Skeleton structure matching your card layout
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Column(
             children: [

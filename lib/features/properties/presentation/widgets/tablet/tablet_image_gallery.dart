@@ -86,7 +86,7 @@ class TabletImageGallery extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   color: Colors.black.withValues(alpha: 0.6),
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(8),
                   border: Border.all(
                     color: Colors.white.withValues(alpha: 0.2),
                     width: 0.5,

@@ -188,7 +188,7 @@ class ProfileScreenContent extends StatelessWidget {
                           ),
                           decoration: BoxDecoration(
                             color: Colors.white.withValues(alpha: 0.2),
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
                             user.role == 'owner' ? 'مالك' : user.role,
@@ -303,7 +303,7 @@ class ProfileScreenContent extends StatelessWidget {
     return Card(
       elevation: isDark ? 2 : 1,
 
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(

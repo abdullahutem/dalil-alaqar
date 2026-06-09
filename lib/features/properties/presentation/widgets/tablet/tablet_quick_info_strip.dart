@@ -22,7 +22,7 @@ class TabletQuickInfoStrip extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: surface,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: border, width: 0.5),
       ),
       child: Row(
@@ -41,7 +41,7 @@ class TabletQuickInfoStrip extends StatelessWidget {
                           color: isDark
                               ? Colors.white.withValues(alpha: 0.06)
                               : Colors.black.withValues(alpha: 0.04),
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         child: Icon(item.icon, size: 20, color: muted),
                       ),

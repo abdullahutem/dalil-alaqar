@@ -44,10 +44,10 @@ class _PromotionCardTabletSkeletonState
       margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       decoration: BoxDecoration(
         color: theme.cardColor,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(8),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -73,7 +73,7 @@ class _PromotionCardTabletSkeletonState
                         color: Colors.grey.withValues(
                           alpha: _animation.value * 0.3,
                         ),
-                        borderRadius: BorderRadius.circular(24),
+                        borderRadius: BorderRadius.circular(8),
                       ),
                     ),
                     const SizedBox(height: 12),
@@ -145,7 +145,7 @@ class _PromotionCardTabletSkeletonState
                         color: Colors.grey.withValues(
                           alpha: _animation.value * 0.2,
                         ),
-                        borderRadius: BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(8),
                       ),
                     ),
                     const SizedBox(height: 16),

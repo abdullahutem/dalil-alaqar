@@ -53,7 +53,7 @@ class _OfficesSkeletonState extends State<OfficesSkeleton>
       margin: const EdgeInsets.only(left: 12, bottom: 4),
       decoration: BoxDecoration(
         color: theme.cardColor,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(14, 13, 14, 12),
@@ -72,7 +72,7 @@ class _OfficesSkeletonState extends State<OfficesSkeleton>
                     color: Colors.grey.withValues(
                       alpha: _animation.value * 0.3,
                     ),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
                 const SizedBox(width: 10),

@@ -103,7 +103,7 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
                   backgroundColor: Colors.green,
                   behavior: SnackBarBehavior.floating,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
               );
@@ -128,7 +128,7 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
                   backgroundColor: Colors.red,
                   behavior: SnackBarBehavior.floating,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
               );
@@ -169,7 +169,7 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
                                   vertical: 16,
                                 ),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
                               child: const Text('التالي'),
@@ -186,7 +186,7 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
                                   vertical: 16,
                                 ),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
                               child: isLoading
@@ -221,7 +221,7 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
                                   vertical: 16,
                                 ),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
                               child: const Text('السابق'),
@@ -295,7 +295,7 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
                     color: isDark ? AppColors.darkIcon : AppColors.primary,
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   filled: true,
                   fillColor: isDark ? AppColors.darkSurface : Colors.grey[100],
@@ -331,7 +331,7 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
                   labelText: 'نوع العرض',
                   prefixIcon: const Icon(Icons.sell),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   filled: true,
                   fillColor: isDark ? AppColors.darkSurface : Colors.grey[100],
@@ -464,7 +464,7 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
                   labelText: 'العملة',
                   prefixIcon: const Icon(Icons.monetization_on),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   filled: true,
                   fillColor: isDark ? AppColors.darkSurface : Colors.grey[100],
@@ -494,7 +494,7 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: Colors.red.shade50,
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(8),
                   border: Border.all(color: Colors.red.shade200),
                 ),
                 child: Row(
@@ -685,7 +685,7 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
   }) {
     return Card(
       elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(

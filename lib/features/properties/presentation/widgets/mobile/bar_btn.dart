@@ -24,7 +24,7 @@ class BarBtn extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 13),
       decoration: BoxDecoration(
         color: bg,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: border, width: 0.5),
       ),
       child: Row(

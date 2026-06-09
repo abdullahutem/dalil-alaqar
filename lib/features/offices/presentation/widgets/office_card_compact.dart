@@ -20,27 +20,14 @@ class OfficeCardCompact extends StatelessWidget {
         margin: const EdgeInsets.only(left: 12, bottom: 4),
         decoration: BoxDecoration(
           color: isDark ? AppColors.darkCard : AppColors.lightSurface,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: isDark
-              ? []
-              : [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.06),
-                    blurRadius: 16,
-                    offset: const Offset(0, 4),
-                  ),
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.03),
-                    blurRadius: 4,
-                    offset: const Offset(0, 1),
-                  ),
-                ],
+          borderRadius: BorderRadius.circular(8),
+
           border: isDark
               ? Border.all(color: AppColors.darkDivider, width: 0.5)
               : null,
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(8),
           child: IntrinsicHeight(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -108,10 +95,6 @@ class OfficeCardCompact extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  if (office.isVerified) ...[
-                    const SizedBox(width: 5),
-                    _VerifiedBadge(),
-                  ],
                 ],
               ),
               const SizedBox(height: 4),
@@ -244,7 +227,7 @@ class _LogoWidget extends StatelessWidget {
         color: isDark
             ? AppColors.darkSurface
             : AppColors.primary.withValues(alpha: 0.06),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(
           color: isDark
               ? AppColors.darkDivider
@@ -285,42 +268,6 @@ class _Placeholder extends StatelessWidget {
 // ─────────────────────────────────────────────
 //  Verified badge
 // ─────────────────────────────────────────────
-class _VerifiedBadge extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2.5),
-      decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF0A2020) : const Color(0xFFE6F4F4),
-        borderRadius: BorderRadius.circular(30),
-        border: Border.all(
-          color: const Color(0xFFD4A843).withValues(alpha: 0.4),
-          width: 0.5,
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            Icons.verified_rounded,
-            size: 10,
-            color: isDark ? const Color(0xFF2EC4B6) : const Color(0xFF1B7A6E),
-          ),
-          const SizedBox(width: 3),
-          Text(
-            'موثق',
-            style: TextStyle(
-              fontSize: 9.5,
-              fontWeight: FontWeight.w700,
-              color: isDark ? const Color(0xFF2EC4B6) : const Color(0xFF1B7A6E),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 // ─────────────────────────────────────────────
 //  Stat chip

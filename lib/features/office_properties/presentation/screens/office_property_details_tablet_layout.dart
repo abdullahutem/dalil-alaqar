@@ -84,7 +84,7 @@ class _PropertyView extends StatelessWidget {
                         Stack(
                           children: [
                             ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(8),
                               child: SizedBox(
                                 height: 400,
                                 child: PropertyImageGallery(

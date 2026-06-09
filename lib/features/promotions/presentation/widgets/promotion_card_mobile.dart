@@ -20,10 +20,10 @@ class PromotionCardMobile extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           color: theme.cardColor,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(8),
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -72,11 +72,6 @@ class PromotionCardMobile extends StatelessWidget {
                       const SizedBox(height: 12),
                     ],
 
-                    // Discount Badge
-                    _buildDiscountBadge(
-                      context,
-                      isDark ? AppColors.darkDivider : AppColors.primary,
-                    ),
                     const SizedBox(height: 12),
 
                     const Divider(height: 1),
@@ -141,7 +136,7 @@ class PromotionCardMobile extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   color: Colors.red.withValues(alpha: 0.9),
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Text(
                   'غير نشط',
@@ -175,7 +170,7 @@ class PromotionCardMobile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.2),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: color.withValues(alpha: 0.3), width: 1),
       ),
       child: Row(
@@ -189,49 +184,6 @@ class PromotionCardMobile extends StatelessWidget {
               color: color,
               fontSize: 12,
               fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDiscountBadge(BuildContext context, Color color) {
-    final theme = Theme.of(context);
-    String discountText;
-    IconData icon;
-
-    if (promotion.isPercentage && promotion.discountValue != null) {
-      discountText = 'خصم ${promotion.discountValue!.toStringAsFixed(0)}%';
-      icon = Icons.percent;
-    } else if (promotion.isFixedAmount && promotion.discountValue != null) {
-      discountText = 'خصم ${_formatCurrency(promotion.discountValue!)} د.ع';
-      icon = Icons.attach_money;
-    } else {
-      discountText = 'ميزة مجانية';
-      icon = Icons.card_giftcard;
-    }
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [color.withValues(alpha: 0.2), color.withValues(alpha: 0.1)],
-        ),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withValues(alpha: 0.4), width: 1.5),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, color: color, size: 20),
-          const SizedBox(width: 10),
-          Text(
-            discountText,
-            style: theme.textTheme.titleSmall?.copyWith(
-              color: color,
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
             ),
           ),
         ],

@@ -27,7 +27,7 @@ class PropertyErrorView extends StatelessWidget {
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
               color: surface,
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: border, width: 0.5),
             ),
             child: Column(
@@ -52,7 +52,7 @@ class PropertyErrorView extends StatelessWidget {
                       color: isDark
                           ? Colors.white.withValues(alpha: 0.07)
                           : Colors.black.withValues(alpha: 0.05),
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(8),
                       border: Border.all(color: border, width: 0.5),
                     ),
                     child: Row(

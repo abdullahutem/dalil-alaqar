@@ -10,7 +10,7 @@ class PropertyCardSkeleton extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       child: Shimmer.fromColors(
         baseColor: isDark ? Colors.black : Colors.grey[300]!,
         highlightColor: isDark ? Colors.grey[900]! : Colors.grey[100]!,

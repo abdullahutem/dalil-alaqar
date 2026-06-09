@@ -20,7 +20,7 @@ class OfficeContentSection extends StatelessWidget {
   Widget build(BuildContext context) => Container(
     decoration: BoxDecoration(
       color: surface,
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(8),
       border: Border.all(color: border, width: 0.5),
     ),
     padding: const EdgeInsets.all(20),

@@ -134,7 +134,7 @@ class _PromotionsSectionState extends State<PromotionsSection> {
               margin: const EdgeInsets.only(left: 12),
               decoration: BoxDecoration(
                 color: theme.cardColor,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
             ),
           ),

@@ -112,7 +112,7 @@ class _PropertyTabletViewState extends State<_PropertyTabletView> {
           scrolledUnderElevation: 0.5,
           shadowColor: border,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: primary),
+            icon: Icon(Icons.arrow_forward_ios, color: primary),
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text(
@@ -140,7 +140,7 @@ class _PropertyTabletViewState extends State<_PropertyTabletView> {
                         height: 500,
                         decoration: BoxDecoration(
                           color: surface,
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(8),
                           border: Border.all(color: border, width: 0.5),
                         ),
                         clipBehavior: Clip.antiAlias,
@@ -198,7 +198,7 @@ class _PropertyTabletViewState extends State<_PropertyTabletView> {
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                           color: surface,
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(8),
                           border: Border.all(color: border, width: 0.5),
                         ),
                         child: Column(
@@ -321,7 +321,7 @@ class _PropertyTabletViewState extends State<_PropertyTabletView> {
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
                             color: surface,
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(8),
                             border: Border.all(color: border, width: 0.5),
                           ),
                           child: Column(
@@ -351,7 +351,7 @@ class _PropertyTabletViewState extends State<_PropertyTabletView> {
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                           color: surface,
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(8),
                           border: Border.all(color: border, width: 0.5),
                         ),
                         child: Column(
@@ -436,7 +436,7 @@ class _PropertyTabletViewState extends State<_PropertyTabletView> {
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                           color: surface,
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(8),
                           border: Border.all(color: border, width: 0.5),
                         ),
                         child: Column(
@@ -463,7 +463,7 @@ class _PropertyTabletViewState extends State<_PropertyTabletView> {
                                           : Colors.black.withValues(
                                               alpha: 0.04,
                                             ),
-                                      borderRadius: BorderRadius.circular(12),
+                                      borderRadius: BorderRadius.circular(8),
                                       border: Border.all(
                                         color: border,
                                         width: 0.5,
@@ -505,7 +505,7 @@ class _PropertyTabletViewState extends State<_PropertyTabletView> {
                                     turns: _showOfficeContacts ? 0.25 : 0,
                                     duration: const Duration(milliseconds: 200),
                                     child: Icon(
-                                      Icons.arrow_back_ios_new_rounded,
+                                      Icons.arrow_forward_ios,
                                       size: 13,
                                       color: muted,
                                     ),

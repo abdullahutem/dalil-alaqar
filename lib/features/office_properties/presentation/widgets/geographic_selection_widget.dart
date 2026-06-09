@@ -130,13 +130,13 @@ class _GeographicSelectionWidgetState extends State<GeographicSelectionWidget> {
       decoration: InputDecoration(
         labelText: 'المحافظة',
         prefixIcon: const Icon(Icons.location_city),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: Colors.grey.shade300),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(
             color: Theme.of(context).primaryColor,
             width: 2,
@@ -188,13 +188,13 @@ class _GeographicSelectionWidgetState extends State<GeographicSelectionWidget> {
       decoration: InputDecoration(
         labelText: 'المديرية',
         prefixIcon: const Icon(Icons.map),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: Colors.grey.shade300),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(
             color: Theme.of(context).primaryColor,
             width: 2,
@@ -249,13 +249,13 @@ class _GeographicSelectionWidgetState extends State<GeographicSelectionWidget> {
       decoration: InputDecoration(
         labelText: 'الحي',
         prefixIcon: const Icon(Icons.place),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: Colors.grey.shade300),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(
             color: Theme.of(context).primaryColor,
             width: 2,
@@ -308,7 +308,7 @@ class _GeographicSelectionWidgetState extends State<GeographicSelectionWidget> {
             ),
           ),
         ),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         filled: true,
         fillColor: isDark ? AppColors.darkSurface : Colors.grey[100],
         contentPadding: const EdgeInsets.symmetric(
@@ -326,7 +326,7 @@ class _GeographicSelectionWidgetState extends State<GeographicSelectionWidget> {
       decoration: InputDecoration(
         labelText: label,
         prefixIcon: const Icon(Icons.lock, color: Colors.grey),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         filled: true,
         fillColor: isDark ? AppColors.darkSurface : Colors.grey[100],
         contentPadding: const EdgeInsets.symmetric(
@@ -352,7 +352,7 @@ class _GeographicSelectionWidgetState extends State<GeographicSelectionWidget> {
       decoration: InputDecoration(
         labelText: label,
         prefixIcon: const Icon(Icons.error, color: Colors.red),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         filled: true,
         fillColor: isDark ? AppColors.darkSurface : Colors.grey[100],
         contentPadding: const EdgeInsets.symmetric(

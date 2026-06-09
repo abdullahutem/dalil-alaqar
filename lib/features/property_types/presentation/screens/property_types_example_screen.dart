@@ -160,7 +160,7 @@ class _PropertyTypesExampleScreenState
                                     color: propertyType.isActive
                                         ? Colors.green[100]
                                         : Colors.grey[300],
-                                    borderRadius: BorderRadius.circular(12),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Text(
                                     propertyType.isActive ? 'نشط' : 'غير نشط',

@@ -50,15 +50,19 @@ class AppLocalizations {
       'employee': 'Employee',
       'employees': 'Employees',
       'manager': 'Manager',
+
+      'logout_confirmation': 'Are you sure you want to log out?',
+      'logout': 'logout',
+      'cancel': 'Cancel',
     },
     'ar': {
       // App
-      'app_name': 'دليلك العقاري',
+      'app_name': 'دليل العقار',
       'app_slogan': 'دليلك في عالم العقارات',
 
       // Login
       'login_welcome': 'مرحباً بكم',
-      'login_subtitle': 'اضغط للدخول',
+      'login_subtitle': 'قم بتسجيل الدخول',
       'login_button': 'تسجيل الدخول',
       'login_create_account': 'إنشاء حساب',
 
@@ -89,6 +93,9 @@ class AppLocalizations {
       'role': 'الدور الوظيفي',
       'employee': 'موظف',
       'manager': 'مدير',
+      'logout_confirmation': 'هل أنت متأكد من أنك تريد تسجيل الخروج؟',
+      'logout': 'تسجيل خروج',
+      'cancel': 'إلغاء',
     },
   };
 

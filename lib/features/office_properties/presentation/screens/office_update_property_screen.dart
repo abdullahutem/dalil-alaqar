@@ -322,7 +322,7 @@ class _OfficeUpdatePropertyScreenState
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(8),
                       ),
                     ),
                     child: isLoading
@@ -376,7 +376,7 @@ class _OfficeUpdatePropertyScreenState
               labelText: 'نوع العقار',
               prefixIcon: const Icon(Icons.home_work),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
             ),
             items: state.response.propertyTypes
@@ -418,7 +418,7 @@ class _OfficeUpdatePropertyScreenState
               labelText: 'نوع العرض',
               prefixIcon: const Icon(Icons.local_offer),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
             ),
             items: state.response.offerTypes
@@ -461,7 +461,7 @@ class _OfficeUpdatePropertyScreenState
               labelText: 'العملة',
               prefixIcon: const Icon(Icons.monetization_on),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
             ),
             items: state.response.currencies
@@ -505,7 +505,7 @@ class _OfficeUpdatePropertyScreenState
               labelText: 'المحافظة',
               prefixIcon: const Icon(Icons.location_city),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
             ),
             items: state.response.governorates
@@ -555,7 +555,7 @@ class _OfficeUpdatePropertyScreenState
               labelText: 'المديرية',
               prefixIcon: const Icon(Icons.location_on),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
             ),
             items: state.response.districts
@@ -585,7 +585,7 @@ class _OfficeUpdatePropertyScreenState
           decoration: InputDecoration(
             labelText: 'المديرية',
             prefixIcon: const Icon(Icons.location_on),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
           ),
           items: const [],
           onChanged: null,
@@ -617,7 +617,7 @@ class _OfficeUpdatePropertyScreenState
               labelText: 'الحي',
               prefixIcon: const Icon(Icons.place),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
             ),
             items: state.response.neighborhoods
@@ -639,7 +639,7 @@ class _OfficeUpdatePropertyScreenState
           decoration: InputDecoration(
             labelText: 'الحي',
             prefixIcon: const Icon(Icons.place),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
           ),
           items: const [],
           onChanged: null,

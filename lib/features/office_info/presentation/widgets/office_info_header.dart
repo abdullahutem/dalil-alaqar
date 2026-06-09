@@ -24,14 +24,7 @@ class OfficeInfoHeader extends StatelessWidget {
       padding: EdgeInsets.all(isTablet ? 28 : 20),
       decoration: BoxDecoration(
         color: theme.cardColor,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        borderRadius: BorderRadius.circular(8),
       ),
       child: isTablet
           ? Row(
@@ -153,7 +146,7 @@ class OfficeInfoHeader extends StatelessWidget {
         color: officeInfo.isActive
             ? Colors.green.withValues(alpha: 0.12)
             : Colors.red.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
         officeInfo.isActive ? 'نشط' : 'غير نشط',

@@ -14,14 +14,7 @@ class OfficeInfoContactCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: theme.cardColor,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,8 +99,9 @@ class OfficeInfoContactCard extends StatelessWidget {
                 label,
                 style: theme.textTheme.bodySmall?.copyWith(
                   fontSize: 11,
-                  color: theme.textTheme.bodySmall?.color
-                      ?.withValues(alpha: 0.6),
+                  color: theme.textTheme.bodySmall?.color?.withValues(
+                    alpha: 0.6,
+                  ),
                 ),
               ),
               const SizedBox(height: 2),

@@ -205,7 +205,7 @@ class DashboardTabletLayout extends StatelessWidget {
                                     Container(
                                       decoration: BoxDecoration(
                                         color: surface,
-                                        borderRadius: BorderRadius.circular(14),
+                                        borderRadius: BorderRadius.circular(8),
                                         border: Border.all(
                                           color: border,
                                           width: 0.5,
@@ -242,7 +242,7 @@ class DashboardTabletLayout extends StatelessWidget {
                                     Container(
                                       decoration: BoxDecoration(
                                         color: surface,
-                                        borderRadius: BorderRadius.circular(14),
+                                        borderRadius: BorderRadius.circular(8),
                                         border: Border.all(
                                           color: border,
                                           width: 0.5,
@@ -385,7 +385,7 @@ class _ErrorView extends StatelessWidget {
                 color: isDark
                     ? Colors.white.withValues(alpha: 0.07)
                     : Colors.black.withValues(alpha: 0.05),
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: border, width: 0.5),
               ),
               child: Row(
@@ -468,7 +468,7 @@ class _StatCard extends StatelessWidget {
     padding: const EdgeInsets.all(14),
     decoration: BoxDecoration(
       color: surface,
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: BorderRadius.circular(8),
       border: Border.all(color: border, width: 0.5),
     ),
     child: Column(
@@ -559,7 +559,7 @@ class _SkeletonStatCard extends StatelessWidget {
     padding: const EdgeInsets.all(14),
     decoration: BoxDecoration(
       color: surface,
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: BorderRadius.circular(8),
       border: Border.all(color: border, width: 0.5),
     ),
     child: Column(
@@ -595,7 +595,7 @@ class _SkeletonSubscriptionCard extends StatelessWidget {
     padding: const EdgeInsets.all(18),
     decoration: BoxDecoration(
       color: surface,
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: BorderRadius.circular(8),
       border: Border.all(color: border, width: 0.5),
     ),
     child: Column(

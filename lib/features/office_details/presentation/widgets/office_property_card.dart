@@ -43,7 +43,7 @@ class OfficePropertyCard extends StatelessWidget {
         width: 200,
         decoration: BoxDecoration(
           color: surface,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: border, width: 0.5),
         ),
         child: Column(

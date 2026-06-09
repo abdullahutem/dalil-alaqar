@@ -237,7 +237,7 @@ You can modify `PropertyTypeFilterChip` to match your design:
 Container(
   decoration: BoxDecoration(
     color: isSelected ? YourColors.primary : Colors.white,
-    borderRadius: BorderRadius.circular(12),
+    borderRadius: BorderRadius.circular(8),
     
       BoxShadow(
         color: Colors.black.withOpacity(0.1),

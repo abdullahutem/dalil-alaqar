@@ -13,7 +13,7 @@ class EmployeeCardCompact extends StatelessWidget {
       width: 200,
       decoration: BoxDecoration(
         color: theme.cardColor,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
       ),
       padding: const EdgeInsets.all(12),
       child: Column(

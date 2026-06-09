@@ -167,7 +167,7 @@ class _OfferTypesExampleScreenState extends State<OfferTypesExampleScreen> {
                             return Card(
                               elevation: 2,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
+                                borderRadius: BorderRadius.circular(8),
                               ),
                               child: InkWell(
                                 onTap: () {
@@ -175,11 +175,11 @@ class _OfferTypesExampleScreenState extends State<OfferTypesExampleScreen> {
                                     selectedOfferTypeId = offerType.id;
                                   });
                                 },
-                                borderRadius: BorderRadius.circular(12),
+                                borderRadius: BorderRadius.circular(8),
                                 child: Container(
                                   padding: const EdgeInsets.all(16),
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
+                                    borderRadius: BorderRadius.circular(8),
                                     border: Border.all(
                                       color: selectedOfferTypeId == offerType.id
                                           ? AppColors.primary
