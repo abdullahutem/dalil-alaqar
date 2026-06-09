@@ -1,5 +1,6 @@
 import 'package:dalil_alaqar/core/databases/api/end_points.dart';
 import 'package:dalil_alaqar/core/utils/price_formatter.dart';
+import 'package:dalil_alaqar/features/properties/presentation/widgets/property_card_skeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/property_details_entity.dart';
@@ -8,7 +9,6 @@ import '../cubit/property_details_state.dart';
 import '../widgets/property_image_gallery.dart';
 import '../widgets/property_status_dropdown.dart';
 import '../widgets/upload_property_images_widget.dart';
-import '../widgets/edit_property_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class OfficePropertyDetailsMobileLayout extends StatelessWidget {
@@ -19,7 +19,10 @@ class OfficePropertyDetailsMobileLayout extends StatelessWidget {
     return BlocBuilder<PropertyDetailsCubit, PropertyDetailsState>(
       builder: (context, state) {
         if (state is PropertyDetailsLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return ListView.builder(
+            itemCount: 6, // Show 6 skeleton cards
+            itemBuilder: (context, index) => const PropertyCardSkeleton(),
+          );
         }
         if (state is PropertyDetailsError) {
           return Center(
@@ -67,7 +70,6 @@ class _PropertyView extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        floatingActionButton: EditPropertyButton(property: property),
         body: CustomScrollView(
           slivers: [
             // Image Gallery App Bar

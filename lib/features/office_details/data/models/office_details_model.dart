@@ -161,9 +161,7 @@ class RecentPropertyInfoModel extends RecentPropertyInfo {
       updatedAt: json['updated_at'] ?? '',
       propertyType: PropertyTypeInfoModel.fromJson(json['property_type'] ?? {}),
       offerType: OfferTypeInfoModel.fromJson(json['offer_type'] ?? {}),
-      primaryImage: json['primary_image'] != null
-          ? PrimaryImageInfoModel.fromJson(json['primary_image'])
-          : null,
+      primaryImage: json['primary_image'] as String?,
     );
   }
 }

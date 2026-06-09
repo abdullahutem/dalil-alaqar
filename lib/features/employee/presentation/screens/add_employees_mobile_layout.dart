@@ -337,7 +337,9 @@ class _AddEmployeesMobileLayoutState extends State<AddEmployeesMobileLayout> {
                 return ElevatedButton(
                   onPressed: isLoading ? null : _handleSubmit,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
+                    backgroundColor: isDark
+                        ? AppColors.darkSurface
+                        : AppColors.primary,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(

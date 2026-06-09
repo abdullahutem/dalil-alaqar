@@ -281,35 +281,6 @@ class PlanDetailsScreen extends StatelessWidget {
               ),
 
             const SizedBox(height: 16),
-
-            // Action button
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: ElevatedButton(
-                onPressed: () {
-                  // TODO: Implement subscription logic
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('جاري الاشتراك في ${plan.name}...'),
-                      backgroundColor: primaryColor,
-                    ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  backgroundColor: primaryColor,
-                  foregroundColor: Colors.white,
-                ),
-                child: const Text(
-                  'اشترك الآن',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
           ],
         ),
       ),

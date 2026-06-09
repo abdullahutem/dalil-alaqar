@@ -6,13 +6,14 @@ class PropertyCardSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Shimmer.fromColors(
-        baseColor: Colors.grey[300]!,
-        highlightColor: Colors.grey[100]!,
+        baseColor: isDark ? Colors.black : Colors.grey[300]!,
+        highlightColor: isDark ? Colors.grey[900]! : Colors.grey[100]!,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

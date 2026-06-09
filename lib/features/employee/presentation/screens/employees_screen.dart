@@ -42,7 +42,7 @@ class EmployeesResponsive extends StatelessWidget {
           : AppColors.lightBackground,
       appBar: AppBar(
         elevation: 0,
-        title: Text(localizations.translate('app_name')),
+        title: Text(localizations.translate('employees')),
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {

@@ -1,4 +1,4 @@
-import 'office_entity.dart';
+import 'profile_office_entity.dart';
 
 class ProfileUserEntity {
   final int id;
@@ -18,7 +18,7 @@ class ProfileUserEntity {
   final int? updatedBy;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final OfficeEntity? office;
+  final ProfileOfficeEntity? office;
 
   const ProfileUserEntity({
     required this.id,

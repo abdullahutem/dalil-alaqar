@@ -1,3 +1,5 @@
+import 'package:dalil_alaqar/core/databases/api/end_points.dart';
+import 'package:dalil_alaqar/core/routes/app_routes.dart';
 import 'package:dalil_alaqar/features/office_details/domain/entities/office_details_entity.dart';
 import 'package:dalil_alaqar/features/office_details/presentation/widgets/office_card_widget.dart';
 import 'package:dalil_alaqar/features/office_details/presentation/widgets/office_label_widget.dart';
@@ -307,8 +309,15 @@ class OfficeDetailsMobileLayout extends StatelessWidget {
                                   border: border,
                                   muted: muted,
                                   isDark: isDark,
-                                  baseImageUrl:
-                                      'https://yourdomain.com/storage/',
+                                  baseImageUrl: EndPoints.kBaseImageUrl,
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      AppRoutes.propertyDetailsScreen,
+                                      arguments:
+                                          officeDetails.recentProperties[i].id,
+                                    );
+                                  },
                                 ),
                               ),
                             ),

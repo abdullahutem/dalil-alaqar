@@ -160,27 +160,93 @@ class _StatCard extends StatelessWidget {
   }
 }
 
-class _StatsLoadingSkeleton extends StatelessWidget {
+class _StatsLoadingSkeleton extends StatefulWidget {
   const _StatsLoadingSkeleton();
 
   @override
+  State<_StatsLoadingSkeleton> createState() => _StatsLoadingSkeletonState();
+}
+
+class _StatsLoadingSkeletonState extends State<_StatsLoadingSkeleton>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 1500),
+      vsync: this,
+    )..repeat(reverse: true);
+    _animation = Tween<double>(begin: 0.3, end: 0.7).animate(_controller);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      child: Row(
-        children: List.generate(
-          2,
-          (index) => Expanded(
-            child: Container(
-              margin: EdgeInsets.only(left: index < 1 ? 12 : 0),
-              height: 120,
-              decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(12),
+    final theme = Theme.of(context);
+
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, _) {
+        return Container(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: List.generate(
+              2,
+              (index) => Expanded(
+                child: Container(
+                  margin: EdgeInsets.only(left: index < 1 ? 12 : 0),
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: theme.cardColor,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.05),
+                        blurRadius: 10,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _shimmerBox(32, 32, circular: 16),
+                      const SizedBox(height: 8),
+                      _shimmerBox(28, 80, radius: 6),
+                      const SizedBox(height: 4),
+                      _shimmerBox(12, 100, radius: 6),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
-        ),
+        );
+      },
+    );
+  }
+
+  Widget _shimmerBox(
+    double height,
+    double width, {
+    double? circular,
+    double radius = 6,
+  }) {
+    return Container(
+      height: height,
+      width: width,
+      decoration: BoxDecoration(
+        color: Colors.grey.withValues(alpha: _animation.value * 0.3),
+        shape: circular != null ? BoxShape.circle : BoxShape.rectangle,
+        borderRadius: circular == null ? BorderRadius.circular(radius) : null,
       ),
     );
   }

@@ -30,8 +30,13 @@ class EmployeeStatsCubit extends Cubit<EmployeeStatsState> {
   }
 
   Future<void> getStats() async {
+    if (isClosed) return; // Don't emit if cubit is already closed
+
     emit(EmployeeStatsLoading());
     final result = await getEmployeeStatsUseCase();
+
+    if (isClosed) return; // Check again after async operation
+
     result.fold(
       (failure) => emit(EmployeeStatsError(message: failure.errMessage)),
       (response) => emit(EmployeeStatsSuccess(stats: response.data)),

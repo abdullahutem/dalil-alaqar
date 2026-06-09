@@ -79,7 +79,7 @@ class OfficePropertiesSection extends StatelessWidget {
               ),
               child: property.primaryImage != null
                   ? Image.network(
-                      property.primaryImage!.imagePath,
+                      property.primaryImage!,
                       width: 100,
                       height: 100,
                       fit: BoxFit.cover,

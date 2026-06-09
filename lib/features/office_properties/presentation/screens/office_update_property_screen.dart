@@ -142,6 +142,8 @@ class _OfficeUpdatePropertyScreenState
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
       appBar: AppBar(title: const Text('تحديث العقار'), centerTitle: true),
       body: BlocConsumer<UpdatePropertyCubit, UpdatePropertyState>(
@@ -196,6 +198,8 @@ class _OfficeUpdatePropertyScreenState
                     controller: _titleController,
                     hint: 'أدخل عنوان العقار',
                     prefixIcon: Icons.title,
+                    isDark: isDark,
+
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'الرجاء إدخال عنوان العقار';
@@ -218,6 +222,8 @@ class _OfficeUpdatePropertyScreenState
                     label: 'الوصف',
                     controller: _descriptionController,
                     hint: 'أدخل وصف العقار',
+                    isDark: isDark,
+
                     prefixIcon: Icons.description,
                     maxLines: 5,
                     validator: (value) {
@@ -243,6 +249,8 @@ class _OfficeUpdatePropertyScreenState
                     hint: 'أدخل السعر',
                     prefixIcon: Icons.attach_money,
                     keyboardType: TextInputType.number,
+                    isDark: isDark,
+
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(
                         RegExp(r'^\d+\.?\d{0,2}'),
@@ -289,6 +297,7 @@ class _OfficeUpdatePropertyScreenState
                     hint: 'أدخل عنوان العقار',
                     prefixIcon: Icons.location_on,
                     maxLines: 2,
+                    isDark: isDark,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'الرجاء إدخال العنوان';

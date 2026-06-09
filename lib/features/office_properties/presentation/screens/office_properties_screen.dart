@@ -1,3 +1,4 @@
+import 'package:dalil_alaqar/core/theme/app_colors.dart';
 import 'package:dalil_alaqar/features/office_properties/presentation/cubit/office_search_filters_cubit.dart';
 import 'package:dalil_alaqar/features/office_properties/presentation/cubit/office_search_filters_state.dart';
 import 'package:dalil_alaqar/features/office_properties/presentation/cubit/office_properties_state.dart';
@@ -115,6 +116,7 @@ class _OfficePropertiesScreenContentState
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
         title: const Text('عقارات المكتب'),
@@ -142,6 +144,7 @@ class _OfficePropertiesScreenContentState
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: isDark ? AppColors.darkSurface : AppColors.primary,
         onPressed: () async {
           final result = await Navigator.push(
             context,
@@ -288,10 +291,13 @@ class _OfficePropertiesScreenContentState
   }
 
   Widget _buildSearchSection(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return BlocBuilder<OfficeSearchFiltersCubit, OfficeSearchFiltersState>(
       builder: (context, filtersState) {
         return Container(
-          decoration: const BoxDecoration(color: Colors.white),
+          decoration: BoxDecoration(
+            color: isDark ? AppColors.darkSurface : Colors.white,
+          ),
           child: Column(
             children: [
               // Search bar
@@ -324,7 +330,9 @@ class _OfficePropertiesScreenContentState
                             borderRadius: BorderRadius.circular(12),
                           ),
                           filled: true,
-                          fillColor: Colors.grey[100],
+                          fillColor: isDark
+                              ? AppColors.darkSurface
+                              : Colors.grey[100],
                           contentPadding: const EdgeInsets.symmetric(
                             horizontal: 16,
                             vertical: 12,
@@ -343,12 +351,14 @@ class _OfficePropertiesScreenContentState
                     Container(
                       decoration: BoxDecoration(
                         color: filtersState.showAdvancedFilters
-                            ? Theme.of(context).colorScheme.primary
+                            ? AppColors.primary
+                            : isDark
+                            ? AppColors.darkSurface
                             : Colors.grey[100],
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
                           color: filtersState.showAdvancedFilters
-                              ? Theme.of(context).colorScheme.primary
+                              ? AppColors.primary
                               : Colors.grey[300]!,
                         ),
                       ),
@@ -401,21 +411,24 @@ class _OfficePropertiesScreenContentState
                     ElevatedButton(
                       onPressed: () => _applySearch(context),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        backgroundColor: isDark
+                            ? AppColors.darkSurface
+                            : AppColors.primary,
                         padding: const EdgeInsets.symmetric(
                           horizontal: 24,
                           vertical: 12,
                         ),
                         shape: RoundedRectangleBorder(
+                          side: BorderSide(color: AppColors.darkIcon),
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: const Text(
+                      child: Text(
                         'بحث',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: isDark ? Colors.grey[100] : Colors.white,
                         ),
                       ),
                     ),

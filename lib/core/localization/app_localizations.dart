@@ -48,6 +48,7 @@ class AppLocalizations {
       'enter_address': 'Enter address',
       'role': 'Role',
       'employee': 'Employee',
+      'employees': 'Employees',
       'manager': 'Manager',
     },
     'ar': {
@@ -71,6 +72,7 @@ class AppLocalizations {
       'nav_dashboard': 'لوحة التحكم',
 
       // Employee
+      'employees': 'الموظفين',
       'add_employee': 'إضافة موظف',
       'name': 'الاسم',
       'enter_name': 'أدخل الاسم',

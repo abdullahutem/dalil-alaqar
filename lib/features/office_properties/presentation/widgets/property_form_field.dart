@@ -1,3 +1,4 @@
+import 'package:dalil_alaqar/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -14,6 +15,7 @@ class PropertyFormField extends StatelessWidget {
   final VoidCallback? onTap;
   final List<TextInputFormatter>? inputFormatters;
   final Widget? suffix;
+  final bool isDark;
 
   const PropertyFormField({
     super.key,
@@ -29,6 +31,7 @@ class PropertyFormField extends StatelessWidget {
     this.onTap,
     this.inputFormatters,
     this.suffix,
+    required this.isDark,
   });
 
   @override
@@ -67,7 +70,7 @@ class PropertyFormField extends StatelessWidget {
           borderSide: const BorderSide(color: Colors.red),
         ),
         filled: true,
-        fillColor: Colors.grey.shade50,
+        fillColor: isDark ? AppColors.darkSurface : Colors.grey[100],
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 16,

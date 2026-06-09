@@ -1,3 +1,4 @@
+import 'package:dalil_alaqar/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../governorates/domain/entities/governorate_entity.dart';
@@ -17,7 +18,7 @@ class GeographicSelectionWidget extends StatefulWidget {
   final Function(GovernorateEntity?) onGovernorateChanged;
   final Function(DistrictEntity?) onDistrictChanged;
   final Function(NeighborhoodEntity?) onNeighborhoodChanged;
-
+  final bool isDark;
   const GeographicSelectionWidget({
     super.key,
     this.selectedGovernorate,
@@ -26,6 +27,7 @@ class GeographicSelectionWidget extends StatefulWidget {
     required this.onGovernorateChanged,
     required this.onDistrictChanged,
     required this.onNeighborhoodChanged,
+    required this.isDark,
   });
 
   @override
@@ -51,16 +53,20 @@ class _GeographicSelectionWidgetState extends State<GeographicSelectionWidget> {
         BlocBuilder<GovernoratesCubit, GovernoratesState>(
           builder: (context, state) {
             if (state is GovernoratesLoading) {
-              return _buildLoadingDropdown('المحافظة');
+              return _buildLoadingDropdown('المحافظة', widget.isDark);
             }
             if (state is GovernoratesError) {
-              return _buildErrorDropdown('المحافظة', state.message);
+              return _buildErrorDropdown(
+                'المحافظة',
+                state.message,
+                widget.isDark,
+              );
             }
             if (state is GovernoratesSuccess) {
               final governorates = state.response.governorates;
-              return _buildGovernorateDropdown(governorates);
+              return _buildGovernorateDropdown(governorates, widget.isDark);
             }
-            return _buildLoadingDropdown('المحافظة');
+            return _buildLoadingDropdown('المحافظة', widget.isDark);
           },
         ),
 
@@ -70,19 +76,23 @@ class _GeographicSelectionWidgetState extends State<GeographicSelectionWidget> {
         BlocBuilder<DistrictsCubit, DistrictsState>(
           builder: (context, state) {
             if (widget.selectedGovernorate == null) {
-              return _buildDisabledDropdown('المديرية');
+              return _buildDisabledDropdown('المديرية', widget.isDark);
             }
             if (state is DistrictsLoading) {
-              return _buildLoadingDropdown('المديرية');
+              return _buildLoadingDropdown('المديرية', widget.isDark);
             }
             if (state is DistrictsError) {
-              return _buildErrorDropdown('المديرية', state.message);
+              return _buildErrorDropdown(
+                'المديرية',
+                state.message,
+                widget.isDark,
+              );
             }
             if (state is DistrictsSuccess) {
               final districts = state.response.districts;
-              return _buildDistrictDropdown(districts);
+              return _buildDistrictDropdown(districts, widget.isDark);
             }
-            return _buildDisabledDropdown('المديرية');
+            return _buildDisabledDropdown('المديرية', widget.isDark);
           },
         ),
 
@@ -92,26 +102,29 @@ class _GeographicSelectionWidgetState extends State<GeographicSelectionWidget> {
         BlocBuilder<NeighborhoodsCubit, NeighborhoodsState>(
           builder: (context, state) {
             if (widget.selectedDistrict == null) {
-              return _buildDisabledDropdown('الحي');
+              return _buildDisabledDropdown('الحي', widget.isDark);
             }
             if (state is NeighborhoodsLoading) {
-              return _buildLoadingDropdown('الحي');
+              return _buildLoadingDropdown('الحي', widget.isDark);
             }
             if (state is NeighborhoodsError) {
-              return _buildErrorDropdown('الحي', state.message);
+              return _buildErrorDropdown('الحي', state.message, widget.isDark);
             }
             if (state is NeighborhoodsSuccess) {
               final neighborhoods = state.response.neighborhoods;
-              return _buildNeighborhoodDropdown(neighborhoods);
+              return _buildNeighborhoodDropdown(neighborhoods, widget.isDark);
             }
-            return _buildDisabledDropdown('الحي');
+            return _buildDisabledDropdown('الحي', widget.isDark);
           },
         ),
       ],
     );
   }
 
-  Widget _buildGovernorateDropdown(List<GovernorateEntity> governorates) {
+  Widget _buildGovernorateDropdown(
+    List<GovernorateEntity> governorates,
+    bool isDark,
+  ) {
     return DropdownButtonFormField<GovernorateEntity>(
       initialValue: widget.selectedGovernorate,
       decoration: InputDecoration(
@@ -130,7 +143,7 @@ class _GeographicSelectionWidgetState extends State<GeographicSelectionWidget> {
           ),
         ),
         filled: true,
-        fillColor: Colors.grey.shade50,
+        fillColor: isDark ? AppColors.darkSurface : Colors.grey[100],
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 16,
@@ -169,7 +182,7 @@ class _GeographicSelectionWidgetState extends State<GeographicSelectionWidget> {
     );
   }
 
-  Widget _buildDistrictDropdown(List<DistrictEntity> districts) {
+  Widget _buildDistrictDropdown(List<DistrictEntity> districts, bool isDark) {
     return DropdownButtonFormField<DistrictEntity>(
       initialValue: widget.selectedDistrict,
       decoration: InputDecoration(
@@ -188,7 +201,7 @@ class _GeographicSelectionWidgetState extends State<GeographicSelectionWidget> {
           ),
         ),
         filled: true,
-        fillColor: Colors.grey.shade50,
+        fillColor: isDark ? AppColors.darkSurface : Colors.grey[100],
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 16,
@@ -227,7 +240,10 @@ class _GeographicSelectionWidgetState extends State<GeographicSelectionWidget> {
     );
   }
 
-  Widget _buildNeighborhoodDropdown(List<NeighborhoodEntity> neighborhoods) {
+  Widget _buildNeighborhoodDropdown(
+    List<NeighborhoodEntity> neighborhoods,
+    bool isDark,
+  ) {
     return DropdownButtonFormField<NeighborhoodEntity>(
       initialValue: widget.selectedNeighborhood,
       decoration: InputDecoration(
@@ -246,7 +262,7 @@ class _GeographicSelectionWidgetState extends State<GeographicSelectionWidget> {
           ),
         ),
         filled: true,
-        fillColor: Colors.grey.shade50,
+        fillColor: isDark ? AppColors.darkSurface : Colors.grey[100],
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 16,
@@ -277,7 +293,7 @@ class _GeographicSelectionWidgetState extends State<GeographicSelectionWidget> {
     );
   }
 
-  Widget _buildLoadingDropdown(String label) {
+  Widget _buildLoadingDropdown(String label, bool isDark) {
     return DropdownButtonFormField<String>(
       decoration: InputDecoration(
         labelText: label,
@@ -294,7 +310,7 @@ class _GeographicSelectionWidgetState extends State<GeographicSelectionWidget> {
         ),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         filled: true,
-        fillColor: Colors.grey.shade50,
+        fillColor: isDark ? AppColors.darkSurface : Colors.grey[100],
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 16,
@@ -305,14 +321,14 @@ class _GeographicSelectionWidgetState extends State<GeographicSelectionWidget> {
     );
   }
 
-  Widget _buildDisabledDropdown(String label) {
+  Widget _buildDisabledDropdown(String label, bool isDark) {
     return DropdownButtonFormField<String>(
       decoration: InputDecoration(
         labelText: label,
         prefixIcon: const Icon(Icons.lock, color: Colors.grey),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         filled: true,
-        fillColor: Colors.grey.shade100,
+        fillColor: isDark ? AppColors.darkSurface : Colors.grey[100],
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 16,
@@ -331,14 +347,14 @@ class _GeographicSelectionWidgetState extends State<GeographicSelectionWidget> {
     );
   }
 
-  Widget _buildErrorDropdown(String label, String error) {
+  Widget _buildErrorDropdown(String label, String error, bool isDark) {
     return DropdownButtonFormField<String>(
       decoration: InputDecoration(
         labelText: label,
         prefixIcon: const Icon(Icons.error, color: Colors.red),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         filled: true,
-        fillColor: Colors.red.shade50,
+        fillColor: isDark ? AppColors.darkSurface : Colors.grey[100],
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 16,

@@ -1,6 +1,6 @@
-import '../../domain/entities/office_entity.dart';
+import '../../domain/entities/profile_office_entity.dart';
 
-class OfficeModel extends OfficeEntity {
+class OfficeModel extends ProfileOfficeEntity {
   const OfficeModel({
     required super.id,
     required super.name,

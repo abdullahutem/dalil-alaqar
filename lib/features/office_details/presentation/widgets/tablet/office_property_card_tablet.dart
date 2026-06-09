@@ -57,7 +57,7 @@ class OfficePropertyCardTablet extends StatelessWidget {
               aspectRatio: 16 / 9,
               child: property.primaryImage != null
                   ? Image.network(
-                      '$baseImageUrl${property.primaryImage!.imagePath}',
+                      '$baseImageUrl${property.primaryImage!}',
                       fit: BoxFit.cover,
                       errorBuilder: (_, __, _) =>
                           OfficeImagePlaceholder(muted: muted, isDark: isDark),

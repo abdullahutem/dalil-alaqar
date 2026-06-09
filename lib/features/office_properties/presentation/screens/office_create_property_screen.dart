@@ -1,3 +1,4 @@
+import 'package:dalil_alaqar/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -79,6 +80,7 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(value: _createPropertyCubit),
@@ -233,7 +235,7 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
                 steps: [
                   Step(
                     title: const Text('المعلومات الأساسية'),
-                    content: _buildBasicInfoStep(),
+                    content: _buildBasicInfoStep(isDark),
                     isActive: _currentStep >= 0,
                     state: _currentStep > 0
                         ? StepState.complete
@@ -241,7 +243,7 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
                   ),
                   Step(
                     title: const Text('السعر'),
-                    content: _buildPriceStep(),
+                    content: _buildPriceStep(isDark),
                     isActive: _currentStep >= 1,
                     state: _currentStep > 1
                         ? StepState.complete
@@ -249,7 +251,7 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
                   ),
                   Step(
                     title: const Text('الموقع'),
-                    content: _buildLocationStep(),
+                    content: _buildLocationStep(isDark),
                     isActive: _currentStep >= 2,
                     state: _currentStep > 2
                         ? StepState.complete
@@ -269,7 +271,7 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
     );
   }
 
-  Widget _buildBasicInfoStep() {
+  Widget _buildBasicInfoStep(bool isDark) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -288,12 +290,15 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
                 initialValue: _selectedPropertyType,
                 decoration: InputDecoration(
                   labelText: 'نوع العقار',
-                  prefixIcon: const Icon(Icons.home),
+                  prefixIcon: Icon(
+                    Icons.home,
+                    color: isDark ? AppColors.darkIcon : AppColors.primary,
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                   filled: true,
-                  fillColor: Colors.grey.shade50,
+                  fillColor: isDark ? AppColors.darkSurface : Colors.grey[100],
                 ),
                 items: state.response.propertyTypes.map((type) {
                   return DropdownMenuItem(
@@ -329,7 +334,7 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   filled: true,
-                  fillColor: Colors.grey.shade50,
+                  fillColor: isDark ? AppColors.darkSurface : Colors.grey[100],
                 ),
                 items: state.response.offerTypes.map((type) {
                   return DropdownMenuItem(
@@ -357,6 +362,8 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
           label: 'عنوان العقار',
           hint: 'مثال: فيلا فاخرة في حي السعادة',
           prefixIcon: Icons.title,
+          isDark: isDark,
+
           validator: (value) {
             if (value == null || value.trim().isEmpty) {
               return 'العنوان مطلوب';
@@ -377,6 +384,8 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
           prefixIcon: Icons.description,
           maxLines: 5,
           maxLength: 1000,
+          isDark: isDark,
+
           validator: (value) {
             if (value == null || value.trim().isEmpty) {
               return 'الوصف مطلوب';
@@ -391,7 +400,7 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
     );
   }
 
-  Widget _buildPriceStep() {
+  Widget _buildPriceStep(bool isDark) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -408,6 +417,8 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
           hint: '0',
           prefixIcon: Icons.attach_money,
           keyboardType: TextInputType.number,
+          isDark: isDark,
+
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           suffix: _selectedCurrency != null
               ? Text(
@@ -456,7 +467,7 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   filled: true,
-                  fillColor: Colors.grey.shade50,
+                  fillColor: isDark ? AppColors.darkSurface : Colors.grey[100],
                 ),
                 items: state.response.currencies.map((currency) {
                   return DropdownMenuItem(
@@ -523,7 +534,7 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
     );
   }
 
-  Widget _buildLocationStep() {
+  Widget _buildLocationStep(bool isDark) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -556,6 +567,7 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
           hint: 'سيتم تعبئته تلقائياً من الخريطة',
           prefixIcon: Icons.location_on,
           maxLines: 2,
+          isDark: isDark,
           validator: (value) {
             if (value == null || value.trim().isEmpty) {
               return 'العنوان مطلوب';
@@ -583,6 +595,7 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
               setState(() => _selectedDistrict = value),
           onNeighborhoodChanged: (value) =>
               setState(() => _selectedNeighborhood = value),
+          isDark: isDark,
         ),
       ],
     );
@@ -710,22 +723,23 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            flex: 3,
-            child: Text(
-              value,
-              textAlign: TextAlign.left,
-              maxLines: maxLines,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 14),
-            ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
             flex: 2,
             child: Text(
               label,
               textAlign: TextAlign.right,
               style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+            ),
+          ),
+          const SizedBox(width: 16),
+
+          Expanded(
+            flex: 3,
+            child: Text(
+              value,
+              textAlign: TextAlign.right,
+              maxLines: maxLines,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontSize: 14),
             ),
           ),
         ],

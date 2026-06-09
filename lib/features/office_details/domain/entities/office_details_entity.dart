@@ -115,7 +115,7 @@ class RecentPropertyInfo {
   final String updatedAt;
   final PropertyTypeInfo propertyType;
   final OfferTypeInfo offerType;
-  final PrimaryImageInfo? primaryImage;
+  final String? primaryImage;
 
   const RecentPropertyInfo({
     required this.id,

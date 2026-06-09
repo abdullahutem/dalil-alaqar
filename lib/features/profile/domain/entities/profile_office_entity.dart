@@ -1,4 +1,4 @@
-class OfficeEntity {
+class ProfileOfficeEntity {
   final int id;
   final String name;
   final String ownerName;
@@ -34,7 +34,7 @@ class OfficeEntity {
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  const OfficeEntity({
+  const ProfileOfficeEntity({
     required this.id,
     required this.name,
     required this.ownerName,
