@@ -1,6 +1,7 @@
 import 'package:dalil_alaqar/core/connection/network_info.dart';
 import 'package:dalil_alaqar/core/databases/api/api_consumer.dart';
 import 'package:dalil_alaqar/core/databases/local/database_helper.dart';
+import 'package:dalil_alaqar/features/employee/data/datasources/employee_stats_local_data_source.dart';
 import 'package:dalil_alaqar/features/employee/data/datasources/employees_local_data_source.dart';
 import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:dio/dio.dart';
@@ -25,11 +26,15 @@ class DeleteEmployeeCubit extends Cubit<DeleteEmployeeState> {
     final localDataSource = EmployeesLocalDataSourceImpl(
       databaseHelper: DatabaseHelper.instance,
     );
+    final stateDataSource = EmployeeStatsLocalDataSourceImpl(
+      databaseHelper: DatabaseHelper.instance,
+    );
     final NetworkInfo networkInfo = NetworkInfoImpl(DataConnectionChecker());
     final repository = EmployeesRepositoryImpl(
       remoteDataSource: remoteDataSource,
       networkInfo: networkInfo,
       localDataSource: localDataSource,
+      statsLocalDataSource: stateDataSource,
     );
     final useCase = DeleteEmployeeUseCase(repository);
     return DeleteEmployeeCubit(deleteEmployeeUseCase: useCase);

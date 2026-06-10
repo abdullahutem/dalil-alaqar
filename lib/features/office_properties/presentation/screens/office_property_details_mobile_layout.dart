@@ -1,5 +1,6 @@
 import 'package:dalil_alaqar/core/databases/api/end_points.dart';
 import 'package:dalil_alaqar/core/utils/price_formatter.dart';
+import 'package:dalil_alaqar/features/properties/presentation/widgets/mobile/property_loading_view.dart';
 import 'package:dalil_alaqar/features/properties/presentation/widgets/property_card_skeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,10 +20,7 @@ class OfficePropertyDetailsMobileLayout extends StatelessWidget {
     return BlocBuilder<PropertyDetailsCubit, PropertyDetailsState>(
       builder: (context, state) {
         if (state is PropertyDetailsLoading) {
-          return ListView.builder(
-            itemCount: 6, // Show 6 skeleton cards
-            itemBuilder: (context, index) => const PropertyCardSkeleton(),
-          );
+          return const PropertyLoadingView();
         }
         if (state is PropertyDetailsError) {
           return Center(

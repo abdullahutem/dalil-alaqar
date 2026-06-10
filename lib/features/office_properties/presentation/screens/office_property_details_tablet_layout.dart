@@ -1,5 +1,6 @@
 import 'package:dalil_alaqar/core/databases/api/end_points.dart';
 import 'package:dalil_alaqar/core/utils/price_formatter.dart';
+import 'package:dalil_alaqar/features/properties/presentation/widgets/mobile/property_loading_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/property_details_entity.dart';
@@ -18,7 +19,7 @@ class OfficePropertyDetailsTabletLayout extends StatelessWidget {
     return BlocBuilder<PropertyDetailsCubit, PropertyDetailsState>(
       builder: (context, state) {
         if (state is PropertyDetailsLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const PropertyLoadingView();
         }
         if (state is PropertyDetailsError) {
           return Center(

@@ -2,6 +2,7 @@ import 'package:dalil_alaqar/core/connection/network_info.dart';
 import 'package:dalil_alaqar/core/databases/api/api_consumer.dart';
 import 'package:dalil_alaqar/core/databases/api/dio_consumer.dart';
 import 'package:dalil_alaqar/core/databases/local/database_helper.dart';
+import 'package:dalil_alaqar/features/employee/data/datasources/employee_stats_local_data_source.dart';
 import 'package:dalil_alaqar/features/employee/data/datasources/employees_local_data_source.dart';
 import 'package:dalil_alaqar/features/employee/data/datasources/employees_remote_data_source.dart';
 import 'package:dalil_alaqar/features/employee/data/repositories/employees_repository_impl.dart';
@@ -26,11 +27,14 @@ class EmployeeStatsCubit extends Cubit<EmployeeStatsState> {
     final localDataSource = EmployeesLocalDataSourceImpl(
       databaseHelper: DatabaseHelper.instance,
     );
-
+    final stateDataSource = EmployeeStatsLocalDataSourceImpl(
+      databaseHelper: DatabaseHelper.instance,
+    );
     final repository = EmployeesRepositoryImpl(
       remoteDataSource: remoteDataSource,
       networkInfo: networkInfo,
       localDataSource: localDataSource,
+      statsLocalDataSource: stateDataSource,
     );
     final useCase = GetEmployeeStatsUseCase(repository: repository);
     return EmployeeStatsCubit(getEmployeeStatsUseCase: useCase);

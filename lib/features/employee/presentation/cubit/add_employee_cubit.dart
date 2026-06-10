@@ -1,6 +1,7 @@
 import 'package:dalil_alaqar/core/connection/network_info.dart';
 import 'package:dalil_alaqar/core/databases/api/api_consumer.dart';
 import 'package:dalil_alaqar/core/databases/local/database_helper.dart';
+import 'package:dalil_alaqar/features/employee/data/datasources/employee_stats_local_data_source.dart';
 import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,11 +26,15 @@ class AddEmployeeCubit extends Cubit<AddEmployeeState> {
     final localDataSource = EmployeesLocalDataSourceImpl(
       databaseHelper: DatabaseHelper.instance,
     );
+    final stateDataSource = EmployeeStatsLocalDataSourceImpl(
+      databaseHelper: DatabaseHelper.instance,
+    );
     final NetworkInfo networkInfo = NetworkInfoImpl(DataConnectionChecker());
     final repository = EmployeesRepositoryImpl(
       remoteDataSource: remoteDataSource,
       localDataSource: localDataSource,
       networkInfo: networkInfo,
+      statsLocalDataSource: stateDataSource,
     );
     final useCase = AddEmployeeUseCase(repository);
     return AddEmployeeCubit(addEmployeeUseCase: useCase);

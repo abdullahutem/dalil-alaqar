@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/connection/network_info.dart';
 import '../../../../core/databases/api/api_consumer.dart';
 import '../../../../core/databases/api/dio_consumer.dart';
+import '../../../../core/databases/local/database_helper.dart';
+import '../../data/datasources/profile_local_data_source.dart';
 import '../../data/datasources/profile_remote_data_source.dart';
 import '../../data/repositories/profile_repository_impl.dart';
 import '../../domain/entities/update_profile_params.dart';
@@ -24,9 +26,13 @@ class ProfileCubit extends Cubit<ProfileState> {
     final ApiConsumer apiConsumer = DioConsumer(dio: Dio());
     final ProfileRemoteDataSource remoteDataSource =
         ProfileRemoteDataSourceImpl(apiConsumer: apiConsumer);
+    final ProfileLocalDataSource localDataSource = ProfileLocalDataSourceImpl(
+      databaseHelper: DatabaseHelper.instance,
+    );
     final NetworkInfo networkInfo = NetworkInfoImpl(DataConnectionChecker());
     final ProfileRepositoryImpl repository = ProfileRepositoryImpl(
       remoteDataSource: remoteDataSource,
+      localDataSource: localDataSource,
       networkInfo: networkInfo,
     );
     final GetProfileUseCase getProfileUseCase = GetProfileUseCase(
@@ -43,9 +49,13 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   Future<void> getProfile() async {
+    if (isClosed) return; // Don't emit if cubit is already closed
+
     emit(ProfileLoading());
 
     final result = await getProfileUseCase.call();
+
+    if (isClosed) return; // Check again after async operation
 
     result.fold(
       (failure) => emit(ProfileError(message: failure.errMessage)),
@@ -54,9 +64,13 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   Future<void> updateProfile(UpdateProfileParams params) async {
+    if (isClosed) return; // Don't emit if cubit is already closed
+
     emit(ProfileUpdating());
 
     final result = await updateProfileUseCase.call(params);
+
+    if (isClosed) return; // Check again after async operation
 
     result.fold(
       (failure) => emit(ProfileUpdateError(message: failure.errMessage)),

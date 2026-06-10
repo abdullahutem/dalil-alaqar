@@ -5,6 +5,7 @@ import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/databases/api/dio_consumer.dart';
+import '../../data/datasources/employee_stats_local_data_source.dart';
 import '../../data/datasources/employees_local_data_source.dart';
 import '../../data/datasources/employees_remote_data_source.dart';
 import '../../data/repositories/employees_repository_impl.dart';
@@ -27,10 +28,14 @@ class EmployeesCubit extends Cubit<EmployeesState> {
     final localDataSource = EmployeesLocalDataSourceImpl(
       databaseHelper: DatabaseHelper.instance,
     );
+    final statsLocalDataSource = EmployeeStatsLocalDataSourceImpl(
+      databaseHelper: DatabaseHelper.instance,
+    );
     final NetworkInfo networkInfo = NetworkInfoImpl(DataConnectionChecker());
     final repository = EmployeesRepositoryImpl(
       remoteDataSource: remoteDataSource,
       localDataSource: localDataSource,
+      statsLocalDataSource: statsLocalDataSource,
       networkInfo: networkInfo,
     );
     final useCase = GetEmployeesUseCase(repository);
@@ -38,8 +43,13 @@ class EmployeesCubit extends Cubit<EmployeesState> {
   }
 
   Future<void> getEmployees() async {
+    if (isClosed) return; // Don't emit if cubit is already closed
+
     emit(const EmployeesLoading());
     final result = await getEmployeesUseCase(page: 1, perPage: _perPage);
+
+    if (isClosed) return; // Check again after async operation
+
     result.fold(
       (failure) => emit(EmployeesError(message: failure.errMessage)),
       (response) => emit(
@@ -53,6 +63,8 @@ class EmployeesCubit extends Cubit<EmployeesState> {
   }
 
   Future<void> loadMore() async {
+    if (isClosed) return; // Don't emit if cubit is already closed
+
     final currentState = state;
     if (currentState is! EmployeesSuccess) return;
     if (currentState.currentPage >= currentState.lastPage) return;
@@ -62,6 +74,8 @@ class EmployeesCubit extends Cubit<EmployeesState> {
 
     final nextPage = currentState.currentPage + 1;
     final result = await getEmployeesUseCase(page: nextPage, perPage: _perPage);
+
+    if (isClosed) return; // Check again after async operation
 
     result.fold(
       (failure) => emit(

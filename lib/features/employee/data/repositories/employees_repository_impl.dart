@@ -3,6 +3,7 @@ import 'package:dalil_alaqar/core/databases/cache/cache_helper.dart';
 import 'package:dalil_alaqar/core/databases/cache/cache_manager.dart';
 import 'package:dalil_alaqar/core/errors/expentions.dart';
 import 'package:dalil_alaqar/core/errors/failure.dart';
+import 'package:dalil_alaqar/core/utils/app_logger.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'dart:convert';
@@ -12,22 +13,27 @@ import '../../domain/entities/employee_stats_response_entity.dart';
 import '../../domain/entities/employees_response_entity.dart';
 import '../../domain/entities/update_employee_response_entity.dart';
 import '../../domain/repositories/employees_repository.dart';
+import '../datasources/employee_stats_local_data_source.dart';
 import '../datasources/employees_local_data_source.dart';
 import '../datasources/employees_remote_data_source.dart';
 import '../models/add_employee_request_model.dart';
 import '../models/employee_model.dart';
+import '../models/employee_stats_model.dart';
+import '../models/employee_stats_response_model.dart';
 import '../models/employees_response_model.dart';
 import '../models/update_employee_request_model.dart';
 
 class EmployeesRepositoryImpl implements EmployeesRepository {
   final EmployeesRemoteDataSource remoteDataSource;
   final EmployeesLocalDataSource localDataSource;
+  final EmployeeStatsLocalDataSource statsLocalDataSource;
   final NetworkInfo networkInfo;
   late final CacheManager _cacheManager;
 
   EmployeesRepositoryImpl({
     required this.remoteDataSource,
     required this.localDataSource,
+    required this.statsLocalDataSource,
     required this.networkInfo,
   }) {
     _cacheManager = CacheManager(CacheHelper.sharedPreferences);
@@ -41,6 +47,7 @@ class EmployeesRepositoryImpl implements EmployeesRepository {
     // فقط نخزن الصفحة الأولى في الكاش (smart caching)
     final isFirstPage = page == 1;
 
+    // CACHE-FIRST STRATEGY: Load cache immediately for first page
     if (isFirstPage) {
       // محاولة تحميل من الكاش السريع
       final cachedData = _cacheManager.getCachedEmployeesData();
@@ -50,12 +57,21 @@ class EmployeesRepositoryImpl implements EmployeesRepository {
           final Map<String, dynamic> jsonData = json.decode(cachedData);
           final employeesResponse = EmployeesResponseModel.fromJson(jsonData);
 
+          AppLogger.success(
+            'Loaded employees from cache (instant)',
+            'Employees',
+          );
+
           // تحديث الكاش في الخلفية
           _updateCacheInBackground(page: page, perPage: perPage);
 
           return Right(employeesResponse);
         } catch (e) {
-          print('Error parsing cached employees data: $e');
+          AppLogger.error(
+            'Error parsing cached employees data',
+            'Employees',
+            e,
+          );
         }
       }
     }
@@ -75,24 +91,28 @@ class EmployeesRepositoryImpl implements EmployeesRepository {
 
           final jsonData = result.toJson();
           await _cacheManager.cacheEmployeesData(json.encode(jsonData));
+
+          AppLogger.success(
+            'Cached employees from API (${employees.length} items)',
+            'Employees',
+          );
         }
 
         return Right(result);
       } on ServerException catch (e) {
-        print('ServerException: $e');
+        AppLogger.error('ServerException fetching employees', 'Employees', e);
         if (isFirstPage) {
           return await _loadFromCache();
         }
         return Left(ServerFailure(errMessage: e.errorModel.errorMessage));
       } on DioException catch (e) {
-        print('DioException: $e');
+        AppLogger.error('DioException fetching employees', 'Employees', e);
         if (isFirstPage) {
           return await _loadFromCache();
         }
         return Left(ServerFailure(errMessage: e.toString()));
       } catch (e, stackTrace) {
-        print('Error fetching employees: $e');
-        print('Stack trace: $stackTrace');
+        AppLogger.error('Error fetching employees', 'Employees', e, stackTrace);
         if (isFirstPage) {
           return await _loadFromCache();
         }
@@ -120,9 +140,11 @@ class EmployeesRepositoryImpl implements EmployeesRepository {
 
         final jsonData = result.toJson();
         await _cacheManager.cacheEmployeesData(json.encode(jsonData));
+
+        AppLogger.success('Updated employees cache in background', 'Employees');
       }
     } catch (e) {
-      print('Background cache update failed: $e');
+      AppLogger.warning('Background cache update failed', 'Employees');
     }
   }
 
@@ -253,15 +275,94 @@ class EmployeesRepositoryImpl implements EmployeesRepository {
   @override
   Future<Either<Failure, EmployeeStatsResponseEntity>>
   getEmployeeStats() async {
-    if (!(await networkInfo.isConnected ?? false)) {
-      return Left(Failure(errMessage: 'لا يوجد اتصال بالإنترنت'));
+    // CACHE-FIRST STRATEGY: Load cache immediately for instant display
+    try {
+      final cachedStats = await statsLocalDataSource.getCachedEmployeeStats();
+      if (cachedStats != null) {
+        AppLogger.success(
+          'Loaded employee stats from cache (instant)',
+          'EmployeeStats',
+        );
+
+        // Update cache in background if online
+        _updateStatsCacheInBackground();
+
+        // Return cached stats wrapped in response
+        return Right(
+          EmployeeStatsResponseModel(
+            success: true,
+            message: 'تم تحميل الإحصائيات من الذاكرة المؤقتة',
+            data: cachedStats,
+          ),
+        );
+      }
+    } catch (e) {
+      AppLogger.warning('Failed to load cached stats: $e', 'EmployeeStats');
     }
 
+    // Check if we're online
+    if (await networkInfo.isConnected ?? false) {
+      try {
+        final result = await remoteDataSource.getEmployeeStats();
+
+        // Cache the fresh data in background
+        try {
+          // Cast to EmployeeStatsModel for caching
+          final statsModel = result.data as EmployeeStatsModel;
+          await statsLocalDataSource.cacheEmployeeStats(statsModel);
+          AppLogger.success(
+            'Updated employee stats cache from API',
+            'EmployeeStats',
+          );
+        } catch (e) {
+          AppLogger.warning(
+            'Failed to update stats cache: $e',
+            'EmployeeStats',
+          );
+        }
+
+        return Right(result);
+      } on ServerException catch (e) {
+        AppLogger.error(
+          'ServerException fetching employee stats',
+          'EmployeeStats',
+          e,
+        );
+        return Left(ServerFailure(errMessage: e.errorModel.errorMessage));
+      } catch (e, stackTrace) {
+        AppLogger.error(
+          'Error fetching employee stats',
+          'EmployeeStats',
+          e,
+          stackTrace,
+        );
+        return Left(
+          ServerFailure(errMessage: 'حدث خطأ أثناء تحميل الإحصائيات'),
+        );
+      }
+    } else {
+      return Left(Failure(errMessage: 'لا يوجد اتصال بالإنترنت'));
+    }
+  }
+
+  /// Update stats cache in background (silent update)
+  Future<void> _updateStatsCacheInBackground() async {
     try {
-      final result = await remoteDataSource.getEmployeeStats();
-      return Right(result);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(errMessage: e.errorModel.errorMessage));
+      if (await networkInfo.isConnected ?? false) {
+        final result = await remoteDataSource.getEmployeeStats();
+        // Cast to EmployeeStatsModel for caching
+        final statsModel = result.data as EmployeeStatsModel;
+        await statsLocalDataSource.cacheEmployeeStats(statsModel);
+        AppLogger.success(
+          'Updated employee stats cache in background',
+          'EmployeeStats',
+        );
+      }
+    } catch (e) {
+      AppLogger.warning(
+        'Background stats cache update failed',
+        'EmployeeStats',
+      );
     }
   }
 
@@ -270,8 +371,10 @@ class EmployeesRepositoryImpl implements EmployeesRepository {
     try {
       await localDataSource.clearEmployees();
       await _cacheManager.clearCache(CacheManager.employeesCacheKey);
+      await statsLocalDataSource.clearEmployeeStats(); // Clear stats cache too
+      AppLogger.info('Cleared employees and stats cache', 'Employees');
     } catch (e) {
-      print('Error clearing employees cache: $e');
+      AppLogger.error('Error clearing employees cache', 'Employees', e);
     }
   }
 }

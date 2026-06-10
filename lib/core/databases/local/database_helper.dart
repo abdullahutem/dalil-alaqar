@@ -1,3 +1,4 @@
+import 'package:dalil_alaqar/core/utils/app_logger.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -19,8 +20,7 @@ class DatabaseHelper {
 
     return await openDatabase(
       path,
-      version:
-          17, // Updated office_properties tables to simplified JSON structure
+      version: 22, // Added employee_stats table for caching employee statistics
       onCreate: _createDB,
       onUpgrade: _onUpgrade,
       onOpen: (db) async {
@@ -30,10 +30,13 @@ class DatabaseHelper {
         );
 
         if (tables.isEmpty) {
-          print('⚠️ Slides table does not exist, creating it...');
+          AppLogger.warning(
+            'Slides table does not exist, creating it...',
+            'Database',
+          );
           await _createDB(db, 6);
         } else {
-          print('✅ Slides table exists');
+          AppLogger.database('Slides table exists', 'Database');
         }
 
         // Verify the offices table exists
@@ -42,10 +45,13 @@ class DatabaseHelper {
         );
 
         if (officesTables.isEmpty) {
-          print('⚠️ Offices table does not exist, creating it...');
+          AppLogger.warning(
+            'Offices table does not exist, creating it...',
+            'Database',
+          );
           await _createOfficesTable(db);
         } else {
-          print('✅ Offices table exists');
+          AppLogger.database('Offices table exists', 'Database');
         }
 
         // Verify the office_details table exists
@@ -54,10 +60,13 @@ class DatabaseHelper {
         );
 
         if (officeDetailsTables.isEmpty) {
-          print('⚠️ Office details table does not exist, creating it...');
+          AppLogger.warning(
+            'Office details table does not exist, creating it...',
+            'Database',
+          );
           await _createOfficeDetailsTable(db);
         } else {
-          print('✅ Office details table exists');
+          AppLogger.database('Office details table exists', 'Database');
         }
 
         // Verify the property_types table exists
@@ -66,10 +75,13 @@ class DatabaseHelper {
         );
 
         if (propertyTypesTables.isEmpty) {
-          print('⚠️ Property types table does not exist, creating it...');
+          AppLogger.warning(
+            'Property types table does not exist, creating it...',
+            'Database',
+          );
           await _createPropertyTypesTable(db);
         } else {
-          print('✅ Property types table exists');
+          AppLogger.database('Property types table exists', 'Database');
         }
 
         // Verify the properties_cache table exists
@@ -78,10 +90,13 @@ class DatabaseHelper {
         );
 
         if (propertiesCacheTables.isEmpty) {
-          print('⚠️ Properties cache table does not exist, creating it...');
+          AppLogger.warning(
+            'Properties cache table does not exist, creating it...',
+            'Database',
+          );
           await _createPropertiesCacheTable(db);
         } else {
-          print('✅ Properties cache table exists');
+          AppLogger.database('Properties cache table exists', 'Database');
         }
 
         // Verify the property_details table exists
@@ -90,10 +105,13 @@ class DatabaseHelper {
         );
 
         if (propertyDetailsTables.isEmpty) {
-          print('⚠️ Property details table does not exist, creating it...');
+          AppLogger.warning(
+            'Property details table does not exist, creating it...',
+            'Database',
+          );
           await _createPropertyDetailsTable(db);
         } else {
-          print('✅ Property details table exists');
+          AppLogger.database('Property details table exists', 'Database');
         }
 
         // Verify the promotions table exists
@@ -102,10 +120,13 @@ class DatabaseHelper {
         );
 
         if (promotionsTables.isEmpty) {
-          print('⚠️ Promotions table does not exist, creating it...');
+          AppLogger.warning(
+            'Promotions table does not exist, creating it...',
+            'Database',
+          );
           await _createPromotionsTable(db);
         } else {
-          print('✅ Promotions table exists');
+          AppLogger.database('Promotions table exists', 'Database');
         }
 
         // Verify the dashboard_stats table exists
@@ -114,10 +135,13 @@ class DatabaseHelper {
         );
 
         if (dashboardTables.isEmpty) {
-          print('⚠️ Dashboard stats table does not exist, creating it...');
+          AppLogger.warning(
+            'Dashboard stats table does not exist, creating it...',
+            'Database',
+          );
           await _createDashboardStatsTable(db);
         } else {
-          print('✅ Dashboard stats table exists');
+          AppLogger.database('Dashboard stats table exists', 'Database');
         }
 
         // Verify the employees table exists
@@ -126,10 +150,13 @@ class DatabaseHelper {
         );
 
         if (employeesTables.isEmpty) {
-          print('⚠️ Employees table does not exist, creating it...');
+          AppLogger.warning(
+            'Employees table does not exist, creating it...',
+            'Database',
+          );
           await _createEmployeesTable(db);
         } else {
-          print('✅ Employees table exists');
+          AppLogger.database('Employees table exists', 'Database');
         }
 
         // Verify the currencies table exists
@@ -138,10 +165,13 @@ class DatabaseHelper {
         );
 
         if (currenciesTables.isEmpty) {
-          print('⚠️ Currencies table does not exist, creating it...');
+          AppLogger.warning(
+            'Currencies table does not exist, creating it...',
+            'Database',
+          );
           await _createCurrenciesTable(db);
         } else {
-          print('✅ Currencies table exists');
+          AppLogger.database('Currencies table exists', 'Database');
         }
 
         // Verify the districts table exists
@@ -150,10 +180,13 @@ class DatabaseHelper {
         );
 
         if (districtsTables.isEmpty) {
-          print('⚠️ Districts table does not exist, creating it...');
+          AppLogger.warning(
+            'Districts table does not exist, creating it...',
+            'Database',
+          );
           await _createDistrictsTable(db);
         } else {
-          print('✅ Districts table exists');
+          AppLogger.database('Districts table exists', 'Database');
         }
 
         // Verify the governorates table exists
@@ -162,10 +195,13 @@ class DatabaseHelper {
         );
 
         if (governoratesTables.isEmpty) {
-          print('⚠️ Governorates table does not exist, creating it...');
+          AppLogger.warning(
+            'Governorates table does not exist, creating it...',
+            'Database',
+          );
           await _createGovernoratesTable(db);
         } else {
-          print('✅ Governorates table exists');
+          AppLogger.database('Governorates table exists', 'Database');
         }
 
         // Verify the neighborhoods table exists
@@ -174,10 +210,88 @@ class DatabaseHelper {
         );
 
         if (neighborhoodsTables.isEmpty) {
-          print('⚠️ Neighborhoods table does not exist, creating it...');
+          AppLogger.warning(
+            'Neighborhoods table does not exist, creating it...',
+            'Database',
+          );
           await _createNeighborhoodsTable(db);
         } else {
-          print('✅ Neighborhoods table exists');
+          AppLogger.database('Neighborhoods table exists', 'Database');
+        }
+
+        // Verify the cache_metadata table exists
+        final cacheMetadataTables = await db.rawQuery(
+          "SELECT name FROM sqlite_master WHERE type='table' AND name='cache_metadata'",
+        );
+
+        if (cacheMetadataTables.isEmpty) {
+          AppLogger.warning(
+            'Cache metadata table does not exist, creating it...',
+            'Database',
+          );
+          await _createCacheMetadataTable(db);
+        } else {
+          AppLogger.database('Cache metadata table exists', 'Database');
+        }
+
+        // Verify the plans table exists
+        final plansTables = await db.rawQuery(
+          "SELECT name FROM sqlite_master WHERE type='table' AND name='plans'",
+        );
+
+        if (plansTables.isEmpty) {
+          AppLogger.warning(
+            'Plans table does not exist, creating it...',
+            'Database',
+          );
+          await _createPlansTable(db);
+        } else {
+          AppLogger.database('Plans table exists', 'Database');
+        }
+
+        // Verify the office_info table exists
+        final officeInfoTables = await db.rawQuery(
+          "SELECT name FROM sqlite_master WHERE type='table' AND name='office_info'",
+        );
+
+        if (officeInfoTables.isEmpty) {
+          AppLogger.warning(
+            'Office info table does not exist, creating it...',
+            'Database',
+          );
+          await _createOfficeInfoTable(db);
+        } else {
+          AppLogger.database('Office info table exists', 'Database');
+        }
+
+        // Verify the profile table exists
+        final profileTables = await db.rawQuery(
+          "SELECT name FROM sqlite_master WHERE type='table' AND name='profile'",
+        );
+
+        if (profileTables.isEmpty) {
+          AppLogger.warning(
+            'Profile table does not exist, creating it...',
+            'Database',
+          );
+          await _createProfileTable(db);
+        } else {
+          AppLogger.database('Profile table exists', 'Database');
+        }
+
+        // Verify the employee_stats table exists
+        final employeeStatsTables = await db.rawQuery(
+          "SELECT name FROM sqlite_master WHERE type='table' AND name='employee_stats'",
+        );
+
+        if (employeeStatsTables.isEmpty) {
+          AppLogger.warning(
+            'Employee stats table does not exist, creating it...',
+            'Database',
+          );
+          await _createEmployeeStatsTable(db);
+        } else {
+          AppLogger.database('Employee stats table exists', 'Database');
         }
       },
     );
@@ -211,102 +325,117 @@ class DatabaseHelper {
         )
       ''');
 
-      print(
-        '✅ Database upgraded to version $newVersion - office_id is now nullable',
+      AppLogger.success(
+        'Database upgraded to version $newVersion - office_id is now nullable',
+        'Database',
       );
     }
 
     if (oldVersion < 4) {
       // Add offices table
       await _createOfficesTable(db);
-      print('✅ Database upgraded to version $newVersion - offices table added');
+      AppLogger.success(
+        'Database upgraded to version $newVersion - offices table added',
+        'Database',
+      );
     }
 
     if (oldVersion < 5) {
       // Add office_details table
       await _createOfficeDetailsTable(db);
-      print(
-        '✅ Database upgraded to version $newVersion - office_details table added',
+      AppLogger.success(
+        'Database upgraded to version $newVersion - office_details table added',
+        'Database',
       );
     }
 
     if (oldVersion < 6) {
       // Add property_types table
       await _createPropertyTypesTable(db);
-      print(
-        '✅ Database upgraded to version $newVersion - property_types table added',
+      AppLogger.success(
+        'Database upgraded to version $newVersion - property_types table added',
+        'Database',
       );
     }
 
     if (oldVersion < 7) {
       // Add properties_cache table
       await _createPropertiesCacheTable(db);
-      print(
-        '✅ Database upgraded to version $newVersion - properties_cache table added',
+      AppLogger.success(
+        'Database upgraded to version $newVersion - properties_cache table added',
+        'Database',
       );
     }
 
     if (oldVersion < 8) {
       // Add property_details table
       await _createPropertyDetailsTable(db);
-      print(
-        '✅ Database upgraded to version $newVersion - property_details table added',
+      AppLogger.success(
+        'Database upgraded to version $newVersion - property_details table added',
+        'Database',
       );
     }
 
     if (oldVersion < 9) {
       // Add promotions table
       await _createPromotionsTable(db);
-      print(
-        '✅ Database upgraded to version $newVersion - promotions table added',
+      AppLogger.success(
+        'Database upgraded to version $newVersion - promotions table added',
+        'Database',
       );
     }
 
     if (oldVersion < 10) {
       // Add dashboard_stats table
       await _createDashboardStatsTable(db);
-      print(
-        '✅ Database upgraded to version $newVersion - dashboard_stats table added',
+      AppLogger.success(
+        'Database upgraded to version $newVersion - dashboard_stats table added',
+        'Database',
       );
     }
 
     if (oldVersion < 11) {
       // Add employees table
       await _createEmployeesTable(db);
-      print(
-        '✅ Database upgraded to version $newVersion - employees table added',
+      AppLogger.success(
+        'Database upgraded to version $newVersion - employees table added',
+        'Database',
       );
     }
 
     if (oldVersion < 12) {
       // Add currencies table
       await _createCurrenciesTable(db);
-      print(
-        '✅ Database upgraded to version $newVersion - currencies table added',
+      AppLogger.success(
+        'Database upgraded to version $newVersion - currencies table added',
+        'Database',
       );
     }
 
     if (oldVersion < 13) {
       // Add districts table
       await _createDistrictsTable(db);
-      print(
-        '✅ Database upgraded to version $newVersion - districts table added',
+      AppLogger.success(
+        'Database upgraded to version $newVersion - districts table added',
+        'Database',
       );
     }
 
     if (oldVersion < 14) {
       // Add governorates table
       await _createGovernoratesTable(db);
-      print(
-        '✅ Database upgraded to version $newVersion - governorates table added',
+      AppLogger.success(
+        'Database upgraded to version $newVersion - governorates table added',
+        'Database',
       );
     }
 
     if (oldVersion < 15) {
       // Add neighborhoods table
       await _createNeighborhoodsTable(db);
-      print(
-        '✅ Database upgraded to version $newVersion - neighborhoods table added',
+      AppLogger.success(
+        'Database upgraded to version $newVersion - neighborhoods table added',
+        'Database',
       );
     }
 
@@ -315,8 +444,9 @@ class DatabaseHelper {
       await _createOfficePropertiesListTable(db);
       await _createOfficePropertyDetailsTable(db);
       await _createOfficePropertyStatsTable(db);
-      print(
-        '✅ Database upgraded to version $newVersion - office_properties tables added',
+      AppLogger.success(
+        'Database upgraded to version $newVersion - office_properties tables added',
+        'Database',
       );
     }
 
@@ -343,8 +473,54 @@ class DatabaseHelper {
         )
       ''');
 
-      print(
-        '✅ Database upgraded to version $newVersion - office_properties tables updated to JSON structure',
+      AppLogger.success(
+        'Database upgraded to version $newVersion - office_properties tables updated to JSON structure',
+        'Database',
+      );
+    }
+
+    if (oldVersion < 18) {
+      // Add cache_metadata table for sophisticated cache management
+      await _createCacheMetadataTable(db);
+      AppLogger.success(
+        'Database upgraded to version $newVersion - cache_metadata table added',
+        'Database',
+      );
+    }
+
+    if (oldVersion < 19) {
+      // Add plans table for caching subscription plans
+      await _createPlansTable(db);
+      AppLogger.success(
+        'Database upgraded to version $newVersion - plans table added',
+        'Database',
+      );
+    }
+
+    if (oldVersion < 20) {
+      // Add office_info table for caching office information
+      await _createOfficeInfoTable(db);
+      AppLogger.success(
+        'Database upgraded to version $newVersion - office_info table added',
+        'Database',
+      );
+    }
+
+    if (oldVersion < 21) {
+      // Add profile table for caching user profile
+      await _createProfileTable(db);
+      AppLogger.success(
+        'Database upgraded to version $newVersion - profile table added',
+        'Database',
+      );
+    }
+
+    if (oldVersion < 22) {
+      // Add employee_stats table for caching employee statistics
+      await _createEmployeeStatsTable(db);
+      AppLogger.success(
+        'Database upgraded to version $newVersion - employee_stats table added',
+        'Database',
       );
     }
   }
@@ -381,6 +557,11 @@ class DatabaseHelper {
     await _createOfficePropertiesListTable(db);
     await _createOfficePropertyDetailsTable(db);
     await _createOfficePropertyStatsTable(db);
+    await _createCacheMetadataTable(db);
+    await _createPlansTable(db);
+    await _createOfficeInfoTable(db);
+    await _createProfileTable(db);
+    await _createEmployeeStatsTable(db);
   }
 
   Future _createOfficesTable(Database db) async {
@@ -653,6 +834,82 @@ class DatabaseHelper {
         sold INTEGER NOT NULL,
         rented INTEGER NOT NULL,
         this_month INTEGER NOT NULL,
+        cached_at TEXT NOT NULL
+      )
+    ''');
+  }
+
+  Future _createCacheMetadataTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE cache_metadata (
+        key TEXT PRIMARY KEY,
+        last_updated INTEGER NOT NULL,
+        expires_at INTEGER NOT NULL
+      )
+    ''');
+  }
+
+  Future _createPlansTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE plans (
+        id INTEGER PRIMARY KEY,
+        name TEXT NOT NULL,
+        slug TEXT NOT NULL,
+        description TEXT NOT NULL,
+        prices_json TEXT NOT NULL,
+        limits_json TEXT NOT NULL,
+        features_json TEXT NOT NULL,
+        priority_level INTEGER NOT NULL,
+        trial_days INTEGER NOT NULL,
+        has_trial INTEGER NOT NULL,
+        cached_at TEXT NOT NULL
+      )
+    ''');
+  }
+
+  Future _createOfficeInfoTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE office_info (
+        id INTEGER PRIMARY KEY,
+        name TEXT NOT NULL,
+        email TEXT NOT NULL,
+        phone TEXT NOT NULL,
+        whatsapp_number TEXT,
+        website TEXT,
+        facebook TEXT,
+        instagram TEXT,
+        twitter TEXT,
+        description TEXT,
+        address TEXT,
+        logo TEXT,
+        logo_url TEXT,
+        status TEXT NOT NULL,
+        created_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL,
+        cached_at TEXT NOT NULL
+      )
+    ''');
+  }
+
+  Future _createProfileTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE profile (
+        id INTEGER PRIMARY KEY,
+        user_json TEXT NOT NULL,
+        office_json TEXT NOT NULL,
+        cached_at TEXT NOT NULL
+      )
+    ''');
+  }
+
+  Future _createEmployeeStatsTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE employee_stats (
+        id INTEGER PRIMARY KEY,
+        total INTEGER NOT NULL,
+        active INTEGER NOT NULL,
+        inactive INTEGER NOT NULL,
+        can_add_more INTEGER NOT NULL,
         cached_at TEXT NOT NULL
       )
     ''');

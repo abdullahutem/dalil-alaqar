@@ -3,6 +3,7 @@ import 'package:dalil_alaqar/core/databases/cache/cache_helper.dart';
 import 'package:dalil_alaqar/core/databases/cache/cache_manager.dart';
 import 'package:dalil_alaqar/core/errors/expentions.dart';
 import 'package:dalil_alaqar/core/errors/failure.dart';
+import 'package:dalil_alaqar/core/utils/app_logger.dart';
 import 'package:dalil_alaqar/features/promotions/data/datasources/promotions_local_data_source.dart';
 import 'package:dalil_alaqar/features/promotions/data/datasources/promotions_remote_data_source.dart';
 import 'package:dalil_alaqar/features/promotions/data/models/promotion_model.dart';
@@ -44,7 +45,10 @@ class PromotionsRepositoryImpl implements PromotionsRepository {
 
         return Right(promotionsResponse);
       } catch (e) {
-        print('Error parsing cached promotions data: $e');
+        AppLogger.warning(
+          'Error parsing cached promotions data: $e',
+          'Promotions',
+        );
         // في حالة فشل تحليل البيانات، نحاول التحميل من API
       }
     }
@@ -66,17 +70,21 @@ class PromotionsRepositoryImpl implements PromotionsRepository {
 
         return Right(result);
       } on ServerException catch (e) {
-        print('ServerException: $e');
+        AppLogger.error('ServerException', 'Promotions', e);
         // If API fails, try to load from SQLite cache
         return await _loadFromCache();
       } on DioException catch (e) {
-        print('DioException: $e');
+        AppLogger.error('DioException', 'Promotions', e);
         // If network error occurs, try to load from SQLite cache
         return await _loadFromCache();
       } catch (e, stackTrace) {
         // If any other error occurs, log it and try to load from SQLite cache
-        print('Error fetching promotions: $e');
-        print('Stack trace: $stackTrace');
+        AppLogger.error(
+          'Error fetching promotions',
+          'Promotions',
+          e,
+          stackTrace,
+        );
         return await _loadFromCache();
       }
     } else {
@@ -100,7 +108,7 @@ class PromotionsRepositoryImpl implements PromotionsRepository {
       }
     } catch (e) {
       // تجاهل الأخطاء في التحديث الخلفي
-      print('Background cache update failed: $e');
+      AppLogger.warning('Background cache update failed: $e', 'Promotions');
     }
   }
 
@@ -108,7 +116,7 @@ class PromotionsRepositoryImpl implements PromotionsRepository {
     try {
       final cachedPromotions = await localDataSource.getCachedPromotions();
 
-      if (cachedPromotions.isEmpty) {
+      if (cachedPromotions == null || cachedPromotions.isEmpty) {
         return Left(
           CacheFailure(message: 'لا توجد عروض محفوظة. يرجى الاتصال بالإنترنت.'),
         );

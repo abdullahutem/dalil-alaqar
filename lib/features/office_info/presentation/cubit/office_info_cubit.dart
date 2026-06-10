@@ -1,9 +1,11 @@
 import 'package:dalil_alaqar/core/databases/api/api_consumer.dart';
+import 'package:dalil_alaqar/core/databases/local/database_helper.dart';
 import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/databases/api/dio_consumer.dart';
 import 'package:dalil_alaqar/core/connection/network_info.dart';
+import '../../data/datasources/office_info_local_data_source.dart';
 import '../../data/datasources/office_info_remote_data_source.dart';
 import '../../data/repositories/office_info_repository_impl.dart';
 import '../../domain/usecases/get_office_info_usecase.dart';
@@ -27,9 +29,13 @@ class OfficeInfoCubit extends Cubit<OfficeInfoState> {
     final remoteDataSource = OfficeInfoRemoteDataSourceImpl(
       apiConsumer: apiConsumer,
     );
+    final localDataSource = OfficeInfoLocalDataSourceImpl(
+      databaseHelper: DatabaseHelper.instance,
+    );
     final NetworkInfo networkInfo = NetworkInfoImpl(DataConnectionChecker());
     final repository = OfficeInfoRepositoryImpl(
       remoteDataSource: remoteDataSource,
+      localDataSource: localDataSource,
       networkInfo: networkInfo,
     );
     final getUseCase = GetOfficeInfoUseCase(repository);

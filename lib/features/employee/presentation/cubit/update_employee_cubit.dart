@@ -6,6 +6,7 @@ import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/databases/api/dio_consumer.dart';
+import '../../data/datasources/employee_stats_local_data_source.dart';
 import '../../data/datasources/employees_remote_data_source.dart';
 import '../../data/repositories/employees_repository_impl.dart';
 import '../../domain/usecases/update_employee_usecase.dart';
@@ -25,11 +26,15 @@ class UpdateEmployeeCubit extends Cubit<UpdateEmployeeState> {
     final localDataSource = EmployeesLocalDataSourceImpl(
       databaseHelper: DatabaseHelper.instance,
     );
+    final statsLocalDataSource = EmployeeStatsLocalDataSourceImpl(
+      databaseHelper: DatabaseHelper.instance,
+    );
     final NetworkInfo networkInfo = NetworkInfoImpl(DataConnectionChecker());
     final repository = EmployeesRepositoryImpl(
       remoteDataSource: remoteDataSource,
-      networkInfo: networkInfo,
       localDataSource: localDataSource,
+      statsLocalDataSource: statsLocalDataSource,
+      networkInfo: networkInfo,
     );
     final useCase = UpdateEmployeeUseCase(repository);
     return UpdateEmployeeCubit(updateEmployeeUseCase: useCase);
