@@ -1,6 +1,8 @@
 import 'package:dalil_alaqar/core/connection/network_info.dart';
 import 'package:dalil_alaqar/core/databases/api/api_consumer.dart';
 import 'package:dalil_alaqar/core/databases/api/dio_consumer.dart';
+import 'package:dalil_alaqar/core/databases/local/database_helper.dart';
+import 'package:dalil_alaqar/features/offices/data/datasources/offices_local_data_source.dart';
 import 'package:dalil_alaqar/features/offices/data/datasources/offices_remote_data_source.dart';
 import 'package:dalil_alaqar/features/offices/data/repositories/offices_repository_impl.dart';
 import 'package:dalil_alaqar/features/offices/domain/entities/office_entity.dart';
@@ -27,8 +29,12 @@ class OfficesCubit extends Cubit<OfficesState> {
     final remoteDataSource = OfficesRemoteDataSourceImpl(
       apiConsumer: apiConsumer,
     );
+    final localDataSource = OfficesLocalDataSourceImpl(
+      databaseHelper: DatabaseHelper.instance,
+    );
     final repository = OfficesRepositoryImpl(
       remoteDataSource: remoteDataSource,
+      localDataSource: localDataSource,
       networkInfo: networkInfo,
     );
     final useCase = GetOfficesUseCase(repository);

@@ -3,7 +3,10 @@ import 'package:dio/dio.dart';
 import 'package:dalil_alaqar/core/connection/network_info.dart';
 import 'package:dalil_alaqar/core/databases/api/api_consumer.dart';
 import 'package:dalil_alaqar/core/databases/api/dio_consumer.dart';
+import 'package:dalil_alaqar/core/databases/local/database_helper.dart';
+import 'package:dalil_alaqar/features/properties/data/datasources/properties_local_data_source.dart';
 import 'package:dalil_alaqar/features/properties/data/datasources/properties_remote_data_source.dart';
+import 'package:dalil_alaqar/features/properties/data/datasources/property_details_local_data_source.dart';
 import 'package:dalil_alaqar/features/properties/data/repositories/properties_repository_impl.dart';
 import 'package:dalil_alaqar/features/properties/domain/entities/property_entity.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,9 +24,17 @@ class PropertiesCubit extends Cubit<PropertiesState> {
     final ApiConsumer apiConsumer = DioConsumer(dio: Dio());
     final PropertiesRemoteDataSource remoteDataSource =
         PropertiesRemoteDataSourceImpl(apiConsumer: apiConsumer);
+    final PropertiesLocalDataSource localDataSource =
+        PropertiesLocalDataSourceImpl(databaseHelper: DatabaseHelper.instance);
+    final PropertyDetailsLocalDataSource propertyDetailsLocalDataSource =
+        PropertyDetailsLocalDataSourceImpl(
+          databaseHelper: DatabaseHelper.instance,
+        );
     final NetworkInfo networkInfo = NetworkInfoImpl(DataConnectionChecker());
     final PropertiesRepositoryImpl repository = PropertiesRepositoryImpl(
       remoteDataSource: remoteDataSource,
+      localDataSource: localDataSource,
+      propertyDetailsLocalDataSource: propertyDetailsLocalDataSource,
       networkInfo: networkInfo,
     );
     final GetPropertiesUseCase getPropertiesUseCase = GetPropertiesUseCase(

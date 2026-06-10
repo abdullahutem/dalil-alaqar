@@ -1,10 +1,13 @@
 import 'package:dalil_alaqar/core/connection/network_info.dart';
 import 'package:dalil_alaqar/core/databases/api/api_consumer.dart';
+import 'package:dalil_alaqar/core/databases/local/database_helper.dart';
 import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/databases/api/dio_consumer.dart';
+import '../../data/datasources/office_properties_list_local_data_source.dart';
 import '../../data/datasources/office_properties_remote_data_source.dart';
+import '../../data/datasources/office_property_details_local_data_source.dart';
 import '../../data/repositories/office_properties_repository_impl.dart';
 import '../../domain/entities/create_property_entity.dart';
 import '../../domain/usecases/create_property_usecase.dart';
@@ -21,9 +24,18 @@ class CreatePropertyCubit extends Cubit<CreatePropertyState> {
     final remoteDataSource = OfficePropertiesRemoteDataSourceImpl(
       apiConsumer: apiConsumer,
     );
+    final listLocalDataSource = OfficePropertiesListLocalDataSourceImpl(
+      databaseHelper: DatabaseHelper.instance,
+    );
+    final detailsLocalDataSource = OfficePropertyDetailsLocalDataSourceImpl(
+      databaseHelper: DatabaseHelper.instance,
+    );
     final NetworkInfo networkInfo = NetworkInfoImpl(DataConnectionChecker());
+
     final repository = OfficePropertiesRepositoryImpl(
       remoteDataSource: remoteDataSource,
+      listLocalDataSource: listLocalDataSource,
+      detailsLocalDataSource: detailsLocalDataSource,
       networkInfo: networkInfo,
     );
     final useCase = CreatePropertyUseCase(repository);

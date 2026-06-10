@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dalil_alaqar/core/connection/network_info.dart';
 import 'package:dalil_alaqar/core/databases/api/api_consumer.dart';
 import 'package:dalil_alaqar/core/databases/api/dio_consumer.dart';
+import 'package:dalil_alaqar/core/databases/local/database_helper.dart';
+import '../../data/datasources/currencies_local_data_source.dart';
 import '../../data/datasources/currencies_remote_data_source.dart';
 import '../../data/repositories/currencies_repository_impl.dart';
 import '../../domain/usecases/get_currencies_usecase.dart';
@@ -19,9 +21,12 @@ class CurrenciesCubit extends Cubit<CurrenciesState> {
     final ApiConsumer apiConsumer = DioConsumer(dio: Dio());
     final CurrenciesRemoteDataSource remoteDataSource =
         CurrenciesRemoteDataSourceImpl(apiConsumer: apiConsumer);
+    final CurrenciesLocalDataSource localDataSource =
+        CurrenciesLocalDataSourceImpl(databaseHelper: DatabaseHelper.instance);
     final NetworkInfo networkInfo = NetworkInfoImpl(DataConnectionChecker());
     final CurrenciesRepositoryImpl repository = CurrenciesRepositoryImpl(
       remoteDataSource: remoteDataSource,
+      localDataSource: localDataSource,
       networkInfo: networkInfo,
     );
     final GetCurrenciesUseCase getCurrenciesUseCase = GetCurrenciesUseCase(

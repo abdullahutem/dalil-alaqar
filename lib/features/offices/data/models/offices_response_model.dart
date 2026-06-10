@@ -21,6 +21,18 @@ class OfficesResponseModel extends OfficesResponseEntity {
       meta: MetaModel.fromJson(json['meta'] as Map<String, dynamic>? ?? {}),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'success': success,
+      'message': message,
+      'data': data.map((office) {
+        final officeModel = office as OfficeModel;
+        return officeModel.toJson();
+      }).toList(),
+      'meta': (meta as MetaModel).toJson(),
+    };
+  }
 }
 
 class MetaModel extends MetaEntity {
@@ -38,5 +50,14 @@ class MetaModel extends MetaEntity {
       perPage: (json['per_page'] as int?) ?? 20,
       total: (json['total'] as int?) ?? 0,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'current_page': currentPage,
+      'last_page': lastPage,
+      'per_page': perPage,
+      'total': total,
+    };
   }
 }

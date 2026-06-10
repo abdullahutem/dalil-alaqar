@@ -30,6 +30,18 @@ class PropertyImageDetailsModel extends PropertyImageEntity {
       updatedAt: json['updated_at'] as String?,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'property_id': propertyId,
+      'image_path': imagePath,
+      'is_primary': isPrimary,
+      'order': order,
+      'created_at': createdAt,
+      'updated_at': updatedAt,
+    };
+  }
 }
 
 class PropertyTypeModel extends PropertyTypeEntity {
@@ -42,6 +54,10 @@ class PropertyTypeModel extends PropertyTypeEntity {
       icon: json['icon'] as String?,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {'id': id, 'name': name, 'icon': icon};
+  }
 }
 
 class OfferTypeModel extends OfferTypeEntity {
@@ -49,6 +65,10 @@ class OfferTypeModel extends OfferTypeEntity {
 
   factory OfferTypeModel.fromJson(Map<String, dynamic> json) {
     return OfferTypeModel(id: json['id'] as int, name: json['name'] as String);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'id': id, 'name': name};
   }
 }
 
@@ -61,6 +81,10 @@ class PropertyGovernorateModel extends PropertyGovernorateEntity {
       nameAr: json['name_ar'] as String,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {'id': id, 'name_ar': nameAr};
+  }
 }
 
 class PropertyDistrictModel extends PropertyDistrictEntity {
@@ -72,6 +96,10 @@ class PropertyDistrictModel extends PropertyDistrictEntity {
       nameAr: json['name_ar'] as String,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {'id': id, 'name_ar': nameAr};
+  }
 }
 
 class PropertyNeighborhoodModel extends PropertyNeighborhoodEntity {
@@ -82,6 +110,10 @@ class PropertyNeighborhoodModel extends PropertyNeighborhoodEntity {
       id: json['id'] as int,
       nameAr: json['name_ar'] as String,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'id': id, 'name_ar': nameAr};
   }
 }
 
@@ -100,6 +132,10 @@ class PropertyCurrencyModel extends PropertyCurrencyEntity {
       code: json['code'] as String? ?? '',
       symbol: json['symbol'] as String? ?? '',
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'id': id, 'name': name, 'code': code, 'symbol': symbol};
   }
 }
 
@@ -204,5 +240,53 @@ class PropertyDetailsModel extends PropertyDetailsEntity {
       // Use the first image marked as primary from the images list
       primaryImage: null,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'office_id': officeId,
+      'property_type_id': propertyTypeId,
+      'offer_type_id': offerTypeId,
+      'title': title,
+      'description': description,
+      'reference_number': referenceNumber,
+      'price': price,
+      'currency_id': currencyId,
+      'currency': currency != null
+          ? (currency as PropertyCurrencyModel).toJson()
+          : null,
+      'price_negotiable': priceNegotiable,
+      'governorate_id': governorateId,
+      'district_id': districtId,
+      'neighborhood_id': neighborhoodId,
+      'address': address,
+      'latitude': latitude,
+      'longitude': longitude,
+      'status': status,
+      'views_count': viewsCount,
+      'published_at': publishedAt,
+      'created_at': createdAt,
+      'updated_at': updatedAt,
+      'property_type': propertyType != null
+          ? (propertyType as PropertyTypeModel).toJson()
+          : null,
+      'offer_type': offerType != null
+          ? (offerType as OfferTypeModel).toJson()
+          : null,
+      'governorate': governorate != null
+          ? (governorate as PropertyGovernorateModel).toJson()
+          : null,
+      'district': district != null
+          ? (district as PropertyDistrictModel).toJson()
+          : null,
+      'neighborhood': neighborhood != null
+          ? (neighborhood as PropertyNeighborhoodModel).toJson()
+          : null,
+      'images': images
+          .map((e) => (e as PropertyImageDetailsModel).toJson())
+          .toList(),
+      'primary_image': primaryImage,
+    };
   }
 }

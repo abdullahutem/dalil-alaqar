@@ -1,12 +1,15 @@
 import 'package:dalil_alaqar/core/connection/network_info.dart';
 import 'package:dalil_alaqar/core/databases/api/api_consumer.dart';
+import 'package:dalil_alaqar/core/databases/local/database_helper.dart';
 import 'package:dalil_alaqar/features/office_properties/domain/usecases/get_property_details_usecase.dart';
 import 'package:dalil_alaqar/features/office_properties/domain/usecases/update_property_status_usecase.dart';
 import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/databases/api/dio_consumer.dart';
+import '../../data/datasources/office_properties_list_local_data_source.dart';
 import '../../data/datasources/office_properties_remote_data_source.dart';
+import '../../data/datasources/office_property_details_local_data_source.dart';
 import '../../data/repositories/office_properties_repository_impl.dart';
 import '../../domain/usecases/get_office_properties_usecase.dart';
 import '../../domain/usecases/get_property_stats_usecase.dart';
@@ -45,9 +48,17 @@ class OfficePropertiesCubit extends Cubit<OfficePropertiesState> {
     final remoteDataSource = OfficePropertiesRemoteDataSourceImpl(
       apiConsumer: apiConsumer,
     );
+    final listLocalDataSource = OfficePropertiesListLocalDataSourceImpl(
+      databaseHelper: DatabaseHelper.instance,
+    );
+    final detailsLocalDataSource = OfficePropertyDetailsLocalDataSourceImpl(
+      databaseHelper: DatabaseHelper.instance,
+    );
     final NetworkInfo networkInfo = NetworkInfoImpl(DataConnectionChecker());
     final repository = OfficePropertiesRepositoryImpl(
       remoteDataSource: remoteDataSource,
+      listLocalDataSource: listLocalDataSource,
+      detailsLocalDataSource: detailsLocalDataSource,
       networkInfo: networkInfo,
     );
     final getPropertiesUseCase = GetOfficePropertiesUseCase(repository);

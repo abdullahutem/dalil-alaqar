@@ -33,7 +33,7 @@ class ProfileScreenContent extends StatelessWidget {
         title: const Text('الملف الشخصي'),
         centerTitle: true,
         iconTheme: IconThemeData(
-          color: isDark ? AppColors.darkIcon : AppColors.primary,
+          color: isDark ? AppColors.darkIcon : AppColors.white,
         ),
         actions: [
           BlocBuilder<ProfileCubit, ProfileState>(
@@ -42,7 +42,7 @@ class ProfileScreenContent extends StatelessWidget {
                 return IconButton(
                   icon: Icon(
                     Icons.edit,
-                    color: isDark ? AppColors.darkIcon : AppColors.primary,
+                    color: isDark ? AppColors.darkIcon : AppColors.white,
                   ),
                   onPressed: () async {
                     final result = await Navigator.of(context).push<bool>(
@@ -115,7 +115,6 @@ class ProfileScreenContent extends StatelessWidget {
             return SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(height: 20),
                   // Header Section
                   Container(
                     width: double.infinity,
@@ -314,9 +313,7 @@ class ProfileScreenContent extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: isDark
-                        ? AppColors.darkBackground
-                        : AppColors.primary,
+                    color: isDark ? AppColors.darkBackground : AppColors.white,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(

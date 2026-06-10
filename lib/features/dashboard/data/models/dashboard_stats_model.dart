@@ -26,6 +26,20 @@ class DashboardStatsModel extends DashboardStatsEntity {
           .toList(),
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'properties': (properties as PropertiesStatsModel).toJson(),
+    'employees': (employees as EmployeesStatsModel).toJson(),
+    'views': (views as ViewsStatsModel).toJson(),
+    'subscription': (subscription as SubscriptionInfoModel).toJson(),
+    'limits': (limits as LimitsInfoModel).toJson(),
+    'recent_properties': recentProperties
+        .map((p) => (p as RecentPropertyModel).toJson())
+        .toList(),
+    'top_viewed_properties': topViewedProperties
+        .map((p) => (p as TopViewedPropertyModel).toJson())
+        .toList(),
+  };
 }
 
 class PropertiesStatsModel extends PropertiesStats {
@@ -48,6 +62,15 @@ class PropertiesStatsModel extends PropertiesStats {
       thisMonth: json['this_month'] ?? 0,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'total': total,
+    'available': available,
+    'reserved': reserved,
+    'sold': sold,
+    'rented': rented,
+    'this_month': thisMonth,
+  };
 }
 
 class EmployeesStatsModel extends EmployeesStats {
@@ -64,6 +87,12 @@ class EmployeesStatsModel extends EmployeesStats {
       inactive: json['inactive'] ?? 0,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'total': total,
+    'active': active,
+    'inactive': inactive,
+  };
 }
 
 class ViewsStatsModel extends ViewsStats {
@@ -75,6 +104,8 @@ class ViewsStatsModel extends ViewsStats {
       thisMonth: json['this_month']?.toString() ?? '0',
     );
   }
+
+  Map<String, dynamic> toJson() => {'total': total, 'this_month': thisMonth};
 }
 
 class SubscriptionInfoModel extends SubscriptionInfo {
@@ -95,6 +126,14 @@ class SubscriptionInfoModel extends SubscriptionInfo {
       isExpiringSoon: json['is_expiring_soon'] ?? false,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'plan_name': planName,
+    'status': status,
+    'end_date': endDate,
+    'days_remaining': daysRemaining,
+    'is_expiring_soon': isExpiringSoon,
+  };
 }
 
 class LimitsInfoModel extends LimitsInfo {
@@ -111,6 +150,12 @@ class LimitsInfoModel extends LimitsInfo {
       canAddMore: json['can_add_more'] ?? false,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'max_properties': maxProperties,
+    'used_properties': usedProperties,
+    'can_add_more': canAddMore,
+  };
 }
 
 class RecentPropertyModel extends RecentPropertyEntity {
@@ -139,6 +184,18 @@ class RecentPropertyModel extends RecentPropertyEntity {
       createdAt: json['created_at'] ?? '',
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'title': title,
+    'price': price,
+    'status': status,
+    'property_type': propertyType,
+    'offer_type': offerType,
+    'governorate': governorate,
+    'views_count': viewsCount,
+    'created_at': createdAt,
+  };
 }
 
 class TopViewedPropertyModel extends TopViewedPropertyEntity {
@@ -159,4 +216,12 @@ class TopViewedPropertyModel extends TopViewedPropertyEntity {
       viewsCount: json['views_count'] ?? 0,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'title': title,
+    'property_type': propertyType,
+    'offer_type': offerType,
+    'views_count': viewsCount,
+  };
 }

@@ -170,14 +170,6 @@ class PropertyCardCompact extends StatelessWidget {
                               color: AppColors.primary,
                             ),
                           ),
-                          if (property.priceNegotiable)
-                            Text(
-                              'قابل للتفاوض',
-                              style: TextStyle(
-                                fontSize: 11,
-                                color: Colors.grey[500],
-                              ),
-                            ),
                         ],
                       ),
                       Row(

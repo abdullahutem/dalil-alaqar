@@ -1,6 +1,8 @@
 import 'package:dalil_alaqar/core/connection/network_info.dart';
 import 'package:dalil_alaqar/core/databases/api/api_consumer.dart';
 import 'package:dalil_alaqar/core/databases/api/dio_consumer.dart';
+import 'package:dalil_alaqar/core/databases/local/database_helper.dart';
+import 'package:dalil_alaqar/features/promotions/data/datasources/promotions_local_data_source.dart';
 import 'package:dalil_alaqar/features/promotions/data/datasources/promotions_remote_data_source.dart';
 import 'package:dalil_alaqar/features/promotions/data/repositories/promotions_repository_impl.dart';
 import 'package:dalil_alaqar/features/promotions/domain/usecases/get_promotions_usecase.dart';
@@ -23,8 +25,12 @@ class PromotionsCubit extends Cubit<PromotionsState> {
     final remoteDataSource = PromotionsRemoteDataSourceImpl(
       apiConsumer: apiConsumer,
     );
+    final localDataSource = PromotionsLocalDataSourceImpl(
+      databaseHelper: DatabaseHelper.instance,
+    );
     final repository = PromotionsRepositoryImpl(
       remoteDataSource: remoteDataSource,
+      localDataSource: localDataSource,
       networkInfo: networkInfo,
     );
     return PromotionsCubit(

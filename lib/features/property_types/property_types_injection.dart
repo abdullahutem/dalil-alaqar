@@ -7,6 +7,7 @@
 
 /*
 import 'package:get_it/get_it.dart';
+import 'package:dalil_alaqar/features/property_types/data/datasources/property_types_local_data_source.dart';
 import 'package:dalil_alaqar/features/property_types/data/datasources/property_types_remote_data_source.dart';
 import 'package:dalil_alaqar/features/property_types/data/repositories/property_types_repository_impl.dart';
 import 'package:dalil_alaqar/features/property_types/domain/repositories/property_types_repository.dart';
@@ -16,15 +17,20 @@ import 'package:dalil_alaqar/features/property_types/presentation/cubit/property
 final sl = GetIt.instance;
 
 void setupPropertyTypesInjection() {
-  // Data Source
+  // Data Sources
   sl.registerLazySingleton<PropertyTypesRemoteDataSource>(
     () => PropertyTypesRemoteDataSourceImpl(apiConsumer: sl()),
+  );
+  
+  sl.registerLazySingleton<PropertyTypesLocalDataSource>(
+    () => PropertyTypesLocalDataSourceImpl(databaseHelper: sl()),
   );
 
   // Repository
   sl.registerLazySingleton<PropertyTypesRepository>(
     () => PropertyTypesRepositoryImpl(
       remoteDataSource: sl(),
+      localDataSource: sl(),
       networkInfo: sl(),
     ),
   );
@@ -53,9 +59,15 @@ MultiProvider(
         apiConsumer: context.read<ApiConsumer>(),
       ),
     ),
+    Provider<PropertyTypesLocalDataSource>(
+      create: (context) => PropertyTypesLocalDataSourceImpl(
+        databaseHelper: context.read<DatabaseHelper>(),
+      ),
+    ),
     Provider<PropertyTypesRepository>(
       create: (context) => PropertyTypesRepositoryImpl(
         remoteDataSource: context.read<PropertyTypesRemoteDataSource>(),
+        localDataSource: context.read<PropertyTypesLocalDataSource>(),
         networkInfo: context.read<NetworkInfo>(),
       ),
     ),

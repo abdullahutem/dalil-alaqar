@@ -1,5 +1,8 @@
 import 'package:dalil_alaqar/core/connection/network_info.dart';
 import 'package:dalil_alaqar/core/databases/api/api_consumer.dart';
+import 'package:dalil_alaqar/core/databases/local/database_helper.dart';
+import 'package:dalil_alaqar/features/office_properties/data/datasources/office_properties_list_local_data_source.dart';
+import 'package:dalil_alaqar/features/office_properties/data/datasources/office_property_details_local_data_source.dart';
 import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,9 +30,18 @@ class PropertyDetailsCubit extends Cubit<PropertyDetailsState> {
     final remoteDataSource = OfficePropertiesRemoteDataSourceImpl(
       apiConsumer: apiConsumer,
     );
+    final listLocalDataSource = OfficePropertiesListLocalDataSourceImpl(
+      databaseHelper: DatabaseHelper.instance,
+    );
+    final detailsLocalDataSource = OfficePropertyDetailsLocalDataSourceImpl(
+      databaseHelper: DatabaseHelper.instance,
+    );
     final NetworkInfo networkInfo = NetworkInfoImpl(DataConnectionChecker());
+
     final repository = OfficePropertiesRepositoryImpl(
       remoteDataSource: remoteDataSource,
+      listLocalDataSource: listLocalDataSource,
+      detailsLocalDataSource: detailsLocalDataSource,
       networkInfo: networkInfo,
     );
     final getDetailsUseCase = GetPropertyDetailsUseCase(repository);

@@ -35,4 +35,18 @@ class OfficePropertiesResponseModel extends OfficePropertiesResponseEntity {
       total: meta?['total'] as int? ?? dataList.length,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'data': properties
+          .map((e) => (e as OfficePropertyModel).toJson())
+          .toList(),
+      'meta': {
+        'current_page': currentPage,
+        'last_page': lastPage,
+        'per_page': perPage,
+        'total': total,
+      },
+    };
+  }
 }

@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dalil_alaqar/core/connection/network_info.dart';
 import 'package:dalil_alaqar/core/databases/api/api_consumer.dart';
 import 'package:dalil_alaqar/core/databases/api/dio_consumer.dart';
+import 'package:dalil_alaqar/core/databases/local/database_helper.dart';
+import 'package:dalil_alaqar/features/districts/data/datasources/districts_local_data_source.dart';
 import 'package:dalil_alaqar/features/districts/data/datasources/districts_remote_data_source.dart';
 import 'package:dalil_alaqar/features/districts/data/repositories/districts_repository_impl.dart';
 import 'package:dalil_alaqar/features/districts/domain/usecases/get_districts_by_governorate_usecase.dart';
@@ -19,9 +21,12 @@ class DistrictsCubit extends Cubit<DistrictsState> {
     final ApiConsumer apiConsumer = DioConsumer(dio: Dio());
     final DistrictsRemoteDataSource remoteDataSource =
         DistrictsRemoteDataSourceImpl(apiConsumer: apiConsumer);
+    final DistrictsLocalDataSource localDataSource =
+        DistrictsLocalDataSourceImpl(databaseHelper: DatabaseHelper.instance);
     final NetworkInfo networkInfo = NetworkInfoImpl(DataConnectionChecker());
     final DistrictsRepositoryImpl repository = DistrictsRepositoryImpl(
       remoteDataSource: remoteDataSource,
+      localDataSource: localDataSource,
       networkInfo: networkInfo,
     );
     final GetDistrictsByGovernorateUseCase getDistrictsByGovernorateUseCase =

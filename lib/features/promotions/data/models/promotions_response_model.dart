@@ -20,4 +20,10 @@ class PromotionsResponseModel extends PromotionsResponseEntity {
           [],
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'success': success,
+    'message': message,
+    'data': data.map((promo) => (promo as PromotionModel).toJson()).toList(),
+  };
 }

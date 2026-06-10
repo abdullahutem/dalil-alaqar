@@ -21,4 +21,12 @@ class PropertyDetailsResponseModel extends PropertyDetailsResponseEntity {
       data: PropertyDetailsModel.fromJson(dataJson as Map<String, dynamic>),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'success': success,
+      'message': message,
+      'data': (data as PropertyDetailsModel).toJson(),
+    };
+  }
 }

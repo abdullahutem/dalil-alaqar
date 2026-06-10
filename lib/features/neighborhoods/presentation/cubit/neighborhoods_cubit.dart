@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dalil_alaqar/core/connection/network_info.dart';
 import 'package:dalil_alaqar/core/databases/api/api_consumer.dart';
 import 'package:dalil_alaqar/core/databases/api/dio_consumer.dart';
+import 'package:dalil_alaqar/core/databases/local/database_helper.dart';
+import 'package:dalil_alaqar/features/neighborhoods/data/datasources/neighborhoods_local_data_source.dart';
 import 'package:dalil_alaqar/features/neighborhoods/data/datasources/neighborhoods_remote_data_source.dart';
 import 'package:dalil_alaqar/features/neighborhoods/data/repositories/neighborhoods_repository_impl.dart';
 import 'package:dalil_alaqar/features/neighborhoods/domain/usecases/get_neighborhoods_by_district_usecase.dart';
@@ -19,9 +21,14 @@ class NeighborhoodsCubit extends Cubit<NeighborhoodsState> {
     final ApiConsumer apiConsumer = DioConsumer(dio: Dio());
     final NeighborhoodsRemoteDataSource remoteDataSource =
         NeighborhoodsRemoteDataSourceImpl(apiConsumer: apiConsumer);
+    final NeighborhoodsLocalDataSource localDataSource =
+        NeighborhoodsLocalDataSourceImpl(
+          databaseHelper: DatabaseHelper.instance,
+        );
     final NetworkInfo networkInfo = NetworkInfoImpl(DataConnectionChecker());
     final NeighborhoodsRepositoryImpl repository = NeighborhoodsRepositoryImpl(
       remoteDataSource: remoteDataSource,
+      localDataSource: localDataSource,
       networkInfo: networkInfo,
     );
     final GetNeighborhoodsByDistrictUseCase getNeighborhoodsByDistrictUseCase =

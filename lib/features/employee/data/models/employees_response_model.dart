@@ -24,4 +24,14 @@ class EmployeesResponseModel extends EmployeesResponseEntity {
       total: data['total'] as int,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'data': {
+      'data': employees.map((e) => (e as EmployeeModel).toJson()).toList(),
+      'current_page': currentPage,
+      'last_page': lastPage,
+      'per_page': perPage,
+      'total': total,
+    },
+  };
 }

@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dalil_alaqar/core/connection/network_info.dart';
 import 'package:dalil_alaqar/core/databases/api/api_consumer.dart';
 import 'package:dalil_alaqar/core/databases/api/dio_consumer.dart';
+import 'package:dalil_alaqar/core/databases/local/database_helper.dart';
+import 'package:dalil_alaqar/features/governorates/data/datasources/governorates_local_data_source.dart';
 import 'package:dalil_alaqar/features/governorates/data/datasources/governorates_remote_data_source.dart';
 import 'package:dalil_alaqar/features/governorates/data/repositories/governorates_repository_impl.dart';
 import 'package:dalil_alaqar/features/governorates/domain/usecases/get_governorates_usecase.dart';
@@ -19,9 +21,14 @@ class GovernoratesCubit extends Cubit<GovernoratesState> {
     final ApiConsumer apiConsumer = DioConsumer(dio: Dio());
     final GovernoratesRemoteDataSource remoteDataSource =
         GovernoratesRemoteDataSourceImpl(apiConsumer: apiConsumer);
+    final GovernoratesLocalDataSource localDataSource =
+        GovernoratesLocalDataSourceImpl(
+          databaseHelper: DatabaseHelper.instance,
+        );
     final NetworkInfo networkInfo = NetworkInfoImpl(DataConnectionChecker());
     final GovernoratesRepositoryImpl repository = GovernoratesRepositoryImpl(
       remoteDataSource: remoteDataSource,
+      localDataSource: localDataSource,
       networkInfo: networkInfo,
     );
     final GetGovernoratesUseCase getGovernoratesUseCase =
