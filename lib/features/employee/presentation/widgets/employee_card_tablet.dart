@@ -28,9 +28,9 @@ class EmployeeCardTablet extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+        child:  Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
             Row(
               children: [
                 _buildAvatar(context),
@@ -48,8 +48,9 @@ class EmployeeCardTablet extends StatelessWidget {
             const SizedBox(height: 8),
             _buildOfficeRow(context),
           ],
+          ),
         ),
-      ),
+      
     );
   }
 

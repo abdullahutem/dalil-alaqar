@@ -58,8 +58,8 @@ class _PropertyTabletViewState extends State<_PropertyTabletView> {
     return PriceFormatter.formatWithSeparators(price, locale: 'ar');
   }
 
-  String _getCurrencySymbol() {
-    return widget.property.currency?.symbol ?? 'ريال';
+  String _getCurrencySymbol(PropertyDetailsEntity property) {
+    return property.currency?.symbol ?? 'ريال';
   }
 
   @override
@@ -271,13 +271,17 @@ class _PropertyTabletViewState extends State<_PropertyTabletView> {
                               crossAxisAlignment: CrossAxisAlignment.baseline,
                               textBaseline: TextBaseline.alphabetic,
                               children: [
-                                Text(
-                                  '${_formatPrice(p.price)} ${_getCurrencySymbol()}',
-                                  style: const TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w700,
-                                    color: Color(0xFF1D9E75),
-                                    letterSpacing: -0.5,
+                                Expanded(
+                                  child: Text(
+                                    '${_formatPrice(p.price)} ${_getCurrencySymbol(p)}',
+                                    style: const TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w700,
+                                      color: Color(0xFF1D9E75),
+                                      letterSpacing: -0.5,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
                                 const SizedBox(width: 8),
@@ -318,6 +322,7 @@ class _PropertyTabletViewState extends State<_PropertyTabletView> {
                       // ── Description ─────────────────────────────────────────
                       if (p.description.isNotEmpty)
                         Container(
+                          width: double.infinity,
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
                             color: surface,

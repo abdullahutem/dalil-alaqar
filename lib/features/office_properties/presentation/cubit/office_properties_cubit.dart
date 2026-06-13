@@ -129,6 +129,7 @@ class OfficePropertiesCubit extends Cubit<OfficePropertiesState> {
   }
 
   Future<void> getPropertyStats() async {
+    if (isClosed) return;
     final currentState = state;
     if (currentState is OfficePropertiesSuccess) {
       emit(currentState.copyWith(isLoadingStats: true));

@@ -87,9 +87,9 @@ class _EmployeesTabletLayoutState extends State<EmployeesTabletLayout> {
             crossAxisCount: 2,
             crossAxisSpacing: 16,
             mainAxisSpacing: 16,
-            childAspectRatio: 2.4,
+            childAspectRatio: 2.0,
           ),
-          itemCount: 6,
+          itemCount: 12,
           itemBuilder: (_, __) => const EmployeesSkeleton(isTablet: true),
         ),
       ),
@@ -115,7 +115,7 @@ class _EmployeesTabletLayoutState extends State<EmployeesTabletLayout> {
                   crossAxisCount: 2,
                   crossAxisSpacing: 16,
                   mainAxisSpacing: 16,
-                  childAspectRatio: 2.4,
+                  childAspectRatio: 1.7,
                 ),
                 delegate: SliverChildBuilderDelegate(
                   (_, index) => EmployeeCardTablet(

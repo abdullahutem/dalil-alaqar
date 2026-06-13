@@ -223,7 +223,7 @@ class _PropertyViewState extends State<_PropertyView> {
                               Text(
                                 '${_formatPrice(p.price)} ${_getCurrencySymbol(p)}',
                                 style: const TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.w700,
                                   color: Color(0xFF1D9E75),
                                   letterSpacing: -0.5,

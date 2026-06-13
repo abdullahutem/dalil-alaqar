@@ -24,9 +24,10 @@ class PromotionCardTablet extends StatelessWidget {
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+          child: IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
               // Image Section (Left)
               _buildImageSection(context, typeColor, isDark),
 
@@ -125,6 +126,7 @@ class PromotionCardTablet extends StatelessWidget {
               ),
             ],
           ),
+          ),
         ),
       ),
     );
@@ -138,6 +140,7 @@ class PromotionCardTablet extends StatelessWidget {
     if (promotion.image != null && promotion.image!.isNotEmpty) {
       return SizedBox(
         width: 280,
+         height: double.infinity,
         child: CachedNetworkImage(
           imageUrl: promotion.image!,
           height: double.infinity,
@@ -152,6 +155,7 @@ class PromotionCardTablet extends StatelessWidget {
   Widget _buildIconSection(BuildContext context, Color typeColor) {
     return Container(
       width: 280,
+ height: double.infinity,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
