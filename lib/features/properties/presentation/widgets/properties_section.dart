@@ -80,12 +80,14 @@ class PropertiesSection extends StatelessWidget {
           BlocBuilder<PropertiesCubit, PropertiesState>(
             builder: (context, state) {
               if (state is PropertiesLoading) {
-                return _PropertiesListLoading(isTablet: isTablet);
+                return _PropertiesListLoading(
+                  isDark: isDark,
+                  isTablet: isTablet,
+                );
               }
 
               if (state is PropertiesError) {
                 debugPrint("===========================${state.message}");
-
                 return Container(
                   height: isTablet ? 320 : 280,
                   margin: EdgeInsets.symmetric(horizontal: isTablet ? 24 : 16),
@@ -231,13 +233,13 @@ class PropertiesSection extends StatelessWidget {
 // ─────────────────────────────────────────────────────────────────────────────
 
 class _PropertiesListLoading extends StatelessWidget {
+  final bool isDark;
   final bool isTablet;
 
-  const _PropertiesListLoading({required this.isTablet});
+  const _PropertiesListLoading({required this.isDark, required this.isTablet});
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final shimmerBase = isDark
         ? const Color(0xFF2C2C2E)
         : const Color(0xFFE0E0E0);
@@ -250,11 +252,12 @@ class _PropertiesListLoading extends StatelessWidget {
         // Properties Cards Skeleton
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          padding: EdgeInsets.symmetric(horizontal: isTablet ? 24 : 16),
+          padding: EdgeInsets.symmetric(horizontal: 16),
           child: Row(
             children: List.generate(
               3,
               (index) => _PropertyCardSkeleton(
+                isDark: isDark,
                 shimmerBase: shimmerBase,
                 shimmerHighlight: shimmerHighlight,
               ),
@@ -264,10 +267,10 @@ class _PropertiesListLoading extends StatelessWidget {
         const SizedBox(height: 16),
         // View All Button Skeleton
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: isTablet ? 24 : 16),
+          padding: EdgeInsets.symmetric(horizontal: 16),
           child: _ShimmerBox(
             width: double.infinity,
-            height: isTablet ? 48 : 40,
+            height: 40,
             radius: 8,
             base: shimmerBase,
             highlight: shimmerHighlight,
@@ -278,14 +281,12 @@ class _PropertiesListLoading extends StatelessWidget {
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Property Card Skeleton Widget
-// ─────────────────────────────────────────────────────────────────────────────
-
 class _PropertyCardSkeleton extends StatelessWidget {
+  final bool isDark;
   final Color shimmerBase, shimmerHighlight;
 
   const _PropertyCardSkeleton({
+    required this.isDark,
     required this.shimmerBase,
     required this.shimmerHighlight,
   });
@@ -296,7 +297,7 @@ class _PropertyCardSkeleton extends StatelessWidget {
       width: 280,
       margin: const EdgeInsets.only(left: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? Colors.grey[800] : Colors.white,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(

@@ -35,22 +35,22 @@ class PropertyModel extends PropertyEntity {
 
   factory PropertyModel.fromJson(Map<String, dynamic> json) {
     return PropertyModel(
-      id: json['id'] as int,
-      officeId: json['office_id'] as int,
-      propertyTypeId: json['property_type_id'] as int,
-      offerTypeId: json['offer_type_id'] as int,
+      id: json['id'] as int? ?? 0,
+      officeId: json['office_id'] as int? ?? 0,
+      propertyTypeId: json['property_type_id'] as int? ?? 0,
+      offerTypeId: json['offer_type_id'] as int? ?? 0,
       title: json['title'] as String? ?? '',
       description: json['description'] as String? ?? '',
       referenceNumber: json['reference_number'] as String? ?? '',
-      price: json['price'] as String? ?? '0',
+      price: json['price']?.toString() ?? '0',
       currencyId: json['currency_id'] as int?,
       priceNegotiable: json['price_negotiable'] as bool? ?? false,
-      governorateId: json['governorate_id'] as int,
-      districtId: json['district_id'] as int,
-      neighborhoodId: json['neighborhood_id'] as int,
+      governorateId: json['governorate_id'] as int? ?? 0,
+      districtId: json['district_id'] as int? ?? 0,
+      neighborhoodId: json['neighborhood_id'] as int? ?? 0,
       address: json['address'] as String? ?? '',
-      latitude: json['latitude'] as String? ?? '0',
-      longitude: json['longitude'] as String? ?? '0',
+      latitude: json['latitude']?.toString() ?? '0',
+      longitude: json['longitude']?.toString() ?? '0',
       status: json['status'] as String? ?? 'active',
       viewsCount: json['views_count'] as int? ?? 0,
       publishedAt: json['published_at'] as String? ?? '',
@@ -181,7 +181,7 @@ class PropertyOfficeModel extends PropertyOffice {
 
   factory PropertyOfficeModel.fromJson(Map<String, dynamic> json) {
     return PropertyOfficeModel(
-      id: json['id'] as int,
+      id: json['id'] as int? ?? 0,
       name: json['name'] as String? ?? '',
       slug: json['slug'] as String? ?? '',
     );
@@ -197,7 +197,7 @@ class PropertyTypeModel extends PropertyType {
 
   factory PropertyTypeModel.fromJson(Map<String, dynamic> json) {
     return PropertyTypeModel(
-      id: json['id'] as int,
+      id: json['id'] as int? ?? 0,
       name: json['name'] as String? ?? '',
     );
   }
@@ -212,7 +212,7 @@ class OfferTypeModel extends OfferType {
 
   factory OfferTypeModel.fromJson(Map<String, dynamic> json) {
     return OfferTypeModel(
-      id: json['id'] as int,
+      id: json['id'] as int? ?? 0,
       name: json['name'] as String? ?? '',
     );
   }
@@ -227,7 +227,7 @@ class GovernorateModel extends Governorate {
 
   factory GovernorateModel.fromJson(Map<String, dynamic> json) {
     return GovernorateModel(
-      id: json['id'] as int,
+      id: json['id'] as int? ?? 0,
       nameAr: json['name_ar'] as String? ?? '',
     );
   }
@@ -242,7 +242,7 @@ class DistrictModel extends District {
 
   factory DistrictModel.fromJson(Map<String, dynamic> json) {
     return DistrictModel(
-      id: json['id'] as int,
+      id: json['id'] as int? ?? 0,
       nameAr: json['name_ar'] as String? ?? '',
     );
   }
@@ -257,7 +257,7 @@ class NeighborhoodModel extends Neighborhood {
 
   factory NeighborhoodModel.fromJson(Map<String, dynamic> json) {
     return NeighborhoodModel(
-      id: json['id'] as int,
+      id: json['id'] as int? ?? 0,
       nameAr: json['name_ar'] as String? ?? '',
     );
   }
@@ -277,7 +277,7 @@ class PropertyCurrencyModel extends PropertyCurrency {
 
   factory PropertyCurrencyModel.fromJson(Map<String, dynamic> json) {
     return PropertyCurrencyModel(
-      id: json['id'] as int,
+      id: json['id'] as int? ?? 0,
       name: json['name'] as String? ?? '',
       code: json['code'] as String? ?? '',
       symbol: json['symbol'] as String? ?? '',

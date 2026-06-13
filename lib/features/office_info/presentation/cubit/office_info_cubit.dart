@@ -49,8 +49,10 @@ class OfficeInfoCubit extends Cubit<OfficeInfoState> {
   }
 
   Future<void> getOfficeInfo() async {
+    if (isClosed) return;
     emit(const OfficeInfoLoading());
     final result = await getOfficeInfoUseCase();
+    if (isClosed) return;
     result.fold(
       (failure) => emit(OfficeInfoError(message: failure.errMessage)),
       (officeInfo) => emit(OfficeInfoSuccess(officeInfo: officeInfo)),
@@ -58,6 +60,7 @@ class OfficeInfoCubit extends Cubit<OfficeInfoState> {
   }
 
   Future<void> updateOfficeInfo(Map<String, dynamic> updateData) async {
+    if (isClosed) return;
     emit(const OfficeInfoUpdating());
     final result = await updateOfficeInfoUseCase(updateData);
     result.fold(
@@ -77,6 +80,7 @@ class OfficeInfoCubit extends Cubit<OfficeInfoState> {
   }
 
   Future<void> uploadOfficeLogo(String filePath) async {
+    if (isClosed) return;
     emit(const OfficeLogoUploading());
     final result = await uploadOfficeLogoUseCase(filePath);
     result.fold(

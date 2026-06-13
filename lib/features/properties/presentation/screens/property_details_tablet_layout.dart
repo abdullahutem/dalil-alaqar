@@ -606,14 +606,25 @@ class _PropertyTabletViewState extends State<_PropertyTabletView> {
 
   Future<void> _launchUrl(String url) async {
     final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    }
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
   }
 
   Future<void> _openMap(String latitude, String longitude) async {
-    final url =
-        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
-    await _launchUrl(url);
+    final lat = double.tryParse(latitude);
+    final lng = double.tryParse(longitude);
+    if (lat == null || lng == null || (lat == 0 && lng == 0)) return;
+
+    final googleMapsUri = Uri.parse(
+      'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude',
+    );
+    final geoUri = Uri.parse('geo:$latitude,$longitude?q=$latitude,$longitude');
+
+    final opened = await launchUrl(
+      googleMapsUri,
+      mode: LaunchMode.externalApplication,
+    );
+    if (!opened) {
+      await launchUrl(geoUri, mode: LaunchMode.externalApplication);
+    }
   }
 }
