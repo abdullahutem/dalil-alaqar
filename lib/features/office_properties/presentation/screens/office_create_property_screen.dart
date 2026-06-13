@@ -271,6 +271,44 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
     );
   }
 
+  Widget _buildDropdownSkeleton(bool isDark) {
+    return Container(
+      height: 56,
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.darkSurface : Colors.grey[100],
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: isDark ? Colors.grey.shade700 : Colors.grey.shade300,
+        ),
+      ),
+      child: Row(
+        children: [
+          const SizedBox(width: 12),
+          Container(
+            width: 24,
+            height: 24,
+            decoration: BoxDecoration(
+              color: Colors.grey.withValues(alpha: 0.3),
+              borderRadius: BorderRadius.circular(4),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Container(
+              height: 16,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.grey.withValues(alpha: 0.3),
+                borderRadius: BorderRadius.circular(4),
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+        ],
+      ),
+    );
+  }
+
   Widget _buildBasicInfoStep(bool isDark) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -315,7 +353,7 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
                     value == null ? 'الرجاء اختيار نوع العقار' : null,
               );
             }
-            return const Center(child: CircularProgressIndicator());
+return _buildDropdownSkeleton(isDark);
           },
         ),
 
@@ -351,7 +389,33 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
                     value == null ? 'الرجاء اختيار نوع العرض' : null,
               );
             }
-            return const Center(child: CircularProgressIndicator());
+            if (state is OfferTypesLoading) {
+              return _buildDropdownSkeleton(isDark);
+            }
+            if (state is OfferTypesError) {
+              return Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.red.shade50,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.red.shade200),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.error, color: Colors.red, size: 20),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        state.message,
+                        textAlign: TextAlign.right,
+                        style: const TextStyle(fontSize: 14, color: Colors.red),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }
+            return const SizedBox.shrink();
           },
         ),
 
@@ -487,7 +551,7 @@ class _CreatePropertyScreenState extends State<OfficeCreatePropertyScreen> {
               );
             }
             if (state is CurrenciesLoading) {
-              return const Center(child: CircularProgressIndicator());
+return _buildDropdownSkeleton(isDark);
             }
             if (state is CurrenciesError) {
               return Container(

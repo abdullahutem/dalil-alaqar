@@ -69,6 +69,8 @@ class PropertiesCubit extends Cubit<PropertiesState> {
     double? minPrice,
     double? maxPrice,
   }) async {
+    if (isClosed) return;
+
     if (refresh) {
       _currentPage = 1;
       _allProperties = [];
@@ -86,7 +88,9 @@ class PropertiesCubit extends Cubit<PropertiesState> {
 
     if (state is PropertiesLoading) return;
 
-    emit(PropertiesLoading());
+    if (!isClosed) {
+      emit(PropertiesLoading());
+    }
 
     final result = await getPropertiesUseCase(
       page: _currentPage,
@@ -100,19 +104,26 @@ class PropertiesCubit extends Cubit<PropertiesState> {
       maxPrice: _maxPrice,
     );
 
+    if (isClosed) return;
+
     result.fold(
       (failure) {
-        emit(PropertiesError(message: failure.errMessage));
+        if (!isClosed) {
+          emit(PropertiesError(message: failure.errMessage));
+        }
       },
       (response) {
-        _allProperties = response.properties;
-        _meta = response.meta;
-        emit(PropertiesSuccess(propertiesResponse: response));
+        if (!isClosed) {
+          _allProperties = response.properties;
+          _meta = response.meta;
+          emit(PropertiesSuccess(propertiesResponse: response));
+        }
       },
     );
   }
 
   Future<void> loadMore() async {
+    if (isClosed) return;
     if (_meta == null || _currentPage >= _meta!.lastPage) return;
 
     if (state is! PropertiesSuccess) return;
@@ -120,12 +131,14 @@ class PropertiesCubit extends Cubit<PropertiesState> {
     final currentState = state as PropertiesSuccess;
 
     // Show loading indicator for pagination
-    emit(
-      PropertiesSuccess(
-        propertiesResponse: currentState.propertiesResponse,
-        isLoadingMore: true,
-      ),
-    );
+    if (!isClosed) {
+      emit(
+        PropertiesSuccess(
+          propertiesResponse: currentState.propertiesResponse,
+          isLoadingMore: true,
+        ),
+      );
+    }
 
     _currentPage++;
 
@@ -141,36 +154,42 @@ class PropertiesCubit extends Cubit<PropertiesState> {
       maxPrice: _maxPrice,
     );
 
+    if (isClosed) return;
+
     result.fold(
       (failure) {
         _currentPage--; // Revert page increment on error
-        emit(
-          PropertiesLoadMoreError(
-            propertiesResponse: currentState.propertiesResponse,
-            message: failure.errMessage,
-          ),
-        );
-        // Restore previous state after showing error
-        Future.delayed(const Duration(seconds: 2), () {
-          if (!isClosed) {
-            emit(
-              PropertiesSuccess(
-                propertiesResponse: currentState.propertiesResponse,
-              ),
-            );
-          }
-        });
+        if (!isClosed) {
+          emit(
+            PropertiesLoadMoreError(
+              propertiesResponse: currentState.propertiesResponse,
+              message: failure.errMessage,
+            ),
+          );
+          // Restore previous state after showing error
+          Future.delayed(const Duration(seconds: 2), () {
+            if (!isClosed) {
+              emit(
+                PropertiesSuccess(
+                  propertiesResponse: currentState.propertiesResponse,
+                ),
+              );
+            }
+          });
+        }
       },
       (response) {
-        _allProperties.addAll(response.properties);
-        _meta = response.meta;
+        if (!isClosed) {
+          _allProperties.addAll(response.properties);
+          _meta = response.meta;
 
-        final updatedResponse = PropertiesResponseEntity(
-          properties: _allProperties,
-          meta: _meta!,
-        );
+          final updatedResponse = PropertiesResponseEntity(
+            properties: _allProperties,
+            meta: _meta!,
+          );
 
-        emit(PropertiesSuccess(propertiesResponse: updatedResponse));
+          emit(PropertiesSuccess(propertiesResponse: updatedResponse));
+        }
       },
     );
   }

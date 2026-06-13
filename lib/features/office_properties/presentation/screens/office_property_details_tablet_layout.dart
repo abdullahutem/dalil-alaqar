@@ -211,52 +211,55 @@ class _PropertyView extends StatelessWidget {
   }
 
   Widget _buildPriceCard(BuildContext context, ThemeData theme) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'السعر',
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              '${_formatPrice(property.price ?? 0)} ${_getCurrencySymbol()}',
-              style: const TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF1D9E75),
-              ),
-            ),
-            if (property.priceNegotiable) ...[
-              const SizedBox(height: 8),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 6,
+    return SizedBox(
+      width: double.infinity,
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'السعر',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
                 ),
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.primary.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(6),
-                  border: Border.all(
-                    color: theme.colorScheme.primary.withValues(alpha: 0.3),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                '${_formatPrice(property.price ?? 0)} ${_getCurrencySymbol()}',
+                style: const TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF1D9E75),
+                ),
+              ),
+              if (property.priceNegotiable) ...[
+                const SizedBox(height: 8),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.primary.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(
+                      color: theme.colorScheme.primary.withValues(alpha: 0.3),
+                    ),
+                  ),
+                  child: Text(
+                    'قابل للتفاوض',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: theme.colorScheme.primary,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
-                child: Text(
-                  'قابل للتفاوض',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: theme.colorScheme.primary,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );
@@ -365,24 +368,26 @@ class _PropertyView extends StatelessWidget {
   }
 
   Widget _buildDescriptionCard(BuildContext context, ThemeData theme) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'وصف العقار',
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
+    return SizedBox(
+width: double.infinity,      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'وصف العقار',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              property.description!,
-              style: theme.textTheme.bodyLarge?.copyWith(height: 1.6),
-            ),
-          ],
+              const SizedBox(height: 12),
+              Text(
+                property.description!,
+                style: theme.textTheme.bodyLarge?.copyWith(height: 1.6),
+              ),
+            ],
+          ),
         ),
       ),
     );

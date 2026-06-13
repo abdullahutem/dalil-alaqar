@@ -32,6 +32,7 @@ class OfferTypesCubit extends Cubit<OfferTypesState> {
   }
 
   Future<void> getOfferTypes() async {
+    if (isClosed) return;
     emit(OfferTypesLoading());
 
     final result = await getOfferTypesUseCase();

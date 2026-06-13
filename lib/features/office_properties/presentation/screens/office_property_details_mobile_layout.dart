@@ -1,7 +1,6 @@
 import 'package:dalil_alaqar/core/databases/api/end_points.dart';
 import 'package:dalil_alaqar/core/utils/price_formatter.dart';
 import 'package:dalil_alaqar/features/properties/presentation/widgets/mobile/property_loading_view.dart';
-import 'package:dalil_alaqar/features/properties/presentation/widgets/property_card_skeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/property_details_entity.dart';
@@ -224,7 +223,7 @@ class _PropertyView extends StatelessWidget {
                 Text(
                   '${_formatPrice(property.price ?? 0)} ${_getCurrencySymbol()}',
                   style: const TextStyle(
-                    fontSize: 24,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF1D9E75),
                   ),
