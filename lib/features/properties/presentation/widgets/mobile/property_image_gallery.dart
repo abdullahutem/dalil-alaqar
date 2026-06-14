@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dalil_alaqar/core/utils/image_cache_config.dart';
 import 'package:dalil_alaqar/features/properties/domain/entities/property_details_entity.dart';
 import 'package:flutter/material.dart';
 
@@ -53,37 +54,10 @@ class PropertyImageGallery extends StatelessWidget {
           itemBuilder: (ctx, i) => CachedNetworkImage(
             imageUrl: '$baseUrl${images[i].imagePath}',
             fit: BoxFit.cover,
-            placeholder: (context, url) => Container(
-              color: isDark
-                  ? Colors.white.withValues(alpha: 0.05)
-                  : Colors.black.withValues(alpha: 0.04),
-              child: Center(
-                child: Opacity(
-                  opacity: 0.15,
-                  child: ColorFiltered(
-                    colorFilter: const ColorFilter.mode(
-                      Colors.grey,
-                      BlendMode.srcIn,
-                    ),
-                    child: Image.asset("assets/images/logo.png", height: 80),
-                  ),
-                ),
-              ),
-            ),
-            errorWidget: (_, __, _) => Container(
-              color: isDark
-                  ? Colors.white.withValues(alpha: 0.05)
-                  : Colors.black.withValues(alpha: 0.04),
-              child: Center(
-                child: Opacity(
-                  opacity: 0.15,
-                  child: Image.asset(
-                    "assets/images/logo.png",
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
-            ),
+
+            placeholder: (context, url) =>
+                ImageCacheConfig.defaultPlaceholder(),
+            errorWidget: (_, __, ___) => ImageCacheConfig.defaultPlaceholder(),
           ),
         ),
 

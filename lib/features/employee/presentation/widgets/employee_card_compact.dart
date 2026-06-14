@@ -1,3 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dalil_alaqar/core/databases/api/end_points.dart';
+import 'package:dalil_alaqar/core/utils/image_cache_config.dart';
 import 'package:flutter/material.dart';
 import '../../domain/entities/employee_entity.dart';
 
@@ -73,10 +76,13 @@ class EmployeeCardCompact extends StatelessWidget {
       ),
       child: employee.avatar != null
           ? ClipOval(
-              child: Image.network(
-                employee.avatar!,
+              child: CachedNetworkImage(
+                imageUrl: "${EndPoints.kBaseImageUrl}${employee.avatar!}",
                 fit: BoxFit.cover,
-                errorBuilder: (_, __, _) => _defaultAvatarIcon(context),
+                placeholder: (context, url) =>
+                    ImageCacheConfig.defaultPlaceholder(),
+                errorWidget: (_, __, ___) =>
+                    ImageCacheConfig.defaultPlaceholder(),
               ),
             )
           : _defaultAvatarIcon(context),

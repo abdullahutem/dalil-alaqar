@@ -1,4 +1,6 @@
+import 'package:dalil_alaqar/core/databases/api/end_points.dart';
 import 'package:dalil_alaqar/core/theme/app_colors.dart';
+import 'package:dalil_alaqar/core/utils/image_cache_config.dart';
 import 'package:dalil_alaqar/features/offices/domain/entities/office_entity.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -16,74 +18,40 @@ class OfficeCardCompact extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 300,
-        margin: const EdgeInsets.only(left: 12, bottom: 4),
+        width: 260,
+        margin: const EdgeInsets.only(left: 16),
         decoration: BoxDecoration(
-          color: isDark ? AppColors.darkCard : AppColors.lightSurface,
+          color: isDark ? AppColors.darkSurface : Colors.white,
           borderRadius: BorderRadius.circular(8),
-
-          border: isDark
-              ? Border.all(color: AppColors.darkDivider, width: 0.5)
-              : null,
+          border: Border.all(
+            color: isDark ? Colors.white10 : Colors.black12,
+            width: 0.5,
+          ),
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8),
-          child: IntrinsicHeight(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // ── Accent bar (verified indicator) ──
-                // _AccentBar(isVerified: office.isVerified),
-
-                // ── Card content ──
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(14, 13, 14, 12),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _buildHeader(context, isDark),
-                        const SizedBox(height: 10),
-                        Divider(
-                          height: 1,
-                          thickness: 0.5,
-                          color: isDark
-                              ? AppColors.darkDivider
-                              : Colors.black.withValues(alpha: 0.06),
-                        ),
-                        const SizedBox(height: 10),
-                        _buildStats(context, isDark),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHeader(BuildContext context, bool isDark) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _LogoWidget(office: office, isDark: isDark),
-        const SizedBox(width: 10),
-        Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              // Name + verified badge
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Text(
+              // Image at the top
+              AspectRatio(
+                aspectRatio: 16 / 10,
+                child: _LogoWidget(office: office, isDark: isDark),
+              ),
+
+              // Content below
+              Padding(
+                padding: const EdgeInsets.fromLTRB(14, 12, 14, 14),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Office name
+                    Text(
                       office.name,
                       style: TextStyle(
-                        fontSize: 13.5,
+                        fontSize: 14,
                         fontWeight: FontWeight.w700,
                         color: isDark
                             ? AppColors.darkText
@@ -94,16 +62,31 @@ class OfficeCardCompact extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                  ),
-                ],
+
+                    const SizedBox(height: 3),
+
+                    // Location
+                    _buildLocation(isDark),
+
+                    // Divider
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Divider(
+                        height: 0.5,
+                        thickness: 0.5,
+                        color: isDark ? Colors.white12 : Colors.black12,
+                      ),
+                    ),
+
+                    // Stats
+                    _buildStats(context, isDark),
+                  ],
+                ),
               ),
-              const SizedBox(height: 4),
-              // Location (governorate / district / address fallback)
-              _buildLocation(isDark),
             ],
           ),
         ),
-      ],
+      ),
     );
   }
 
@@ -115,24 +98,12 @@ class OfficeCardCompact extends StatelessWidget {
 
     return Row(
       children: [
-        Icon(
-          Icons.location_on_rounded,
-          size: 11,
-          color: isDark
-              ? AppColors.darkTextSecondary
-              : AppColors.lightTextSecondary,
-        ),
-        const SizedBox(width: 2),
+        Icon(Icons.location_on_outlined, size: 13, color: Colors.grey[500]),
+        const SizedBox(width: 5),
         Expanded(
           child: Text(
             locationText,
-            style: TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.w500,
-              color: isDark
-                  ? AppColors.darkTextSecondary
-                  : AppColors.lightTextSecondary,
-            ),
+            style: TextStyle(fontSize: 12, color: Colors.grey[500]),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -185,33 +156,7 @@ class OfficeCardCompact extends StatelessWidget {
 }
 
 // ─────────────────────────────────────────────
-//  Left accent bar
-// ─────────────────────────────────────────────
-// class _AccentBar extends StatelessWidget {
-//   final bool isVerified;
-//   const _AccentBar({required this.isVerified});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       width: 4,
-//       decoration: BoxDecoration(
-//         gradient: isVerified
-//             ? const LinearGradient(
-//                 begin: Alignment.topCenter,
-//                 end: Alignment.bottomCenter,
-
-//                 colors: [Color(0xFF0A2020)],
-//               )
-//             : null,
-//         color: isVerified ? null : Colors.transparent,
-//       ),
-//     );
-//   }
-// }
-
-// ─────────────────────────────────────────────
-//  Logo widget
+//  Logo widget (updated to full-width image)
 // ─────────────────────────────────────────────
 class _LogoWidget extends StatelessWidget {
   final OfficeEntity office;
@@ -221,30 +166,23 @@ class _LogoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 46,
-      height: 46,
+      width: double.infinity,
+      height: double.infinity,
       decoration: BoxDecoration(
         color: isDark
             ? AppColors.darkSurface
             : AppColors.primary.withValues(alpha: 0.06),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: isDark
-              ? AppColors.darkDivider
-              : Colors.black.withValues(alpha: 0.07),
-          width: 0.5,
-        ),
       ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(9.5),
-        child: office.logo != null
-            ? CachedNetworkImage(
-                imageUrl: office.logo!,
-                fit: BoxFit.cover,
-                errorWidget: (_, __, ___) => _Placeholder(isDark: isDark),
-              )
-            : _Placeholder(isDark: isDark),
-      ),
+      child: office.logo != null
+          ? CachedNetworkImage(
+              imageUrl: "${EndPoints.kBaseImageUrl}${office.logo!}",
+              fit: BoxFit.cover,
+              placeholder: (context, url) =>
+                  ImageCacheConfig.defaultPlaceholder(),
+              errorWidget: (_, __, ___) =>
+                  ImageCacheConfig.defaultPlaceholder(),
+            )
+          : ImageCacheConfig.defaultPlaceholder(),
     );
   }
 }
@@ -258,16 +196,12 @@ class _Placeholder extends StatelessWidget {
     return Center(
       child: Icon(
         Icons.business_rounded,
-        size: 22,
+        size: 48,
         color: isDark ? AppColors.darkPrimary : AppColors.primary,
       ),
     );
   }
 }
-
-// ─────────────────────────────────────────────
-//  Verified badge
-// ─────────────────────────────────────────────
 
 // ─────────────────────────────────────────────
 //  Stat chip

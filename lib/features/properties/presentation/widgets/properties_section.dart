@@ -180,41 +180,6 @@ class PropertiesSection extends StatelessWidget {
                         }).toList(),
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    // View All Button
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: isTablet ? 24 : 16,
-                      ),
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: OutlinedButton.icon(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const PropertiesScreen(),
-                              ),
-                            );
-                          },
-                          icon: const Icon(Icons.arrow_forward_ios),
-                          label: Text(
-                            'عرض جميع العقارات (${state.propertiesResponse.meta.total})',
-                            style: TextStyle(fontSize: isTablet ? 16 : 14),
-                          ),
-                          style: OutlinedButton.styleFrom(
-                            foregroundColor: AppColors.primary,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            side: BorderSide(color: AppColors.primary),
-                            padding: EdgeInsets.symmetric(
-                              vertical: isTablet ? 16 : 12,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
                   ],
                 );
               }

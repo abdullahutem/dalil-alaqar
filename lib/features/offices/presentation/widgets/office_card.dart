@@ -1,3 +1,5 @@
+import 'package:dalil_alaqar/core/databases/api/end_points.dart';
+import 'package:dalil_alaqar/core/utils/image_cache_config.dart';
 import 'package:dalil_alaqar/features/offices/domain/entities/office_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -11,6 +13,7 @@ class OfficeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return GestureDetector(
       onTap: onTap,
@@ -27,7 +30,7 @@ class OfficeCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  _buildLogo(context),
+                  _buildLogo(context, isDark),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Column(
@@ -80,7 +83,7 @@ class OfficeCard extends StatelessWidget {
     );
   }
 
-  Widget _buildLogo(BuildContext context) {
+  Widget _buildLogo(BuildContext context, bool isDark) {
     final theme = Theme.of(context);
     return Container(
       width: 56,
@@ -93,26 +96,15 @@ class OfficeCard extends StatelessWidget {
           ? ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: CachedNetworkImage(
-                imageUrl: office.logo!,
+                imageUrl: "${EndPoints.kBaseImageUrl}${office.logo!}",
                 fit: BoxFit.cover,
-                placeholder: (context, url) => Center(
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: theme.colorScheme.primary,
-                  ),
-                ),
-                errorWidget: (context, url, error) =>
-                    _buildLogoPlaceholder(context),
+                placeholder: (context, url) =>
+                    ImageCacheConfig.defaultPlaceholder(),
+                errorWidget: (_, __, ___) =>
+                    ImageCacheConfig.defaultPlaceholder(),
               ),
             )
-          : _buildLogoPlaceholder(context),
-    );
-  }
-
-  Widget _buildLogoPlaceholder(BuildContext context) {
-    final theme = Theme.of(context);
-    return Center(
-      child: Icon(Icons.business, color: theme.colorScheme.primary, size: 28),
+          : ImageCacheConfig.defaultPlaceholder(),
     );
   }
 

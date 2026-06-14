@@ -71,16 +71,39 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
                               width: 80,
                               height: 80,
                               fit: BoxFit.cover,
-                              placeholder: (context, url) => const Center(
-                                child: CircularProgressIndicator(
-                                  color: Colors.blue,
-                                  strokeWidth: 2,
+                              placeholder: (context, url) => Container(
+                                color: isDark
+                                    ? Colors.white.withValues(alpha: 0.05)
+                                    : Colors.black.withValues(alpha: 0.04),
+                                child: Center(
+                                  child: Opacity(
+                                    opacity: 0.15,
+                                    child: ColorFiltered(
+                                      colorFilter: const ColorFilter.mode(
+                                        Colors.grey,
+                                        BlendMode.srcIn,
+                                      ),
+                                      child: Image.asset(
+                                        "assets/images/logo.png",
+                                        height: 80,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
-                              errorWidget: (context, url, error) => const Icon(
-                                Icons.business,
-                                size: 50,
-                                color: Colors.blue,
+                              errorWidget: (_, __, _) => Container(
+                                color: isDark
+                                    ? Colors.white.withValues(alpha: 0.05)
+                                    : Colors.black.withValues(alpha: 0.04),
+                                child: Center(
+                                  child: Opacity(
+                                    opacity: 0.15,
+                                    child: Image.asset(
+                                      "assets/images/logo.png",
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ),

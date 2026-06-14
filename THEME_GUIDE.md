@@ -368,7 +368,7 @@ class PropertyCard extends StatelessWidget {
           // Image
           ClipRRect(
             borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
-            child: Image.network(property.imageUrl),
+            child: CachedNetworkImage(property.imageUrl),
           ),
           
           // Content

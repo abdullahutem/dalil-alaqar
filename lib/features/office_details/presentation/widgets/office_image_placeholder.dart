@@ -18,7 +18,13 @@ class OfficeImagePlaceholder extends StatelessWidget {
         ? Colors.white.withValues(alpha: 0.05)
         : Colors.black.withValues(alpha: 0.04),
     child: Center(
-      child: Icon(Icons.home_work_outlined, size: iconSize, color: muted),
+      child: Opacity(
+        opacity: 0.15,
+        child: ColorFiltered(
+          colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn),
+          child: Image.asset("assets/images/logo.png", height: 80),
+        ),
+      ),
     ),
   );
 }

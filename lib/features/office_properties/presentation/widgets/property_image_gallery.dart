@@ -1,3 +1,4 @@
+import 'package:dalil_alaqar/core/utils/image_cache_config.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,11 +60,11 @@ class _PropertyImageGalleryState extends State<PropertyImageGallery> {
                 child: CachedNetworkImage(
                   imageUrl: _buildUrl(images[index].imagePath),
                   fit: BoxFit.fill,
-                  placeholder: (_, __) => Container(
-                    color: Theme.of(context).cardColor,
-                    child: const Center(child: CircularProgressIndicator()),
-                  ),
-                  errorWidget: (_, __, ___) => _buildPlaceholder(context),
+
+                  placeholder: (context, url) =>
+                      ImageCacheConfig.defaultPlaceholder(),
+                  errorWidget: (_, __, ___) =>
+                      ImageCacheConfig.defaultPlaceholder(),
                 ),
               );
             },

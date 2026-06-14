@@ -1,3 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dalil_alaqar/core/databases/api/end_points.dart';
+import 'package:dalil_alaqar/core/utils/image_cache_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/office_info_entity.dart';
@@ -57,10 +60,14 @@ class OfficeInfoHeader extends StatelessWidget {
           ),
           child: officeInfo.logoUrl != null
               ? ClipOval(
-                  child: Image.network(
-                    officeInfo.logoUrl!,
+                  child: CachedNetworkImage(
+                    imageUrl:
+                        "${EndPoints.kBaseImageUrl}${officeInfo.logoUrl!}",
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => _defaultIcon(context, size),
+                    placeholder: (context, url) =>
+                        ImageCacheConfig.defaultPlaceholder(),
+                    errorWidget: (_, __, ___) =>
+                        ImageCacheConfig.defaultPlaceholder(),
                   ),
                 )
               : _defaultIcon(context, size),

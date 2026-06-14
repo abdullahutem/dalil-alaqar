@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dalil_alaqar/core/databases/api/end_points.dart';
 import 'package:dalil_alaqar/core/utils/image_cache_config.dart';
 import 'package:dalil_alaqar/core/utils/price_formatter.dart';
 import 'package:flutter/material.dart';
@@ -69,8 +70,9 @@ class OfficePropertyCard extends StatelessWidget {
           children: [
             imageUrl != null
                 ? CachedNetworkImage(
-                    imageUrl: imageUrl,
+                    imageUrl: "${EndPoints.kBaseImageUrl}${imageUrl}",
                     fit: BoxFit.cover,
+
                     placeholder: (context, url) =>
                         ImageCacheConfig.defaultPlaceholder(),
                     errorWidget: (_, __, ___) =>

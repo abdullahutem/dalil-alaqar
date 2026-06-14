@@ -83,7 +83,7 @@ class _OfficesSectionState extends State<OfficesSection> {
         ),
         const SizedBox(height: 8),
         SizedBox(
-          height: 130,
+          height: 280,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.only(right: 16),

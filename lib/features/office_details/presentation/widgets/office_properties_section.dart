@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dalil_alaqar/core/databases/api/end_points.dart';
 import 'package:flutter/material.dart';
 import 'package:dalil_alaqar/features/office_details/domain/entities/office_details_entity.dart';
 
@@ -78,14 +80,46 @@ class OfficePropertiesSection extends StatelessWidget {
                 bottomLeft: Radius.circular(8),
               ),
               child: property.primaryImage != null
-                  ? Image.network(
-                      property.primaryImage!,
+                  ? CachedNetworkImage(
+                      imageUrl:
+                          "${EndPoints.kBaseImageUrl}${property.primaryImage!}",
                       width: 100,
                       height: 100,
                       fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return _buildPlaceholderImage();
-                      },
+                      placeholder: (context, url) => Container(
+                        color: isDark
+                            ? Colors.white.withValues(alpha: 0.05)
+                            : Colors.black.withValues(alpha: 0.04),
+                        child: Center(
+                          child: Opacity(
+                            opacity: 0.15,
+                            child: ColorFiltered(
+                              colorFilter: const ColorFilter.mode(
+                                Colors.grey,
+                                BlendMode.srcIn,
+                              ),
+                              child: Image.asset(
+                                "assets/images/logo.png",
+                                height: 80,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      errorWidget: (_, __, _) => Container(
+                        color: isDark
+                            ? Colors.white.withValues(alpha: 0.05)
+                            : Colors.black.withValues(alpha: 0.04),
+                        child: Center(
+                          child: Opacity(
+                            opacity: 0.15,
+                            child: Image.asset(
+                              "assets/images/logo.png",
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                      ),
                     )
                   : _buildPlaceholderImage(),
             ),

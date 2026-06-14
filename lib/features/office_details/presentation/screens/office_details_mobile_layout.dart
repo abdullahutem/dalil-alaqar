@@ -309,7 +309,6 @@ class OfficeDetailsMobileLayout extends StatelessWidget {
                                   border: border,
                                   muted: muted,
                                   isDark: isDark,
-                                  baseImageUrl: EndPoints.kBaseImageUrl,
                                   onTap: () {
                                     Navigator.pushNamed(
                                       context,

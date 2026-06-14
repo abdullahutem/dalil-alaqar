@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dalil_alaqar/core/utils/image_cache_config.dart';
 import 'package:flutter/material.dart';
 import 'package:dalil_alaqar/core/databases/api/end_points.dart';
-import 'package:dalil_alaqar/core/theme/app_colors.dart';
 import 'package:dalil_alaqar/features/properties/domain/entities/property_details_entity.dart';
 
 class PropertyImageGallery extends StatefulWidget {
@@ -89,24 +89,11 @@ class _PropertyImageGalleryState extends State<PropertyImageGallery> {
               child: CachedNetworkImage(
                 imageUrl: _getImageUrl(image.imagePath),
                 fit: BoxFit.cover,
-                placeholder: (context, url) => Container(
-                  color: Theme.of(context).colorScheme.surface,
-                  child: const Center(
-                    child: CircularProgressIndicator(color: AppColors.primary),
-                  ),
-                ),
-                errorWidget: (context, url, error) => Container(
-                  color: Theme.of(context).colorScheme.surface,
-                  child: Center(
-                    child: Icon(
-                      Icons.broken_image,
-                      size: 64,
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.onSurface.withOpacity(0.3),
-                    ),
-                  ),
-                ),
+
+                placeholder: (context, url) =>
+                    ImageCacheConfig.defaultPlaceholder(),
+                errorWidget: (_, __, ___) =>
+                    ImageCacheConfig.defaultPlaceholder(),
               ),
             );
           },
@@ -271,16 +258,11 @@ class _FullScreenGalleryState extends State<_FullScreenGallery> {
               child: CachedNetworkImage(
                 imageUrl: _getImageUrl(image.imagePath),
                 fit: BoxFit.contain,
-                placeholder: (context, url) => const Center(
-                  child: CircularProgressIndicator(color: AppColors.primary),
-                ),
-                errorWidget: (context, url, error) => const Center(
-                  child: Icon(
-                    Icons.broken_image,
-                    size: 64,
-                    color: Colors.white54,
-                  ),
-                ),
+
+                placeholder: (context, url) =>
+                    ImageCacheConfig.defaultPlaceholder(),
+                errorWidget: (_, __, ___) =>
+                    ImageCacheConfig.defaultPlaceholder(),
               ),
             ),
           );

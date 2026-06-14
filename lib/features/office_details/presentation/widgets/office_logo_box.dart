@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dalil_alaqar/core/databases/api/end_points.dart';
 import 'package:flutter/material.dart';
 
 class OfficeLogoBox extends StatelessWidget {
@@ -31,11 +33,40 @@ class OfficeLogoBox extends StatelessWidget {
     child: logoUrl != null
         ? ClipRRect(
             borderRadius: BorderRadius.circular(radius - 0.5),
-            child: Image.network(
-              logoUrl!,
+            child: CachedNetworkImage(
+              imageUrl: "${EndPoints.kBaseImageUrl}${logoUrl!}",
               fit: BoxFit.contain,
-              errorBuilder: (_, __, _) =>
-                  Icon(Icons.business_rounded, size: size * 0.42, color: muted),
+              placeholder: (context, url) => Container(
+                color: isDark
+                    ? Colors.white.withValues(alpha: 0.05)
+                    : Colors.black.withValues(alpha: 0.04),
+                child: Center(
+                  child: Opacity(
+                    opacity: 0.15,
+                    child: ColorFiltered(
+                      colorFilter: const ColorFilter.mode(
+                        Colors.grey,
+                        BlendMode.srcIn,
+                      ),
+                      child: Image.asset("assets/images/logo.png", height: 80),
+                    ),
+                  ),
+                ),
+              ),
+              errorWidget: (_, __, _) => Container(
+                color: isDark
+                    ? Colors.white.withValues(alpha: 0.05)
+                    : Colors.black.withValues(alpha: 0.04),
+                child: Center(
+                  child: Opacity(
+                    opacity: 0.15,
+                    child: Image.asset(
+                      "assets/images/logo.png",
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+              ),
             ),
           )
         : Icon(Icons.business_rounded, size: size * 0.42, color: muted),

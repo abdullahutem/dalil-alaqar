@@ -1,4 +1,7 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dalil_alaqar/core/databases/api/end_points.dart';
+import 'package:dalil_alaqar/core/utils/image_cache_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -144,14 +147,14 @@ class _UploadOfficeLogoScreenState extends State<UploadOfficeLogoScreen> {
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
-                      child: Image.network(
-                        widget.officeInfo.logoUrl!,
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            "${EndPoints.kBaseImageUrl}${widget.officeInfo.logoUrl!}",
                         fit: BoxFit.contain,
-                        errorBuilder: (context, error, stackTrace) {
-                          return const Center(
-                            child: Icon(Icons.business, size: 64),
-                          );
-                        },
+                        placeholder: (context, url) =>
+                            ImageCacheConfig.defaultPlaceholder(),
+                        errorWidget: (_, __, ___) =>
+                            ImageCacheConfig.defaultPlaceholder(),
                       ),
                     ),
                   ),

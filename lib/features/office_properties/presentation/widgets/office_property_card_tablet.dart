@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dalil_alaqar/core/databases/api/end_points.dart';
 import 'package:dalil_alaqar/core/utils/price_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -57,6 +59,7 @@ class OfficePropertyCardTablet extends StatelessWidget {
 
   Widget _buildImage(BuildContext context) {
     final imageUrl = property.primaryImageUrl;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return ClipRRect(
       borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
       child: AspectRatio(
@@ -65,10 +68,43 @@ class OfficePropertyCardTablet extends StatelessWidget {
           fit: StackFit.expand,
           children: [
             imageUrl != null
-                ? Image.network(
-                    imageUrl,
+                ? CachedNetworkImage(
+                    imageUrl: "${EndPoints.kBaseImageUrl}${imageUrl}",
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => _imagePlaceholder(context),
+                    placeholder: (context, url) => Container(
+                      color: isDark
+                          ? Colors.white.withValues(alpha: 0.05)
+                          : Colors.black.withValues(alpha: 0.04),
+                      child: Center(
+                        child: Opacity(
+                          opacity: 0.15,
+                          child: ColorFiltered(
+                            colorFilter: const ColorFilter.mode(
+                              Colors.grey,
+                              BlendMode.srcIn,
+                            ),
+                            child: Image.asset(
+                              "assets/images/logo.png",
+                              height: 80,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    errorWidget: (_, __, _) => Container(
+                      color: isDark
+                          ? Colors.white.withValues(alpha: 0.05)
+                          : Colors.black.withValues(alpha: 0.04),
+                      child: Center(
+                        child: Opacity(
+                          opacity: 0.15,
+                          child: Image.asset(
+                            "assets/images/logo.png",
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    ),
                   )
                 : _imagePlaceholder(context),
             Positioned(

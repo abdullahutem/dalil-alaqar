@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dalil_alaqar/core/theme/app_colors.dart';
+import 'package:dalil_alaqar/core/utils/image_cache_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/databases/api/end_points.dart';
@@ -143,19 +144,11 @@ class ProfileScreenContent extends StatelessWidget {
                                 width: 120,
                                 height: 120,
                                 fit: BoxFit.cover,
-                                placeholder: (context, url) => const Center(
-                                  child: CircularProgressIndicator(
-                                    color: Colors.blue,
-                                    strokeWidth: 2,
-                                  ),
-                                ),
-                                errorWidget: (context, url, error) => Icon(
-                                  Icons.business,
-                                  size: 60,
-                                  color: isDark
-                                      ? AppColors.darkBackground
-                                      : AppColors.primary,
-                                ),
+
+                                placeholder: (context, url) =>
+                                    ImageCacheConfig.defaultPlaceholder(),
+                                errorWidget: (_, __, ___) =>
+                                    ImageCacheConfig.defaultPlaceholder(),
                               ),
                             ),
                           )

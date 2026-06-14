@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dalil_alaqar/core/databases/api/end_points.dart';
 import 'package:dalil_alaqar/features/office_details/domain/entities/office_details_entity.dart';
 import 'package:dalil_alaqar/features/office_details/presentation/widgets/office_image_placeholder.dart';
 import 'package:flutter/material.dart';
@@ -56,10 +58,14 @@ class OfficePropertyCardTablet extends StatelessWidget {
             child: AspectRatio(
               aspectRatio: 16 / 9,
               child: property.primaryImage != null
-                  ? Image.network(
-                      '$baseImageUrl${property.primaryImage!}',
+                  ? CachedNetworkImage(
+                      imageUrl:
+                          '${EndPoints.kBaseImageUrl}${property.primaryImage!}',
                       fit: BoxFit.cover,
-                      errorBuilder: (_, __, _) =>
+                      placeholder: (context, url) =>
+                          OfficeImagePlaceholder(muted: muted, isDark: isDark),
+
+                      errorWidget: (_, __, _) =>
                           OfficeImagePlaceholder(muted: muted, isDark: isDark),
                     )
                   : OfficeImagePlaceholder(muted: muted, isDark: isDark),

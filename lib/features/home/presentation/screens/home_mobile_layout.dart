@@ -79,8 +79,6 @@ class _HomeMobileLayoutState extends State<HomeMobileLayout>
 
             // Offices Section
             OfficesSection(),
-
-            SizedBox(height: 80),
           ],
         ),
       ),

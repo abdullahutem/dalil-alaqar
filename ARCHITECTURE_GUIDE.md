@@ -660,7 +660,7 @@ class PropertyCard extends StatelessWidget {
       child: Column(
         children: [
           // Image (works in both themes)
-          Image.network(imageUrl),
+          CachedNetworkImage(imageUrl),
           
           Padding(
             padding: EdgeInsets.all(16),
